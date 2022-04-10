@@ -11,6 +11,5 @@ namespace MyFirstProgram
             int area = a * b;
             Console.WriteLine(area);
         }
-
     }
 }
