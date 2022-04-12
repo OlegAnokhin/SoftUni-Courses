@@ -13,7 +13,7 @@ namespace _03Gaming_Store
 
             while (gameName != "Game Time")
             {
-                if (gameName != "OutFall 4" && gameName != "CS: OG" && gameName != "Zplinter Zell" && 
+                if (gameName != "OutFall 4" && gameName != "CS: OG" && gameName != "Zplinter Zell" &&
                     gameName != "Honored 2" && gameName != "RoverWatch" &&
                     gameName != "RoverWatch Origins Edition")
                 {
@@ -21,62 +21,96 @@ namespace _03Gaming_Store
                 }
                 if (gameName == "OutFall 4")
                 {
-                    sum += 39.99;
-                    if (balance < sum)
+                    double price = 39.99;
+                    if (balance < price)
                     {
                         Console.WriteLine("Too Expensive");
                     }
-                    Console.WriteLine($"Bought OutFall 4");
+                    else
+                    {
+                        sum += 39.99;
+                        balance -= price;
+                        Console.WriteLine($"Bought OutFall 4");
+                    }
                 }
-                if (gameName == "CS: OG")
+                else if (gameName == "CS: OG")
                 {
-                    sum += 15.99;
-                    if (balance < sum)
+                    double price = 15.99;
+                    if (balance < price)
                     {
                         Console.WriteLine("Too Expensive");
                     }
-                    Console.WriteLine($"Bought CS: OG");
+                    else
+                    {
+                        sum += 15.99;
+                        balance -= price;
+                        Console.WriteLine($"Bought CS: OG");
+                    }
                 }
-                if (gameName == "Zplinter Zell")
+                else if (gameName == "Zplinter Zell")
                 {
-                    sum += 19.99;
-                    if (balance < sum)
+                    double price = 19.99;
+                    if (balance < price)
                     {
                         Console.WriteLine("Too Expensive");
                     }
-                    Console.WriteLine($"Bought Zplinter Zell");
+                    else
+                    {
+                        sum += 19.99;
+                        balance -= price;
+                        Console.WriteLine($"Bought Zplinter Zell");
+                    }
                 }
-                if (gameName == "Honored 2")
+                else if (gameName == "Honored 2")
                 {
-                    sum += 59.99;
-                    if (balance < sum)
+                    double price = 59.99;
+                    if (balance < price)
                     {
                         Console.WriteLine("Too Expensive");
                     }
-                    Console.WriteLine($"Bought Honored 2");
+                    else
+                    {
+                        sum += 59.99;
+                        balance -= price;
+                        Console.WriteLine($"Bought Honored 2");
+                    }
                 }
-                if (gameName == "RoverWatch")
+                else if (gameName == "RoverWatch")
                 {
-                    sum += 29.99;
-                    if (balance < sum)
+                    double price = 29.99;
+                    if (balance < price)
                     {
                         Console.WriteLine("Too Expensive");
-                        sum -= 29.99;
                     }
-                    Console.WriteLine($"Bought RoverWatch");
+                    else
+                    {
+                        sum += 29.99;
+                        balance -= price;
+                        Console.WriteLine($"Bought RoverWatch");
+                    }
                 }
-                if (gameName == "RoverWatch Origins Edition")
+                else if (gameName == "RoverWatch Origins Edition")
                 {
-                    sum += 39.99;
-                    if (balance < sum)
+                    double price = 39.99;
+                    if (balance < price)
                     {
                         Console.WriteLine("Too Expensive");
                     }
-                    Console.WriteLine($"Bought RoverWatch Origins Edition");
+                    else
+                    {
+                        sum += 39.99;
+                        balance -= price;
+                        Console.WriteLine($"Bought RoverWatch Origins Edition");
+                    }
+                }
+                if (balance == 0)
+                {
+                    Console.WriteLine("Out of money!");
+                    return;
                 }
                 gameName = Console.ReadLine();
             }
-            Console.WriteLine($"Total spend: ${sum:F2}. Remaining: ${balance - sum:F2}");
+            Console.WriteLine($"Total spent: ${sum:F2}. Remaining: ${balance:F2}");
         }
     }
 }

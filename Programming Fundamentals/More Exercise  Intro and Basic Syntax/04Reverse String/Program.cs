@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace _04Reverse_String
 {
@@ -6,7 +7,12 @@ namespace _04Reverse_String
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            string input = Console.ReadLine();
+            char[] chars = input.ToCharArray();
+            var reversWord = chars.Reverse();
+
+
+            Console.WriteLine(string.Join("", reversWord));
         }
     }
 }
