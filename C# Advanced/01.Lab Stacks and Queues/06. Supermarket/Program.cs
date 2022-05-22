@@ -8,7 +8,30 @@ namespace _06._Supermarket
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Queue<string> queue = new Queue<string>();
+            int totalRemaining = 0;
+
+            while (true)
+            {
+                string input = Console.ReadLine();
+
+                if (input == "Paid")
+                {
+                    foreach (var name in queue)
+                    {
+                        Console.WriteLine(name);
+                    }
+                    queue.Clear();
+                    continue;
+                }
+                else if (input == "End")
+                {
+                    Console.WriteLine($"{queue.Count} people remaining.");
+                    break;
+                }
+                queue.Enqueue(input);
+                totalRemaining++;
+            }
         }
     }
 }
