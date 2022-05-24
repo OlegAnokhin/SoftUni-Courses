@@ -8,35 +8,25 @@ namespace _03._Simple_Calculator
     {
         static void Main(string[] args)
         {
-            string[] input = Console.ReadLine().Split();
+            Stack<string> stack = new Stack<string>(Console.ReadLine().Split(" ",
+                StringSplitOptions.RemoveEmptyEntries).Reverse());
 
-            Stack<string> stack = new Stack<string>(input);
-
-            //foreach (var arg in input)
-            //{
-            //    stack.Push(arg);
-            //}
-
-           // string[] cmd = input.Split(' ');
-            int sum = 0;
-
-            for (int i = 0; i < input.Length; i++) 
+            while (stack.Count > 1)
             {
-                int currNumber = int.Parse(input[i]);
-                string opr = input[i+1];
+                int num1 = int.Parse(stack.Pop());
+                string oper = stack.Pop();
+                int num2 = int.Parse(stack.Pop());
 
-                if (opr == "+")
+                if (oper.Equals("+"))
                 {
-                    sum += currNumber;
+                    stack.Push((num1 + num2).ToString());
                 }
-                else if (opr == "-")
+                else if (oper.Equals("-"))
                 {
-                    sum -= currNumber;
+                    stack.Push((num1 - num2).ToString());
                 }
             }
-
-            // stack.Push(c);
-            Console.WriteLine(sum);
+            Console.WriteLine(stack.Pop());
         }
     }
 }
