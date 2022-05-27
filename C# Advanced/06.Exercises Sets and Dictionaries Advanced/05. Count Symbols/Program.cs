@@ -23,7 +23,10 @@ namespace _05._Count_Symbols
                     dictionary[c]++;
                 }
             }
-            Console.WriteLine();
+            foreach (var c in dictionary)
+            {
+                Console.WriteLine($"{c.Key}: {c.Value} time/s");
+            }
         }
     }
 }
