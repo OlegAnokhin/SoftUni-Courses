@@ -1,13 +1,29 @@
-﻿using System;
-using System.IO;
-
-namespace _07._Folder_Size
+﻿namespace FolderSize
 {
-    internal class Program
+    using System;
+    using System.IO;
+    public class FolderSize
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            string folderPath = @"..\..\..\Files\TestFolder";
+            string outputPath = @"..\..\..\Files\output.txt";
+
+            GetFolderSize(folderPath, outputPath);
+        }
+
+        public static void GetFolderSize(string folderPath, string outputFilePath)
+        {
+            double sum = 0;
+            DirectoryInfo dir = new DirectoryInfo(folderPath);
+            FileInfo[] infos = dir.GetFiles("*", SearchOption.AllDirectories);
+
+            foreach (FileInfo info in infos)
+            {
+                sum += info.Length;
+            }
+            sum = sum / 1024;
+            File.WriteAllText(outputFilePath, sum.ToString());
         }
     }
 }
