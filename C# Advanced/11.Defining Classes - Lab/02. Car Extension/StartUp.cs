@@ -1,26 +1,22 @@
 ﻿using CarManufacturer;
 using System;
 
-public class StartUp
+namespace CarManufacturer
 {
-    public static void Main()
+
+    public class StartUp
     {
-        Car car = new Car();
-        car.Year = 2000;
-        car.Make = "BMW";
-        car.Model = "320D";
-        car.FuelQuantity = 50;
-        car.FuelConsumption = 0.04;
+        public static void Main()
+        {
+            Car car = new Car();
+            car.Make = "BMW";
+            car.Model = "320D";
+            car.Year = 2000;
+            car.FuelQuantity = 200;
+            car.FuelConsumption = 200;
+            car.Drive(2000);
 
-        Console.WriteLine(car.WhoAmI());
-        Console.WriteLine();
-
-        car.Drive(700);
-        Console.WriteLine(car.WhoAmI());
-        Console.WriteLine();
-
-        car.Drive(50);
-        Console.WriteLine(car.WhoAmI());
-        Console.WriteLine();
+            Console.WriteLine(car.WhoAmI());
+        }
     }
 }
