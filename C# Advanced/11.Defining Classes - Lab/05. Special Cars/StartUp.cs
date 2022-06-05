@@ -1,67 +1,73 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace CarManufacturer
 {
     public class StartUp
     {
-        static void Main()
+        static void Main(string[] args)
         {
-
-
-
-
-
-
-            Car ccar = new Car();
-            Console.WriteLine(ccar.WhoAmI());
-            Console.WriteLine();
-
-            Car skoda = new Car("Skoda", "Felicia", 1999);
-            Console.WriteLine(skoda.WhoAmI());
-            Console.WriteLine();
-
-            Car car = new Car();
-            car.Make = "BMW";
-            car.Model = "X6";
-            car.Year = 2022;
-            car.FuelQuantity = 50;
-            car.FuelConsumption = 0.07;
-
-            Car anotherCar = new Car()
+            string input = string.Empty;
+            List<Tire[]> listOftires = new List<Tire[]>();
+            List<Engine> listOfEngines = new List<Engine>();
+            List<Car> listOfCars = new List<Car>();
+            while ((input = Console.ReadLine()) != "No more tires")
             {
-                Make = "Toyota",
-                Model = "Avensis",
-                Year = 2018,
-                FuelQuantity = 40,
-                FuelConsumption = 0.08
+                string[] tires = input.Split();
+                Tire[] currTires = new Tire[4]
+                {
+                 new Tire(int.Parse(tires[0]), double.Parse(tires[1])),
+                 new Tire(int.Parse(tires[2]), double.Parse(tires[3])),
+                 new Tire(int.Parse(tires[4]), double.Parse(tires[5])),
+                 new Tire(int.Parse(tires[6]), double.Parse(tires[7]))
             };
-            Console.WriteLine(anotherCar.WhoAmI());
-            Console.WriteLine();
+                listOftires.Add(currTires);
+            }
+            while ((input = Console.ReadLine()) != "Engines done")
+            {
+                double[] engines = input.Split().Select(double.Parse).ToArray();
 
-            Console.WriteLine(car.WhoAmI());
-            Console.WriteLine();
-
-            car.Drive(700);
-            Console.WriteLine(car.WhoAmI());
-            Console.WriteLine();
-
-            car.Drive(50);
-            Console.WriteLine(car.WhoAmI());
-            Console.WriteLine();
-
-            Engine lamboEngine = new Engine(560, 6300);
-
-            Tire[] lamboTires = new Tire[] {
-                new Tire(2018, 2.4),
-                new Tire(2018, 2.3),
-                new Tire(2018, 2.4),
-                new Tire(2018, 2.5),
-            };
-
-            Car lambo = new Car("Lambo", "Urus", 2010, 250, 0.12, lamboEngine, lamboTires);
-            lambo.Drive(50);
-            Console.WriteLine(lambo.WhoAmI());
-            Console.WriteLine();
+                int horsePower = (int)(engines[0]);
+                double cubic = engines[1];
+                Engine currEngine = new Engine(horsePower, cubic);
+                listOfEngines.Add(currEngine);
+            }
+            while ((input = Console.ReadLine()) != "Show special")
+            {
+                string[] spCars = input.Split();
+                string Name = spCars[0];
+                string model = spCars[1];
+                int year = int.Parse(spCars[2]);
+                double fuelQuantity = double.Parse(spCars[3]);
+                double fuelConsumption = double.Parse(spCars[4]);
+                int engineIndex = int.Parse(spCars[5]);
+                int tiresIndex = int.Parse(spCars[6]);
+                Car currCar = new Car(Name, model, year, fuelQuantity, fuelConsumption, listOfEngines[engineIndex], listOftires[tiresIndex]);
+                listOfCars.Add(currCar);
+            }
+            string result = SpecialCars(listOfCars);
+            Console.WriteLine(result);
+        }
+        public static string SpecialCars(List<Car> cars)
+        {
+            List<Car> specialCars = cars
+                .Where(x => x.Year >= 2017)
+                .Where(x => x.Engine.HorsePower > 330)
+                .Where(x => x.Tires.Sum(y => y.Pressure) >= 9 && x.Tires.Sum(y => y.Pressure) <= 10)
+                .ToList();
+            StringBuilder result = new StringBuilder();
+            foreach (var car in specialCars)
+            {
+                car.Drive(20);
+                result.AppendLine($"Make: {car.Make}");
+                result.AppendLine($"Model: {car.Model}");
+                result.AppendLine($"Year: {car.Year}");
+                result.AppendLine($"HorsePowers: {car.Engine.HorsePower}");
+                result.AppendLine($"FuelQuantity: {car.FuelQuantity}");
+            }
+            return result.ToString();
         }
     }
 }

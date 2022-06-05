@@ -13,19 +13,15 @@ namespace DefiningClasses
 
         public Car(string model, double fuelAmount, double fuelConsumptionPerKilometer)
         {
-            this.model = model;
-            this.fuelAmount = fuelAmount;
-            this.fuelConsumptionPerKilometer = fuelConsumptionPerKilometer;
+            Model = model;
+            FuelAmount = fuelAmount;
+            FuelConsumptionPerKilometer = fuelConsumptionPerKilometer;
             TravelledDistance = 0;
         }
-        public string Model
-        { get; set; }
-        public double FuelAmount
-        { get; set; }
-        public double FuelConsumptionPerKilometer
-        { get; set; }
-        public double TravelledDistance
-            {get; set;}
+        public string Model { get; set; }
+        public double FuelAmount { get; set; }
+        public double FuelConsumptionPerKilometer { get; set; }
+        public double TravelledDistance {get; set;}
         public void Drive(double amountOfKm)
         {
             double needetLiters = amountOfKm * FuelConsumptionPerKilometer;

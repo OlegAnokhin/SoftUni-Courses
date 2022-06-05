@@ -13,7 +13,7 @@ namespace DefiningClasses
         {
             this.familyMembers = new List<Person>();
         }
-        public void AddMember (Person member)
+        public void AddMember(Person member)
         {
             this.familyMembers.Add(member);
         }
