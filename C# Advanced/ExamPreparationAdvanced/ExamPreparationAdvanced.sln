@@ -3,11 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32519.379
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01._The_Fight_for_Gondor", "01._The_Fight_for_Gondor\01._The_Fight_for_Gondor.csproj", "{B8B519FA-D0EE-4726-8A17-B1D1A4CC2626}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "01._The_Fight_for_Gondor", "01._The_Fight_for_Gondor\01._The_Fight_for_Gondor.csproj", "{B8B519FA-D0EE-4726-8A17-B1D1A4CC2626}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "02._Super_Mario", "02._Super_Mario\02._Super_Mario.csproj", "{AB331CB6-5908-43F1-937E-59C88CF4E5BD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "02._Super_Mario", "02._Super_Mario\02._Super_Mario.csproj", "{AB331CB6-5908-43F1-937E-59C88CF4E5BD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "03. Classroom", "03. Classroom\03. Classroom.csproj", "{54700D07-FDCA-446E-88E5-FFB85B0D5A28}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "03. Classroom", "03. Classroom\03. Classroom.csproj", "{54700D07-FDCA-446E-88E5-FFB85B0D5A28}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01._Warm_Winter", "01._Warm_Winter\01._Warm_Winter.csproj", "{00904634-6891-47F1-957A-488F9E36E6FC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "02._Warships", "02._Warships\02._Warships.csproj", "{A416382D-FB39-4267-B351-7680D1B27D47}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "03._VetClinic", "03._VetClinic\03._VetClinic.csproj", "{9CF8256D-14AC-42C4-9A61-4E32689DD54E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +33,18 @@ Global
 		{54700D07-FDCA-446E-88E5-FFB85B0D5A28}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{54700D07-FDCA-446E-88E5-FFB85B0D5A28}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{54700D07-FDCA-446E-88E5-FFB85B0D5A28}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00904634-6891-47F1-957A-488F9E36E6FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00904634-6891-47F1-957A-488F9E36E6FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00904634-6891-47F1-957A-488F9E36E6FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00904634-6891-47F1-957A-488F9E36E6FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A416382D-FB39-4267-B351-7680D1B27D47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A416382D-FB39-4267-B351-7680D1B27D47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A416382D-FB39-4267-B351-7680D1B27D47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A416382D-FB39-4267-B351-7680D1B27D47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9CF8256D-14AC-42C4-9A61-4E32689DD54E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CF8256D-14AC-42C4-9A61-4E32689DD54E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CF8256D-14AC-42C4-9A61-4E32689DD54E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CF8256D-14AC-42C4-9A61-4E32689DD54E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
