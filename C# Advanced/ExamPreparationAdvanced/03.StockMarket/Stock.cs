@@ -10,10 +10,10 @@ namespace StockMarket
         private int totalNumberOfShares;
         private decimal marketCapitalization;
 
-        public string CompanyName { get; set; }
-        public string Director { get; set; }
-        public decimal PricePerShare { get; set; }
-        public int TotalNumberOfShares { get; set; }
+        public string CompanyName { get => companyName; set => companyName = value; }
+        public string Director { get => director; set => director = value; }
+        public decimal PricePerShare { get => pricePerShare; set => pricePerShare = value; }
+        public int TotalNumberOfShares { get => totalNumberOfShares; set => totalNumberOfShares = value; }
         public decimal MarketCapitalization { get => pricePerShare * totalNumberOfShares; set => marketCapitalization = value; }
 
         public Stock(string companyName, string director, decimal pricePerShare, int totalNumberOfShares)
@@ -24,6 +24,7 @@ namespace StockMarket
             TotalNumberOfShares = totalNumberOfShares;
             MarketCapitalization = pricePerShare * totalNumberOfShares;
         }
+
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
@@ -32,6 +33,7 @@ namespace StockMarket
                 .AppendLine("Director: " + Director)
                 .AppendLine("Price per share: $" + PricePerShare)
                 .AppendLine("Market capitalization: $" + MarketCapitalization);
+
             return sb.ToString();
         }
     }

@@ -1,77 +1,211 @@
-﻿using System;
-using System.Linq;
+﻿
+using System;
+using System.Collections.Generic;
 
 namespace _02.BeaverAtWork
 {
-    public class Program
+    class Program
     {
         static void Main(string[] args)
         {
             int n = int.Parse(Console.ReadLine());
-            char[,] matrix = ReadMatrix(n);
-            (int rows, int cols) = FindBeaberLocation(matrix);
+            string[,] matrix = new string[n, n];
+            List<string> woodCollection = new List<string>();
+            int beaverRow = 0;
+            int beaverCol = 0;
+            int woods = 0;
+            for (int rows = 0; rows < matrix.GetLength(0); rows++)
+            {
+                string[] colElements = Console.ReadLine().Split(" ", StringSplitOptions.RemoveEmptyEntries);
+                for (int cols = 0; cols < matrix.GetLength(1); cols++)
+                {
+                    matrix[rows, cols] = colElements[cols];
+                    if (matrix[rows, cols] == "B")
+                    {
+                        beaverRow = rows;
+                        beaverCol = cols;
+                    }
+                    if (matrix[rows, cols] != "B" && matrix[rows, cols] != "F" && matrix[rows, cols] != "-")
+                    {
+                        woods++;
+                    }
+                }
+            }
             while (true)
             {
                 string command = Console.ReadLine();
+                matrix[beaverRow, beaverCol] = "-";
                 if (command == "end")
                 {
+                    matrix[beaverRow, beaverCol] = "B";
                     break;
                 }
                 else if (command == "up")
                 {
-                    Move(matrix, rows, cols, rows - 1, cols);
+                    beaverRow--;
+                    if (beaverRow >= 0)
+                    {
+                        if (matrix[beaverRow, beaverCol] == "F")
+                        {
+                            matrix[beaverRow, beaverCol] = "-";
+                            beaverRow = n - 1;
+                            if (matrix[beaverRow, beaverCol] == "F")
+                            {
+                                matrix[beaverRow, beaverCol] = "-";
+                                beaverRow = 0;
+                            }
+                            if (matrix[beaverRow, beaverCol] == "F")
+                            {
+                                matrix[beaverRow, beaverCol] = "-";
+                                beaverRow = n - 1;
+                            }
+                        }
+                        else if (matrix[beaverRow, beaverCol] == "-")
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            woodCollection.Add(matrix[beaverRow, beaverCol]);
+                            woods--;
+                        }
+                    }
+                    else
+                    {
+                        woodCollection.RemoveAt(woodCollection.Count - 1);
+                        beaverRow++;
+                    }
                 }
                 else if (command == "down")
                 {
-                    Move(matrix, rows, cols, rows + 1, cols);
-                }
-                else if (command == "left")
-                {
-                    Move(matrix, rows, cols, rows, cols - 1);
+                    beaverRow++;
+                    if (beaverRow < n)
+                    {
+                        if (matrix[beaverRow, beaverCol] == "F")
+                        {
+                            matrix[beaverRow, beaverCol] = "-";
+                            beaverRow = 0;
+                            if (matrix[beaverRow, beaverCol] == "F")
+                            {
+                                matrix[beaverRow, beaverCol] = "-";
+                                beaverRow = n - 1;
+                            }
+                            if (matrix[beaverRow, beaverCol] == "F")
+                            {
+                                matrix[beaverRow, beaverCol] = "-";
+                                beaverRow = 0;
+                            }
+                        }
+                        else if (matrix[beaverRow, beaverCol] == "-")
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            woodCollection.Add(matrix[beaverRow, beaverCol]);
+                            woods--;
+                        }
+                    }
+                    else
+                    {
+                        woodCollection.RemoveAt(woodCollection.Count - 1);
+                        beaverRow--;
+                    }
                 }
                 else if (command == "right")
                 {
-                    Move(matrix, rows, cols, rows, cols + 1);
-                }
-                else
-                {
-                    throw new Exception("Invalid command: " + command);
-                }
-            }
-        }
-
-        private static char[,] ReadMatrix(int n)
-        {
-            var matrix = new char[n, n];
-            for (int row = 0; row < n; row++)
-            {
-                string[] rowChars = Console.ReadLine().Split().ToArray();
-                for (int col = 0; col < n; col++)
-                {
-                    matrix[row, col] = rowChars[col][0];
-                }
-            }
-            return matrix;
-        }
-
-        private static (int x, int y) FindBeaberLocation(char[,] matrix)
-        {
-            for (int row = 0; row < matrix.GetLength(0); row++)
-            {
-                for (var col = 0; col < matrix.GetLength(1); col++)
-                {
-                    if (matrix[row, col] == 'B')
+                    beaverCol++;
+                    if (beaverCol < n)
                     {
-                        return (row, col);
+                        if (matrix[beaverRow, beaverCol] == "F")
+                        {
+                            matrix[beaverRow, beaverCol] = "-";
+                            beaverCol = 0;
+                            if (matrix[beaverRow, beaverCol] == "F")
+                            {
+                                matrix[beaverRow, beaverCol] = "-";
+                                beaverCol = n - 1;
+                            }
+                            if (matrix[beaverRow, beaverCol] == "F")
+                            {
+                                matrix[beaverRow, beaverCol] = "-";
+                                beaverCol = 0;
+                            }
+                        }
+                        else if (matrix[beaverRow, beaverCol] == "-")
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            woodCollection.Add(matrix[beaverRow, beaverCol]);
+                            woods--;
+                        }
+                    }
+                    else
+                    {
+                        woodCollection.RemoveAt(woodCollection.Count - 1);
+                        beaverCol--;
                     }
                 }
+                else if (command == "left")
+                {
+                    beaverCol--;
+                    if (beaverCol >= 0)
+                    {
+                        if (matrix[beaverRow, beaverCol] == "F")
+                        {
+                            matrix[beaverRow, beaverCol] = "-";
+                            beaverCol = n - 1;
+                            if (matrix[beaverRow, beaverCol] == "F")
+                            {
+                                matrix[beaverRow, beaverCol] = "-";
+                                beaverCol = 0;
+                            }
+                            if (matrix[beaverRow, beaverCol] == "F")
+                            {
+                                matrix[beaverRow, beaverCol] = "-";
+                                beaverCol = n - 1;
+                            }
+                        }
+                        else if (matrix[beaverRow, beaverCol] == "-")
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            woodCollection.Add(matrix[beaverRow, beaverCol]);
+                            woods--;
+                        }
+                    }
+                    else
+                    {
+                        woodCollection.RemoveAt(woodCollection.Count - 1);
+                        beaverCol++;
+                    }
+                }
+                if (woods == 0)
+                {
+                    matrix[beaverRow, beaverCol] = "B";
+                    break;
+                }
             }
-            throw new Exception("Beaver not found in the matrix!");
-        }
-        private static void Move(char[,] matrix, int row, int col, int newRow, int newCol)
-        {
-            matrix[row, col] = '-';
-            matrix[newRow, newCol] = 'B';
+            if (woods > 0)
+            {
+                Console.WriteLine($"The Beaver failed to collect every wood branch. There are {woods} branches left.");
+            }
+            else
+            {
+                Console.WriteLine($"The Beaver successfully collect {woodCollection.Count} wood branches: {string.Join(", ", woodCollection)}.");
+            }
+            for (int rows = 0; rows < n; rows++)
+            {
+                for (int cols = 0; cols < n; cols++)
+                {
+                    Console.Write(matrix[rows, cols] + " ");
+                }
+                Console.WriteLine();
+            }
         }
     }
 }
