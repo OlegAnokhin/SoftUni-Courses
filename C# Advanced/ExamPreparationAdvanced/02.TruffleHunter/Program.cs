@@ -11,7 +11,6 @@ namespace _02.TruffleHunter
             int size = int.Parse(Console.ReadLine());
             char[,] matrix = new char[size, size];
 
-
             for (int row = 0; row <= size - 1; row++)
             {
                 char[] currRowElement = Console.ReadLine().Replace(" ", string.Empty).ToCharArray();
