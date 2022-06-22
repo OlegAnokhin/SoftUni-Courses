@@ -13,7 +13,6 @@ namespace StreetRacing
 
             //Initialize Car
             Car car = new Car("BMW", "320ci", "NFS2005", 150, 1450);
-            Car car2 = new Car("BMWww", "320ci", "NFS2005", 150, 1450);
 
             //Print car
             Console.WriteLine(car.ToString());
@@ -26,7 +25,6 @@ namespace StreetRacing
 
             //Add car
             race.Add(car);
-            race.Add(car2);
 
             //Remove car
             Console.WriteLine(race.Remove("NFS2005")); // True

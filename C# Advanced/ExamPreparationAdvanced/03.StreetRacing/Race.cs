@@ -26,13 +26,20 @@ namespace StreetRacing
         public int Count => this.Participants.Count();
         public void Add(Car car)
         {
-           // if (Race.LicensePlate != car.LicensePlate)
-
-            if (Participants.Count > this.Capacity 
-                || car.HorsePower <= this.MaxHorsePower)
-            {
-                this.Participants.Add(car);
-            }
+            if (!Participants.Any(x => x.LicensePlate == car.LicensePlate))
+                if (Participants.Count < this.Capacity)
+                {
+                    if (car.HorsePower <= this.MaxHorsePower)
+                    {
+                        this.Participants.Add(car);
+                    }
+                }
+            //if (!Participants.Any(x => x.LicensePlate == car.LicensePlate)
+            //    && Participants.Count < this.Capacity
+            //    && car.HorsePower <= this.MaxHorsePower)
+            //{
+            //    this.Participants.Add(car);
+            //}
         }
         public bool Remove(string licensePlate)
         {
