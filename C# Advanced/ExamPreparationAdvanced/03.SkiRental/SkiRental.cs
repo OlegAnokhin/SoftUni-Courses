@@ -8,15 +8,17 @@ namespace SkiRental
     public class SkiRental
     {
         private List<Ski> data;
-        public SkiRental(string name, int capacity)
+        public SkiRental()
         {
             this.data = new List<Ski>();
+        }
+        public SkiRental(string name, int capacity) : this()
+        {
             this.Name = name;
             this.Capacity = capacity;
         }
         public string Name { get; set; }
         public int Capacity { get; set; }
-        public int Count => data.Count;
         public void Add(Ski ski)
         {
             if (data.Count < Capacity)
@@ -38,14 +40,24 @@ namespace SkiRental
         {
             var newestSki = this.data.Max(l => l.Year);
             var newest = this.data.FirstOrDefault(x => x.Year == newestSki);
+            if (newest == null)
+            {
+                return null;
+            }
             return newest;
         }
         public Ski GetSki(string manufacturer, string model)
         {
             Ski ski = this.data.FirstOrDefault(x => x.Manufacturer == manufacturer
             && x.Model == model);
+            if (ski == null)
+            {
+                return null;
+            }
             return ski;
         }
+        public int Count => this.data.Count;
+
         public string GetStatistics()
         {
             StringBuilder sb = new StringBuilder();

@@ -8,9 +8,9 @@ namespace SkiRental
     {
         public Ski(string manufacturer, string model, int year)
         {
-            Manufacturer = manufacturer;
-            Model = model;
-            Year = year;
+            this.Manufacturer = manufacturer;
+            this.Model = model;
+            this.Year = year;
         }
         public string Manufacturer { get; set; }
         public string Model { get; set; }
