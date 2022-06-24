@@ -15,11 +15,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "05. Date Modifier BONUS", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "06. Speed Racing", "06. Speed Racing\06. Speed Racing.csproj", "{EB4AA269-28F1-4F01-B452-6120F5C72C9A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "07. Raw Data", "07. Raw Data\07. Raw Data.csproj", "{C9C3CAFF-3123-462E-931C-DFF0BFF6B94F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "07.RawData", "07. Raw Data\07.RawData.csproj", "{C9C3CAFF-3123-462E-931C-DFF0BFF6B94F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "08. Car Salesman", "08. Car Salesman\08. Car Salesman.csproj", "{7A256826-68C4-44A4-80D4-138C6BF82C37}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "09. Pokemon Trainer", "09. Pokemon Trainer\09. Pokemon Trainer.csproj", "{6AF00BF8-DD75-4585-AB76-BB68B21B2F0B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "09.PokemonTrainer", "09. Pokemon Trainer\09.PokemonTrainer.csproj", "{6AF00BF8-DD75-4585-AB76-BB68B21B2F0B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "10. SoftUni Parking BONUS", "10. SoftUni Parking BONUS\10. SoftUni Parking BONUS.csproj", "{F8C959F8-9931-408A-B5DC-F3BFFE3A1C4F}"
 EndProject
