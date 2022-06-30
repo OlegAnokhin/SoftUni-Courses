@@ -1,12 +1,19 @@
 ﻿using System;
 
-namespace _04.RandomList
+namespace CustomRandomList
 {
-    internal class Program
+    public class StartUp
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var randomList = new RandomList();
+            randomList.Add("randomOne");
+            randomList.Add("randomTwo");
+
+            Console.WriteLine(string.Join(", ", randomList));
+
+            randomList.RemoveRandomElement();
+            Console.WriteLine(string.Join(", ", randomList));
         }
     }
 }
