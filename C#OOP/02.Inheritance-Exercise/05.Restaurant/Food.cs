@@ -9,7 +9,7 @@ namespace Restaurant
         public Food(string name, decimal price, double grams) 
             : base(name, price)
         {
-            this.Grams = Grams;
+            this.Grams = grams;
         }
         public double Grams { get; set; }
     }

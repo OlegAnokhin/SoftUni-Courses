@@ -3,19 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32616.157
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Inheritance-Exercise", "02.Inheritance-Exercise\Inheritance-Exercise.csproj", "{58D892E5-3692-4244-A439-10891EA0747E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "01.Person", "01.Person\01.Person.csproj", "{B46261EF-5F0F-4F9D-8564-E5FD5BD53ACB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01.Person", "01.Person\01.Person.csproj", "{B46261EF-5F0F-4F9D-8564-E5FD5BD53ACB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "02.Zoo", "02.Zoo\02.Zoo.csproj", "{7BEB6D67-0D95-41F3-8233-BDD982CC22BA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "02.Zoo", "02.Zoo\02.Zoo.csproj", "{7BEB6D67-0D95-41F3-8233-BDD982CC22BA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "03.PlayersAndMonsters", "03.PlayersAndMonsters\03.PlayersAndMonsters.csproj", "{AEC9230E-CE4B-4FA8-958F-F2524013AD5C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "03.PlayersAndMonsters", "03.PlayersAndMonsters\03.PlayersAndMonsters.csproj", "{AEC9230E-CE4B-4FA8-958F-F2524013AD5C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "04.NeedForSpeed", "04.NeedForSpeed\04.NeedForSpeed.csproj", "{53FF3588-4C09-49FD-B6DC-EFA55FDBF2EB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "04.NeedForSpeed", "04.NeedForSpeed\04.NeedForSpeed.csproj", "{53FF3588-4C09-49FD-B6DC-EFA55FDBF2EB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "05.Restaurant", "05.Restaurant\05.Restaurant.csproj", "{22514B9A-4394-4389-A355-CCF04D6AED8D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "05.Restaurant", "05.Restaurant\05.Restaurant.csproj", "{22514B9A-4394-4389-A355-CCF04D6AED8D}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "06.AnimalsBONUS", "06.AnimalsBONUS\06.AnimalsBONUS.csproj", "{2D41DBB7-E638-4C38-AEF5-BCBACC729889}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "06.AnimalsBONUS", "06.AnimalsBONUS\06.AnimalsBONUS.csproj", "{2D41DBB7-E638-4C38-AEF5-BCBACC729889}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +21,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{58D892E5-3692-4244-A439-10891EA0747E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{58D892E5-3692-4244-A439-10891EA0747E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{58D892E5-3692-4244-A439-10891EA0747E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{58D892E5-3692-4244-A439-10891EA0747E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B46261EF-5F0F-4F9D-8564-E5FD5BD53ACB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B46261EF-5F0F-4F9D-8564-E5FD5BD53ACB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B46261EF-5F0F-4F9D-8564-E5FD5BD53ACB}.Release|Any CPU.ActiveCfg = Release|Any CPU
