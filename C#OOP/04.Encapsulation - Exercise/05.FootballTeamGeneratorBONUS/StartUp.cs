@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace _05.FootballTeamGeneratorBONUS
+﻿namespace _05.FootballTeamGeneratorBONUS
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
     public class StartUp
     {
         static void Main(string[] args)
@@ -17,12 +17,19 @@ namespace _05.FootballTeamGeneratorBONUS
                 {
                     string[] cmdArgs = command
                         .Split(';', StringSplitOptions.RemoveEmptyEntries);
-
+                    ProcessInput(teams, cmdArgs);
                 }
-                catch (Exception)
+                catch (ArgumentException ae)
                 {
-
-                    throw;
+                    Console.WriteLine(ae.Message);
+                }
+                catch (InvalidOperationException ioe)
+                {
+                    Console.WriteLine(ioe.Message);
+                }
+                catch (IndexOutOfRangeException)
+                {
+                    Console.WriteLine(ErrorMessages.NameNullMessage);
                 }
             }
         }
@@ -36,38 +43,29 @@ namespace _05.FootballTeamGeneratorBONUS
                 Team team = new Team(teamName);
                 teams.Add(team);
             }
-            else if (cmdType == "Add")
+            else
             {
-                string playerName = cmdArgs[2];
                 Team team = teams.FirstOrDefault(t => t.Name == teamName);
                 if (team == null)
                 {
-                    throw new InvalidOperationException(ErrorMessages.TeamNotExist);
+                    throw new InvalidOperationException(String.Format(ErrorMessages.TeamNotExist, teamName));
                 }
-                Stats playerStats = GeneratePlayersStats(cmdArgs.Skip(3).ToArray());
-                Player player = new Player(playerName, playerStats);
-                team.AddPlayer(player);
-            }
-            else if (cmdType == "Remove")
-            {
-                string playerName = cmdArgs[2];
-                Team team = teams
-                    .FirstOrDefault(t => t.Name == teamName);
-                if (team == null)
+                if (cmdType == "Add")
                 {
-                    throw new InvalidOperationException(ErrorMessages.TeamNotExist);
+                    string playerName = cmdArgs[2];
+                    Stats playerStats = GeneratePlayersStats(cmdArgs.Skip(3).ToArray());
+                    Player player = new Player(playerName, playerStats);
+                    team.AddPlayer(player);
                 }
-                team.RemovePlayer(playerName);
-            }
-            else if (cmdType == "Rating")
-            {
-                Team team = teams
-                    .FirstOrDefault(t => t.Name == teamName);
-                if (team == null)
+                else if (cmdType == "Remove")
                 {
-                    throw new InvalidOperationException(ErrorMessages.TeamNotExist);
+                    string playerName = cmdArgs[2];
+                    team.RemovePlayer(playerName);
                 }
-                Console.WriteLine(team);
+                else if (cmdType == "Rating")
+                {
+                    Console.WriteLine(team);
+                }
             }
         }
         static Stats GeneratePlayersStats(string[] stats)

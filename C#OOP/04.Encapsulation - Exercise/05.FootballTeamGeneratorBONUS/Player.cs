@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace _05.FootballTeamGeneratorBONUS
+﻿namespace _05.FootballTeamGeneratorBONUS
 {
+    using System;
+    using System.Text;
+    using System.Collections.Generic;
+
     public class Player
     {
         private string name;
@@ -12,15 +12,15 @@ namespace _05.FootballTeamGeneratorBONUS
             this.Name = name;
             this.Stats = stats;
         }
-        public string Name 
-        { 
+        public string Name
+        {
             get
             {
                 return this.name;
             }
             private set
             {
-                if (string.IsNullOrWhiteSpace(value))
+                if (String.IsNullOrWhiteSpace(value))
                 {
                     throw new ArgumentException(ErrorMessages.NameNullMessage);
                 }

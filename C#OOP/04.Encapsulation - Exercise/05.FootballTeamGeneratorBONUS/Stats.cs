@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace _05.FootballTeamGeneratorBONUS
+﻿namespace _05.FootballTeamGeneratorBONUS
 {
+    using System;
     public class Stats
     {
         private const int StatMinValue = 0;
@@ -23,8 +20,8 @@ namespace _05.FootballTeamGeneratorBONUS
             this.Shooting = shooting;
         }
 
-        public int Endurance 
-        { 
+        public int Endurance
+        {
             get
             {
                 return this.endurance;
@@ -103,7 +100,7 @@ namespace _05.FootballTeamGeneratorBONUS
                 this.shooting = value;
             }
         }
-        public double GetOverallStats 
+        public double GetOverallStats()
             => (this.Endurance + this.Sprint + this.Dribble + this.Passing + this.Shooting) / 5.0;
     }
 }
