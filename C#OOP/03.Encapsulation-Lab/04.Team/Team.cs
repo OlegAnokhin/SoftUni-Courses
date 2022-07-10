@@ -18,8 +18,7 @@ namespace PersonsInfo
         }
         public IReadOnlyCollection<Person> FirstTeam 
         { 
-            get
-            { return this.firstTeam.AsReadOnly(); }
+            get { return this.firstTeam.AsReadOnly(); }
         }
         public IReadOnlyCollection<Person> ReserveTeam
         {
@@ -36,13 +35,12 @@ namespace PersonsInfo
                 reserveTeam.Add(person);
             }
         }
-        public int CountFirst { get { return firstTeam.Count; } }
-        public int CountReserve { get { return reserveTeam.Count; } }
-        public override string ToString()
-        {
-            return $"First team has {FirstTeam.Count} players.";
-            return $"Reserve team has {ReserveTeam.Count} players.";
-        }
-
+        //public int CountFirst { get { return firstTeam.Count; } }
+        //public int CountReserve { get { return reserveTeam.Count; } }
+        //public override string ToString()
+        //{
+        //    return $"First team has {FirstTeam.Count} players.";
+        //    return $"Reserve team has {ReserveTeam.Count} players.";
+        //}
     }
 }

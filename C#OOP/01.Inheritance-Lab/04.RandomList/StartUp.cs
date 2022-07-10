@@ -6,14 +6,14 @@ namespace CustomRandomList
     {
         static void Main(string[] args)
         {
-            var randomList = new RandomList();
-            randomList.Add("randomOne");
-            randomList.Add("randomTwo");
+            //var randomList = new RandomList();
+            //randomList.Add("randomOne");
+            //randomList.Add("randomTwo");
 
-            Console.WriteLine(string.Join(", ", randomList));
+            //Console.WriteLine(string.Join(", ", randomList));
 
-            randomList.RemoveRandomElement();
-            Console.WriteLine(string.Join(", ", randomList));
+            //randomList.RemoveRandomElement();
+            //Console.WriteLine(string.Join(", ", randomList));
         }
     }
 }

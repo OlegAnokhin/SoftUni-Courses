@@ -8,7 +8,7 @@ namespace PersonsInfo
         static void Main(string[] args)
         {
             var lines = int.Parse(Console.ReadLine());
-            var persons = new List<Person>();
+            Team team = new Team("SoftUni");
             for (int i = 0; i < lines; i++)
             {
                 var cmdArgs = Console.ReadLine().Split();
@@ -16,25 +16,10 @@ namespace PersonsInfo
                                         cmdArgs[1],
                                         int.Parse(cmdArgs[2]),
                                         decimal.Parse(cmdArgs[3]));
-
-                Team team = new Team("SoftUni");
-                foreach (Person perso in persons)
-                {
                     team.AddPlayer(person);
-                }
             }
-
-
-
-            // как се печата това съобщение????????
-
-            //Console.WriteLine($"First team has {CountFirst} players.");
-
-            //int firrs = Team.;
-
-            //return $"First team has {FirstTeam.Count} players.";
-            //return $"Reserve team has {ReserveTeam.Count} players.";
-
+            Console.WriteLine($"First team have {team.FirstTeam.Count} players");
+            Console.WriteLine($"Reserve team have {team.ReserveTeam.Count} players");
         }
     }
 }

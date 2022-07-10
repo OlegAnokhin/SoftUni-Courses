@@ -6,7 +6,7 @@ namespace CustomRandomList
 {
     public class RandomList : List<string>
     {
-        private Random random;
+        public Random random;
         public RandomList()
         {
             this.random = new Random();
@@ -14,10 +14,10 @@ namespace CustomRandomList
         public string RemoveRandomElement()
         {
             int index = random.Next(0, this.Count);
-            if (index <= 0)
-            {
-                return null;
-            }
+            //if (index <= 0)
+            //{
+            //    return null;
+            //}
             string str = this[index];
             this.RemoveAt(index);
             return str;

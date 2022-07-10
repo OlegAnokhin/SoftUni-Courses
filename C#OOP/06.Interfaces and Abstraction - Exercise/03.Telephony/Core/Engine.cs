@@ -15,7 +15,7 @@
             this.stationaryPhone = new StationaryPhone();
             this.smartphone = new Smartphone();
         }
-        public Engine(IReader reader, IWriter writer)
+        public Engine(IReader reader, IWriter writer) : this()
         {
             this.reader = reader;
             this.writer = writer;
