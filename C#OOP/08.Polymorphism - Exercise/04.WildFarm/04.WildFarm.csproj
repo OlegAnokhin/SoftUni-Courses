@@ -6,4 +6,9 @@
     <RootNamespace>_04.WildFarm</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\Animals\Birds\" />
+    <Folder Include="Models\Animals\Mammals\" />
+  </ItemGroup>
+
 </Project>

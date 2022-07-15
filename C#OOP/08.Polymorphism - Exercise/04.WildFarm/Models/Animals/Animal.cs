@@ -1,16 +1,23 @@
-﻿using _04.WildFarm.Models.Foods;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace _04.WildFarm.Models.Animals
+﻿namespace _04.WildFarm.Models.Animals
 {
+    using _04.WildFarm.Exceptions;
+    using _04.WildFarm.Models.Foods;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+
     public abstract class Animal
     {
-        public string Name { get;}
-        public double Weight { get; set; }
-        public int FoodEaten { get; set; }
+        protected Animal(string name, double weight)
+        {
+            this.Name = name;
+            this.Weight = weight;
+        }
+
+        public string Name { get; }
+        public double Weight { get; private set; }
+        public int FoodEaten { get; private set; }
         protected abstract IReadOnlyCollection<Type> PreferredFoods { get; }
         protected abstract double WeightMultiplier { get; }
         public abstract string ProduceSound();
@@ -18,8 +25,15 @@ namespace _04.WildFarm.Models.Animals
         {
             if (!this.PreferredFoods.Contains(food.GetType()))
             {
-
+                throw new FoodNotPreferredException(
+                    string.Format(ExceptionMessages.FoodNotPreferred, this.GetType().Name, food.GetType().Name));
             }
+            this.FoodEaten += food.Quantity;
+            this.Weight += food.Quantity * this.WeightMultiplier;
+        }
+        public override string ToString()
+        {
+            return $"{this.GetType().Name} [{this.Name}, ";
         }
     }
 }
