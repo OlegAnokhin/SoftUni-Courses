@@ -1,14 +1,14 @@
 ﻿namespace _01.Vehicles.Model
 {
-using System;
-using System.Collections.Generic;
-using System.Text;
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
     public class Truck : Vehicle
     {
         private const double TruckFuelConsumptionIncrement = 1.6;
         private const double RefuelCoeffiecient = 0.95;
-        public Truck(double fuelQuantity, double fuelConsumpion) 
-            : base(fuelQuantity, fuelConsumpion)
+        public Truck(double fuelQuantity, double fuelConsumpion, double tankCapacity)
+            : base(fuelQuantity, fuelConsumpion, tankCapacity)
         {
         }
         public override double FuelConsumpion
@@ -24,7 +24,14 @@ using System.Text;
         }
         public override void Refuel(double liters)
         {
-            base.Refuel(liters * RefuelCoeffiecient);
+            if (liters > TankCapacity)
+            {
+                base.Refuel(liters);
+            }
+            else
+            {
+                base.Refuel(liters * RefuelCoeffiecient);
+            }
         }
     }
 }

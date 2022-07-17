@@ -21,12 +21,12 @@
         protected abstract IReadOnlyCollection<Type> PreferredFoods { get; }
         protected abstract double WeightMultiplier { get; }
         public abstract string ProduceSound();
-        public virtual void Eat(Food food)
+        public void Eat(Food food)
         {
             if (!this.PreferredFoods.Contains(food.GetType()))
             {
                 throw new FoodNotPreferredException(
-                    string.Format(ExceptionMessages.FoodNotPreferred, this.GetType().Name, food.GetType().Name));
+                    String.Format(ExceptionMessages.FoodNotPreferred, this.GetType().Name, food.GetType().Name));
             }
             this.FoodEaten += food.Quantity;
             this.Weight += food.Quantity * this.WeightMultiplier;

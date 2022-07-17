@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace _04.WildFarm.Models.Foods
+﻿namespace _04.WildFarm.Models.Foods
 {
     public abstract class Food
     {
-        public Food()
+        protected Food(int quantity)
         {
-
+            this.Quantity = quantity;
         }
+        public int Quantity { get; }
     }
 }

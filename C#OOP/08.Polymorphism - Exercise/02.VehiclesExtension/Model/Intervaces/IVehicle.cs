@@ -7,6 +7,7 @@
     {
         double FuelQuantity { get; }
         double FuelConsumpion { get; }
+        double TankCapacity { get; }
         string Drive(double distance);
         void Refuel(double liters);
 

@@ -2,23 +2,12 @@
 {
     public class Rectangle : Shape
     {
-        private double height;
         private double width;
-        public Rectangle(double height, double width)
+        private double height;
+        public Rectangle(double width, double height)
         {
-            this.Height = height;
             this.Width = width;
-        }
-        public double Height 
-        { 
-            get
-            {
-                return height;
-            }
-            private set
-            {
-                height = value;
-            }
+            this.Height = height;
         }
         public double Width 
         { 
@@ -29,6 +18,17 @@
             private set
             {
                 width = value;
+            }
+        }
+        public double Height
+        {
+            get
+            {
+                return height;
+            }
+            private set
+            {
+                height = value;
             }
         }
         public override double CalculateArea()
