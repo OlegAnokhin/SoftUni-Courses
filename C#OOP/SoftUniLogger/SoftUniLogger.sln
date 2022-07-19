@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32616.157
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoftUniLogger", "SoftUniLogger\SoftUniLogger.csproj", "{8FA0F539-F812-43E8-862B-2E7FEEC1B5CE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleLogger", "ConsoleLogger\ConsoleLogger.csproj", "{A7D35661-FBDB-46A1-9DB7-E488F65E5116}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8FA0F539-F812-43E8-862B-2E7FEEC1B5CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FA0F539-F812-43E8-862B-2E7FEEC1B5CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FA0F539-F812-43E8-862B-2E7FEEC1B5CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FA0F539-F812-43E8-862B-2E7FEEC1B5CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7D35661-FBDB-46A1-9DB7-E488F65E5116}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7D35661-FBDB-46A1-9DB7-E488F65E5116}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7D35661-FBDB-46A1-9DB7-E488F65E5116}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7D35661-FBDB-46A1-9DB7-E488F65E5116}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1F21E4F0-4F2E-465A-8E1D-C4C15761A4FA}
+	EndGlobalSection
+EndGlobal
