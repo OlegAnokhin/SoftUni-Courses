@@ -3,13 +3,11 @@
     using System;
 
     [Author("Victor")]
-    public class StartUp
+    class StartUp
     {
         [Author("George")]
-
         static void Main(string[] args)
         {
-
         }
     }
 }
