@@ -12,6 +12,7 @@
         private readonly ICollection<Animal> animals;
         private readonly IFoodFactory foodFactory;
         private readonly IAnimalFactory animalFactory;
+
         private Engine()
         {
             this.animals = new List<Animal>();
@@ -31,9 +32,9 @@
                 {
                     string[] animalArgs = command.Split();
                     string[] foodArgs = Console.ReadLine().Split();
-
                     Animal animal = BuildAnimalUsingFactory(animalArgs);
                     Food food = this.foodFactory.CreateFood(foodArgs[0], int.Parse(foodArgs[1]));
+
                     Console.WriteLine(animal.ProduceSound());
                     this.animals.Add(animal);
                     animal.Eat(food);

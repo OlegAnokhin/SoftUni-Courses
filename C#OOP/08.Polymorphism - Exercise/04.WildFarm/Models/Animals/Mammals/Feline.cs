@@ -10,7 +10,8 @@
         public string Breed { get; }
         public override string ToString()
         {
-            return base.ToString() + $"{this.Breed}, {this.Weight}, {this.LivingRegion}, {this.FoodEaten}]";
+            return base.ToString() +
+                   $"{this.Breed}, {this.Weight}, {this.LivingRegion}, {this.FoodEaten}]";
         }
     }
 }

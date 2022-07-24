@@ -11,13 +11,11 @@
         public Mouse(string name, double weight, string livingRegion)
             : base(name, weight, livingRegion)
         {
-
         }
         protected override IReadOnlyCollection<Type> PreferredFoods
             => new List<Type> { typeof(Fruit), typeof(Vegetable) }.AsReadOnly();
-
-        protected override double WeightMultiplier => MouseWeightMultiplier;
-
+        protected override double WeightMultiplier
+            => MouseWeightMultiplier;
         public override string ProduceSound()
         {
             return "Squeak";

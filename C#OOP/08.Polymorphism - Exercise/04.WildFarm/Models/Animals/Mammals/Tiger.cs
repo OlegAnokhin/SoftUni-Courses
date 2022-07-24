@@ -11,13 +11,11 @@
         public Tiger(string name, double weight, string livingRegion, string breed)
             : base(name, weight, livingRegion, breed)
         {
-
         }
         protected override IReadOnlyCollection<Type> PreferredFoods
             => new List<Type> { typeof(Meat) }.AsReadOnly();
-
-        protected override double WeightMultiplier => TigerWeightMultiplier;
-
+        protected override double WeightMultiplier
+            => TigerWeightMultiplier;
         public override string ProduceSound()
         {
             return "ROAR!!!";

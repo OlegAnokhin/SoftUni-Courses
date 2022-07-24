@@ -1,33 +1,91 @@
-﻿namespace _01.Vehicles
+﻿namespace _02.VehiclesExtension
 {
     using System;
-    using _01.Vehicles.Core;
-    using _01.Vehicles.Model;
-    using _01.Vehicles.Factories;
-    using _01.Vehicles.Factories.Interfaces;
-    public class StartUp
+
+    public class Startup
     {
-        static void Main(string[] args)
-        {          
-            string[] carData = Console.ReadLine().Split();
-            string[] truckData = Console.ReadLine().Split();
-            string[] busData = Console.ReadLine().Split();
-            
+        private static Car car;
+        private static Truck truck;
+        private static Bus bus;
 
-            IVehicleFactory vehicleFactory = new VehicleFactory();
-            Vehicle car = vehicleFactory
-                .CreateVehicle(carData[0], double.Parse(carData[1]), double.Parse(carData[2]), double.Parse(carData[3]));
-            Vehicle truck = vehicleFactory
-                .CreateVehicle(truckData[0], double.Parse(truckData[1]), double.Parse(truckData[2]), double.Parse(truckData[3]));
-            Vehicle bus = vehicleFactory
-                .CreateVehicle(busData[0], double.Parse(busData[1]), double.Parse(busData[2]), double.Parse(busData[3]));
+        public static void Main()
+        {
+            ParseInput();
+            int numberOfCommands = int.Parse(Console.ReadLine());
+            ParseCommand(numberOfCommands);
+            Console.WriteLine(car);
+            Console.WriteLine(truck);
+            Console.WriteLine(bus);
+        }
 
-            IEngine engine = new Engine(car, truck, bus);
-            engine.Start();
+        private static void ParseInput()
+        {
+            string[] carData = Console.ReadLine().Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            string[] truckData = Console.ReadLine().Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            string[] busData = Console.ReadLine().Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+
+            car = new Car(double.Parse(carData[1]), double.Parse(carData[2]), double.Parse(carData[3]));
+            truck = new Truck(double.Parse(truckData[1]), double.Parse(truckData[2]), double.Parse(truckData[3]));
+            bus = new Bus(double.Parse(busData[1]), double.Parse(busData[2]), double.Parse(busData[3]));
+        }
+
+        private static void ParseCommand(int numberOfCommands)
+        {
+            for (int i = 0; i < numberOfCommands; i++)
+            {
+                string[] commandParts = Console.ReadLine().Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                string command = commandParts[0];
+                switch (command)
+                {
+                    case "Drive":
+                        DriveCommand(commandParts);
+                        break;
+                    case "Refuel":
+                        RefuelCommand(commandParts);
+                        break;
+                    case "DriveEmpty":
+                        bus.DriveEmpty(double.Parse(commandParts[2]));
+                        break;
+                }
+            }
+        }
+
+        private static void RefuelCommand(string[] commandParts)
+        {
+            string vehicle = commandParts[1];
+            switch (vehicle)
+            {
+                case "Car":
+                    car.Refuel(double.Parse(commandParts[2]));
+                    break;
+                case "Truck":
+                    truck.Refuel(double.Parse(commandParts[2]));
+                    break;
+                case "Bus":
+                    bus.Refuel(double.Parse(commandParts[2]));
+                    break;
+            }
+        }
+
+        private static void DriveCommand(string[] commandParts)
+        {
+            string vehicle = commandParts[1];
+            switch (vehicle)
+            {
+                case "Car":
+                    car.Drive(double.Parse(commandParts[2]));
+                    break;
+                case "Truck":
+                    truck.Drive(double.Parse(commandParts[2]));
+                    break;
+                case "Bus":
+                    bus.Drive(double.Parse(commandParts[2]));
+                    break;
+            }
         }
     }
 }
-
 
 //Car 30 0.04 70
 //Truck 100 0.5 300

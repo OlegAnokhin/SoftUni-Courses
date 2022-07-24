@@ -14,7 +14,6 @@
             this.Name = name;
             this.Weight = weight;
         }
-
         public string Name { get; }
         public double Weight { get; private set; }
         public int FoodEaten { get; private set; }

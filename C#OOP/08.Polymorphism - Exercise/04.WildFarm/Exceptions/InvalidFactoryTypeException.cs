@@ -10,13 +10,10 @@
         public InvalidFactoryTypeException()
             : base(DefaultMessage)
         {
-
         }
         public InvalidFactoryTypeException(string message)
             : base(message)
         {
-
         }
-
     }
 }

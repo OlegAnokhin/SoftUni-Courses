@@ -8,7 +8,8 @@
 
     public class AnimalFactory : IAnimalFactory
     {
-        public Animal CreateAnimal(string type, string name, double weight, string thirdParam, string fourthParam = null)
+        public Animal CreateAnimal(string type, string name, 
+            double weight, string thirdParam, string fourthParam = null)
         {
             Animal animal;
             if (type == "Owl")
