@@ -14,7 +14,8 @@
         {
             this.transactions = new HashSet<ITransaction>();
         }
-        public int Count => this.transactions.Count;
+        public int Count 
+            => this.transactions.Count;
 
         public void Add(ITransaction tx)
         {
@@ -24,89 +25,127 @@
             }
             this.transactions.Add(tx);
         }
-
         public bool Contains(ITransaction tx)
         {
-            throw new NotImplementedException();
+            return this.transactions.Any(t => t.Id == tx.Id);
         }
-
         public bool Contains(int id)
         {
-            throw new NotImplementedException();
+            return this.transactions.Any(t => t.Id == id);
         }
         public void ChangeTransactionStatus(int id, TransactionStatus newStatus)
         {
-            throw new NotImplementedException();
+            ITransaction currentTransaction = this.transactions.FirstOrDefault(t => t.Id == id);
+            if (currentTransaction == null)
+            {
+                throw new ArgumentException("You cannot change the status of non-existing transaction!");
+            }
+            currentTransaction.Status = newStatus;
         }
-
-        public IEnumerable<ITransaction> GetAllInAmountRange(double lo, double hi)
+        public void RemoveTransactionById(int id)
         {
-            throw new NotImplementedException();
+            ITransaction transactionToRemove = this.transactions.FirstOrDefault(t => t.Id == id);
+            if (transactionToRemove == null)
+            {
+                throw new InvalidOperationException("You cannot delete a transaction that do not exist in our records!");
+            }
+            this.transactions.Remove(transactionToRemove);
         }
-
-        public IEnumerable<ITransaction> GetAllOrderedByAmountDescendingThenById()
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<string> GetAllReceiversWithTransactionStatus(TransactionStatus status)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<string> GetAllSendersWithTransactionStatus(TransactionStatus status)
-        {
-            throw new NotImplementedException();
-        }
-
         public ITransaction GetById(int id)
         {
-            throw new NotImplementedException();
+            if (!this.Contains(id))
+            {
+                throw new InvalidOperationException("Transaction with the provided id does not exist in our records!");
+            }
+            return this.transactions.First(t => t.Id == id);
         }
-
-        public IEnumerable<ITransaction> GetByReceiverAndAmountRange(string receiver, double lo, double hi)
+        public IEnumerable<ITransaction> GetByTransactionStatus(TransactionStatus status)
         {
-            throw new NotImplementedException();
+            IEnumerable<ITransaction> transactionByStatus = this.transactions
+                .Where(t => t.Status == status)
+                .OrderByDescending(t => t.Amount)
+                .ToArray();
+            if (!transactionByStatus.Any())
+            {
+                throw new InvalidOperationException("There are no transaction in our records meeting your dasired transaction status!");
+            }
+            return transactionByStatus;
         }
-
+        public IEnumerable<string> GetAllSendersWithTransactionStatus(TransactionStatus status)
+        {
+            IEnumerable<string> transactionSenders = this.transactions
+                .Where(t => t.Status == status)
+                .OrderByDescending(t => t.Amount)
+                .Select(t => t.From)
+                .ToArray();
+            if (!transactionSenders.Any())
+            {
+                throw new InvalidOperationException("There are no transaction in our records meeting providet transaction status!");
+            }
+            return transactionSenders;
+        }
+        public IEnumerable<string> GetAllReceiversWithTransactionStatus(TransactionStatus status)
+        {
+            IEnumerable<string> transactionReceivers = this.transactions
+                .Where(t => t.Status == status)
+                .OrderByDescending(t => t.Amount)
+                .Select(t => t.To)
+                .ToArray();
+            if (!transactionReceivers.Any())
+            {
+                throw new InvalidOperationException("There are no transaction in our records meeting providet transaction status!");
+            }
+            return transactionReceivers;
+        }
+        public IEnumerable<ITransaction> GetAllOrderedByAmountDescendingThenById()
+        {
+            return this.transactions
+                .OrderByDescending(t => t.Amount)
+                .ThenBy(t => t.Id)
+                .ToArray();
+        }
+        public IEnumerable<ITransaction> GetBySenderOrderedByAmountDescending(string sender)
+        {
+            IEnumerable<ITransaction> senders = this.transactions
+                .Where(n => n.From == sender)
+                .OrderByDescending(t => t.Amount)
+                .ToArray();
+            if (!senders.Any())
+            {
+                throw new InvalidOperationException("Transaction with the provided sender does not exist in our records!");
+            }
+            return senders;
+        }
         public IEnumerable<ITransaction> GetByReceiverOrderedByAmountThenById(string receiver)
         {
             throw new NotImplementedException();
         }
-
-        public IEnumerable<ITransaction> GetBySenderAndMinimumAmountDescending(string sender, double amount)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<ITransaction> GetBySenderOrderedByAmountDescending(string sender)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<ITransaction> GetByTransactionStatus(TransactionStatus status)
-        {
-            throw new NotImplementedException();
-        }
-
         public IEnumerable<ITransaction> GetByTransactionStatusAndMaximumAmount(TransactionStatus status, double amount)
         {
             throw new NotImplementedException();
         }
-
+        public IEnumerable<ITransaction> GetBySenderAndMinimumAmountDescending(string sender, double amount)
+        {
+            throw new NotImplementedException();
+        }
+        public IEnumerable<ITransaction> GetByReceiverAndAmountRange(string receiver, double lo, double hi)
+        {
+            throw new NotImplementedException();
+        }
+        public IEnumerable<ITransaction> GetAllInAmountRange(double lo, double hi)
+        {
+            throw new NotImplementedException();
+        }
         public IEnumerator<ITransaction> GetEnumerator()
         {
-            throw new NotImplementedException();
+            foreach (ITransaction transaction in this.transactions)
+            {
+                yield return transaction;
+            }
         }
-
-        public void RemoveTransactionById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         IEnumerator IEnumerable.GetEnumerator()
         {
-            throw new NotImplementedException();
+            return GetEnumerator();
         }
     }
 }
