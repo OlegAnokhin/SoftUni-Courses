@@ -1,8 +1,8 @@
-﻿using System;
-using System.Linq;
-
-namespace ExtendedDatabase
+﻿namespace ExtendedDatabase
 {
+    using System;
+    using System.Linq;
+
     public class Database
     {
         private Person[] persons;
@@ -99,5 +99,9 @@ namespace ExtendedDatabase
             Person person = this.persons.First(p => p.Id == id);
             return person;
         }
+        //public Person[] Fetch()
+        //{
+        //    return this.persons.Take(count).ToArray();
+        //}
     }
 }
