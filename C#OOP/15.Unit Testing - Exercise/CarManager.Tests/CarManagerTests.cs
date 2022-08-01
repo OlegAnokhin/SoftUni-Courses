@@ -63,8 +63,8 @@ namespace CarManager.Tests
             Assert.AreEqual(expectedModel, actualModel,
                 "Getter of the property Model should return the value of model!");
         }
-        [TestCase(- 9999999999)]
-        [TestCase(- 0.0000001)]
+        [TestCase(-9999999999)]
+        [TestCase(-0.0000001)]
         [TestCase(0)]
         public void FuelConsumptionCannotBeZeroOrNegativValue(double fuelCons)
         {
@@ -84,6 +84,16 @@ namespace CarManager.Tests
             double actualFCons = car.FuelConsumption;
             Assert.AreEqual(expectedfuelConsumption, actualFCons,
                 "Getter of the property Consumption should return the value of consumption!");
+        }
+        [TestCase(-5)]
+        [TestCase(-1)]
+        [TestCase(0)]
+        public void TestFuelConsumSetter(double consum)
+        {
+            Assert.Throws<ArgumentException>(() =>
+            {
+                Car car = new Car("Make", "Model", consum, 90);
+            }, "Fuel consumption cannot be zero or negative!");
         }
         [TestCase(-9999999999)]
         [TestCase(-0.0000001)]
@@ -107,6 +117,82 @@ namespace CarManager.Tests
             Assert.AreEqual(expectedfuelCapacity, actualFCap,
                 "Getter of the property Capacity should return the value of capacity!");
         }
-
+        [TestCase(-5)]
+        [TestCase(-1)]
+        [TestCase(0)]
+        public void TestFuelCapacitySetter(double capacity)
+        {
+            Assert.Throws<ArgumentException>(() =>
+            {
+                Car car = new Car("Make", "Model", 5, capacity);
+            }, "Fuel capacity cannot be zero or negative!");
+        }
+        [Test]
+        public void TestFuelAmountGetter()
+        {
+            Car car = new Car("Make", "Model", 5, 50);
+            double expected = 0;
+            double actual = car.FuelAmount;
+            Assert.AreEqual(expected, actual,
+                "Getter of the property Amount should return the value of amount!");
+        }
+        [TestCase(-9999999999)]
+        [TestCase(-0.0000001)]
+        [TestCase(0)]
+        public void RefuelValueCannotBeZeroOrNegativShouldThrowException(double fuelToAdd)
+        {
+            Assert.Throws<ArgumentException>(() =>
+            {
+                string expectedMake = "Subaru";
+                string expectedModel = "Outback";
+                double expectedfuelConsumption = 5.5;
+                double expectedfuelCapacity = 70;
+                Car car = new Car(expectedMake, expectedModel, expectedfuelConsumption, expectedfuelCapacity);
+                car.Refuel(fuelToAdd);
+            }, "Fuel amount cannot be zero or negative!");
+        }
+        [TestCase(50)]
+        public void RefuelMethodNeedReturnCorrectValueIfItSuccessAdd(double fuelToAdd)
+        {
+            string expectedMake = "Subaru";
+            string expectedModel = "Outback";
+            double expectedfuelConsumption = 5.5;
+            double expectedfuelCapacity = 70;
+            Car car = new Car(expectedMake, expectedModel, expectedfuelConsumption, expectedfuelCapacity);
+            double fuelAmount = 0;
+            double expectedFuel = 50;
+            car.Refuel(fuelToAdd);
+            fuelAmount = fuelToAdd;
+            Assert.AreEqual(expectedFuel, fuelAmount);
+        }
+        [TestCase(100)]
+        [TestCase(10000)]
+        public void FuelNeededValueNeedToBeSmallerOfValueCapacityShouldThrowException(double distance)
+        {
+            Assert.Throws<InvalidOperationException>(() =>
+            {
+                string expectedMake = "Subaru";
+                string expectedModel = "Outback";
+                double expectedfuelConsumption = 5.5;
+                double expectedfuelCapacity = 70;
+                Car car = new Car(expectedMake, expectedModel, expectedfuelConsumption, expectedfuelCapacity);
+                car.Drive(distance);
+            }, "You don't have enough fuel to drive!");
+        }
+        //[TestCase(50)]
+        //public void DriveMethodNeedReturnCorrectValueIfItSuccessDrive(double distance)
+        //{
+        //    string expectedMake = "Subaru";
+        //    string expectedModel = "Outback";
+        //    double expectedfuelConsumption = 5.5;
+        //    double expectedfuelCapacity = 70;
+        //    Car car = new Car(expectedMake, expectedModel, expectedfuelConsumption, expectedfuelCapacity);
+        //    double fuelAmount = 100;
+        //    double fuelNeeded = (distance / 100) * expectedfuelConsumption;
+        //    car.Drive(distance);
+        //    double expectedFuel = expectedfuelCapacity - fuelNeeded;
+        //    double actual = car.FuelCapacity;
+        //    Assert.AreEqual(expectedFuel, actual);
+        //}
     }
 }

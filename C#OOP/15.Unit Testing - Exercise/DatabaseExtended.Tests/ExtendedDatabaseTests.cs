@@ -9,6 +9,7 @@ namespace DatabaseExtended.Tests
     public class ExtendedDatabaseTests
     {
         private Database database;
+        private Person[] data;
         private Person Oleg;
         private Person Dani;
 
@@ -16,9 +17,11 @@ namespace DatabaseExtended.Tests
         public void SetUp()
         {
             this.database = new Database();
+            this.data = new Person[17];
             Oleg = new Person(240486, "Oleg");
             Dani = new Person(080104, "Dani");
         }
+
         //[Test]
         //public void ConstructorShouldInitilizeCorrectCollection()
         //{
@@ -56,8 +59,6 @@ namespace DatabaseExtended.Tests
             database.Add(newPerson);
             var actuall = database.Count;
             var expectedd = database.Count;
-          //  Person[] actual = database
-         //   Person[] expected = new Person[] { Oleg, Dani, newPerson };
             Assert.AreEqual(expectedd, actuall);
         }
         [Test]
@@ -66,9 +67,9 @@ namespace DatabaseExtended.Tests
             Person[] persons = new Person[] { Oleg, Dani };
             Database database = new Database(persons);
             long count = 1;
-            for (long i = count+1; i < 16; i++)
+            for (long i = count + 1; i < 16; i++)
             {
-                Person newPerson = new Person(212121+count, "Petya"+count);
+                Person newPerson = new Person(212121 + count, "Petya" + count);
                 database.Add(newPerson);
                 count++;
             }
@@ -79,7 +80,10 @@ namespace DatabaseExtended.Tests
         [Test]
         public void AddRangeShouldThrowAnExceprionWhenCountMore16()
         {
-
+            int expectedLenght = 17;
+            int actualLenght = this.data.Length;
+            Assert.AreEqual(expectedLenght, actualLenght
+            , "Provided data length should be in range [0..16]!");
         }
         [Test]
         public void AddSameUsernameShouldThrowAnException()
@@ -133,8 +137,6 @@ namespace DatabaseExtended.Tests
         [Test]
         public void FindByUsernameNonExistingPersonShouldShouldThrowExceprtion()
         {
-            //Person[] persons = new Person[] { Oleg, Dani };
-            //Database database = new Database(persons);
             Assert.Throws<InvalidOperationException>(() =>
             {
                 this.database.FindByUsername("Gosho");
@@ -143,8 +145,6 @@ namespace DatabaseExtended.Tests
         [Test]
         public void FindByUsernameWhenIsNullShouldThrowExceprtion()
         {
-            //Person[] persons = new Person[] { Oleg, Dani };
-            //Database database = new Database(persons);
             Assert.Throws<ArgumentNullException>(() =>
             {
                 this.database.FindByUsername(null);
@@ -153,8 +153,6 @@ namespace DatabaseExtended.Tests
         [Test]
         public void FindByUsernameCaseSensitive()
         {
-            //Person[] persons = new Person[] { Oleg, Dani };
-            //Database database = new Database(persons);
             Assert.Throws<InvalidOperationException>(() =>
             {
                 this.database.FindByUsername("OLEG");
@@ -172,8 +170,6 @@ namespace DatabaseExtended.Tests
         [Test]
         public void FindByIdNonExistingPersonShouldThrowAnException()
         {
-            //Person[] persons = new Person[] { Oleg, Dani };
-            //Database database = new Database(persons);
             Assert.Throws<InvalidOperationException>(() =>
             {
                 this.database.FindById(654565);
@@ -183,8 +179,6 @@ namespace DatabaseExtended.Tests
         [TestCase(-1)]
         public void FindByIdWithNegativeNumberShouldThrowAnException(long id)
         {
-            //Person[] persons = new Person[] { Oleg, Dani };
-            //Database database = new Database(persons);
             Assert.Throws<ArgumentOutOfRangeException>(() =>
             {
                 this.database.FindById(id);
