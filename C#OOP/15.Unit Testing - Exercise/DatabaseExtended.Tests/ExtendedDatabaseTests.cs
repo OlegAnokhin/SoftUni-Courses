@@ -9,7 +9,6 @@ namespace DatabaseExtended.Tests
     public class ExtendedDatabaseTests
     {
         private Database database;
-        private Person[] data;
         private Person Oleg;
         private Person Dani;
 
@@ -17,7 +16,6 @@ namespace DatabaseExtended.Tests
         public void SetUp()
         {
             this.database = new Database();
-            this.data = new Person[17];
             Oleg = new Person(240486, "Oleg");
             Dani = new Person(080104, "Dani");
         }
@@ -78,13 +76,20 @@ namespace DatabaseExtended.Tests
             Assert.AreEqual(expected, actual);
         }
         [Test]
-        public void AddRangeShouldThrowAnExceprionWhenCountMore16()
+        public void AddRangeShouldThrowAnExceprionIfCountMore16()
         {
-            int expectedLenght = 17;
-            int actualLenght = this.data.Length;
-            Assert.AreEqual(expectedLenght, actualLenght
-            , "Provided data length should be in range [0..16]!");
+            Person[] persons = new Person[17];
+            for (int i = 0; i < 17; i++)
+            {
+                Person currentPerson = new Person(i, $"{i}");
+                persons[i] = currentPerson;
+            }
+            Assert.Throws<ArgumentException>(() =>
+            {
+                new Database(persons);
+            }, "Provided data length should be in range [0..16]!");
         }
+
         [Test]
         public void AddSameUsernameShouldThrowAnException()
         {
@@ -107,23 +112,23 @@ namespace DatabaseExtended.Tests
                 database.Add(newPerson);
             }, "There is already user with this Id!");
         }
-        //[Test]
-        //public void RemoveShouldPhysicalyRemoveThePerson()
-        //{
-        //    Person[] persons = new Person[] { Oleg, Dani };
-        //    Database database = new Database(persons);
-        //    database.Remove();
-        //    Person[] actual = database.Fetch();
-        //    Person[] expected = new Person[] { Oleg };
-        //    Assert.AreEqual(expected, actual);
-        //}
+        [Test]
+        public void RemoveShouldPhysicalyRemoveThePerson()
+        {
+            Person person = new Person (1213, "Oleg");
+            this.database.Add(person);
+            database.Remove();
+            int expectedCount = 0;
+            int actualCount = database.Count;
+            Assert.AreEqual(expectedCount, actualCount);
+        }
         [Test]
         public void RemoveWithNoPersonInCollectionShouldThrowException()
         {
             Assert.Throws<InvalidOperationException>(() =>
             {
                 this.database.Remove();
-            }, "The collection in empty!");
+            });
         }
         [Test]
         public void FindByUsernameExistingPersonShouldReturnCorrectPerson()

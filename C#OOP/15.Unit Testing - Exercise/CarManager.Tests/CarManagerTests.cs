@@ -42,6 +42,7 @@ namespace CarManager.Tests
             Assert.AreEqual(expectedMake, actualMake,
                 "Getter of the property Make should return the value of make!");
         }
+
         [TestCase(null)]
         [TestCase("")]
         public void ModelCannotBeNullOrEmptyShouldThrowException(string expectedModel)
@@ -179,20 +180,20 @@ namespace CarManager.Tests
                 car.Drive(distance);
             }, "You don't have enough fuel to drive!");
         }
-        //[TestCase(50)]
-        //public void DriveMethodNeedReturnCorrectValueIfItSuccessDrive(double distance)
-        //{
-        //    string expectedMake = "Subaru";
-        //    string expectedModel = "Outback";
-        //    double expectedfuelConsumption = 5.5;
-        //    double expectedfuelCapacity = 70;
-        //    Car car = new Car(expectedMake, expectedModel, expectedfuelConsumption, expectedfuelCapacity);
-        //    double fuelAmount = 100;
-        //    double fuelNeeded = (distance / 100) * expectedfuelConsumption;
-        //    car.Drive(distance);
-        //    double expectedFuel = expectedfuelCapacity - fuelNeeded;
-        //    double actual = car.FuelCapacity;
-        //    Assert.AreEqual(expectedFuel, actual);
-        //}
+        [TestCase(0)]
+        public void DriveMethodNeedReturnCorrectValueIfItSuccessDrive(double distance)
+        {
+            string expectedMake = "Subaru";
+            string expectedModel = "Outback";
+            double expectedfuelConsumption = 5.5;
+            double expectedfuelCapacity = 70;
+            Car car = new Car(expectedMake, expectedModel, expectedfuelConsumption, expectedfuelCapacity);
+            double fuelAmount = 100;
+            double fuelNeeded = (distance / 100) * expectedfuelConsumption;
+            car.Drive(distance);
+            double expectedFuel = 70;
+            double actual = car.FuelCapacity;
+            Assert.AreEqual(expectedFuel, actual);
+        }
     }
 }
