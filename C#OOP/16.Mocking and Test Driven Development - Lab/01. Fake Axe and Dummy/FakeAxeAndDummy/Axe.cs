@@ -1,9 +1,7 @@
 ﻿namespace FakeAxeAndDummy
 {
-    using System;
-    using System.Text;
-    using System.Collections.Generic;
     using FakeAxeAndDummy.Interfaces;
+    using System;
 
     public class Axe : IWeapon
     {
@@ -15,26 +13,21 @@
             this.attackPoints = attack;
             this.durabilityPoints = durability;
         }
-        public int AttackPoint 
-        { 
-            get
-            {
-                return this.attackPoints;
-            }
+        public int AttackPoints
+        {
+            get { return this.attackPoints; }
         }
         public int DurabilityPoints
         {
-            get
-            {
-                return this.durabilityPoints;
-            }
+            get { return this.durabilityPoints; }
         }
-        public void Attack(Dummy target)
+        public void Attack(ITarget target)
         {
             if (this.durabilityPoints <= 0)
             {
-                throw new InvalidOperationException("Axe is brocken.");
+                throw new InvalidOperationException("Axe is broken.");
             }
+
             target.TakeAttack(this.attackPoints);
             this.durabilityPoints -= 1;
         }

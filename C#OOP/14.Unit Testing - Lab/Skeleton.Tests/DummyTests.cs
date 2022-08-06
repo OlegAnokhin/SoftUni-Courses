@@ -6,6 +6,7 @@ namespace Skeleton.Tests
     [TestFixture]
     public class DummyTests
     {
+        private const int dummyExpirience = 5;
         [Test]
         public void CreateNewDummyShouldRetunCorrectValue()
         {
@@ -40,16 +41,6 @@ namespace Skeleton.Tests
             int actual = 10;
             Assert.AreEqual(expected, actual);
         }
-        //[Test]
-        //public void AliceDummyShouldCantGiveXP()
-        //{
-        //    Dummy dummy = new Dummy(1, 10);
-        //    dummy.GiveExperience();
-        //    int expected = 0;
-        //    int actual = 0;
-        //    Assert.AreEqual(expected, actual);
-        //}
-
         [TestCase(99999999)]
         [TestCase(1)]
         public void DummyMethodGivenExpirienceShouldThrowExceptionIfHisNotDead(int healt)
@@ -69,6 +60,44 @@ namespace Skeleton.Tests
             dummy.IsDead();
             bool expected = true;
             Assert.AreEqual(expected, true);
+        }
+        [Test]
+        public void DummyLoosesHealthIfAttacked()
+        {
+            Dummy dummy = new Dummy(10, 15);
+            dummy.TakeAttack(5);
+
+            Assert.That(dummy.Health, Is.EqualTo(5));
+        }
+        [Test]
+        public void AttackDeadDummyShouldThrow()
+        {
+            Dummy dummy = new Dummy(5, 15);
+            int damageTaken = 6;
+            dummy.TakeAttack(damageTaken);
+
+            Assert.Throws<InvalidOperationException>(() =>
+            {
+                dummy.TakeAttack(damageTaken);
+            }, "Dummy is dead.");
+        }
+        [Test]
+        public void DeadDummyCanGiveExperience()
+        {
+            Dummy dummy = new Dummy(10, 5);
+            dummy.TakeAttack(dummy.Health);
+            Assert.That(dummy.GiveExperience(), Is
+                .EqualTo(dummyExpirience),
+                "Dead dummy doesn't give correct amount of expirence");
+        }
+        [Test]
+        public void AliveDummyCantGiveExperience()
+        {
+            Dummy dummy = new Dummy(10, 15);
+            int dummyHealth = 20;
+            dummy = new Dummy(dummyHealth, dummyExpirience);
+            Assert.That(() => dummy.GiveExperience(), Throws
+                .InvalidOperationException, "Alive dummy changes experience");
         }
     }
 }

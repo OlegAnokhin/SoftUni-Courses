@@ -1,10 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace FakeAxeAndDummy.Interfaces
+﻿namespace FakeAxeAndDummy.Interfaces
 {
-    internal interface ITarget
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
+
+    public interface ITarget
     {
+        int Health { get; }
+
+        void TakeAttack(int attackPoints);
+
+        int GiveExperience();
+
+        bool IsDead();
     }
 }

@@ -35,12 +35,5 @@ namespace PersonsInfo
                 reserveTeam.Add(person);
             }
         }
-        //public int CountFirst { get { return firstTeam.Count; } }
-        //public int CountReserve { get { return reserveTeam.Count; } }
-        //public override string ToString()
-        //{
-        //    return $"First team has {FirstTeam.Count} players.";
-        //    return $"Reserve team has {ReserveTeam.Count} players.";
-        //}
     }
 }

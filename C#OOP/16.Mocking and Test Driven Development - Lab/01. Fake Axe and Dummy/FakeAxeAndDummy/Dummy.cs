@@ -4,7 +4,6 @@
     using System.Text;
     using System.Collections.Generic;
     using FakeAxeAndDummy.Interfaces;
-
     public class Dummy : ITarget
     {
         private int health;
@@ -16,10 +15,7 @@
         }
         public int Health
         {
-            get
-            {
-                return this.health;
-            }
+            get { return this.health; }
         }
         public void TakeAttack(int attackPoints)
         {
@@ -27,6 +23,7 @@
             {
                 throw new InvalidOperationException("Dummy is dead.");
             }
+
             this.health -= attackPoints;
         }
         public int GiveExperience()
@@ -35,6 +32,7 @@
             {
                 throw new InvalidOperationException("Target is not dead.");
             }
+
             return this.experience;
         }
         public bool IsDead()
