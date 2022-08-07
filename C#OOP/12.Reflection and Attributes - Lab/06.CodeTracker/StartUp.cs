@@ -1,23 +1,20 @@
 ﻿namespace AuthorProblem
 {
     using System;
-    using System.Reflection;
-
-    [AuthorAttribute("Victor")]
     public class StartUp
     {
-        [AuthorAttribute("George")]
-        static void Main()
+        [Author("Oleg")]
+        static void Main(string[] args)
         {
             Tracker tracker = new Tracker();
             tracker.PrintMethodsByAuthor();
         }
-        [AuthorAttribute("Oleg")]
-        public void CreateObj()
+        [Author("Gosho")]
+        public void TakeBeer()
         {
         }
-        [AuthorAttribute("Hasan")]
-        public void GetMethod()
+        [Author("Pesho")]
+        public static void DrinkBeer()
         {
         }
     }

@@ -1,13 +1,14 @@
 ﻿namespace AuthorProblem
 {
     using System;
-
-    [Author("Victor")]
-    class StartUp
+    [Author("Oleg")]
+    public class StartUp
     {
-        [Author("George")]
-        static void Main(string[] args)
+        [Author("Oleg")]
+        [Author("Gosho")]
+        static void Main()
         {
         }
     }
 }
+//05.CreateAttribute
