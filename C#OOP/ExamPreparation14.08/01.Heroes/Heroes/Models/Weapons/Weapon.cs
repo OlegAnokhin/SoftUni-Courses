@@ -10,13 +10,18 @@ namespace Heroes.Models.Weapons
         private string name;
         private int durability;
         private int damage;
-        protected Weapon(string name, int durability, int damage)
+        protected Weapon(string name, int durability)
+        {
+            this.Name = name;
+            this.Durability = durability;
+        }
+        public Weapon(string name, int durability, int damage) 
+            : this(name, durability)
         {
             this.Name = name;
             this.Durability = durability;
             this.damage = damage;
         }
-
         public string Name
         {
             get
@@ -47,21 +52,21 @@ namespace Heroes.Models.Weapons
                 this.durability = value;
             }
         }
-        private int Damage
-        {
-            get
-            {
-                return this.damage;
-            }
-            set
-            {
-                if (value < 0)
-                {
-                    throw new ArgumentException("Damage cannot be below 0");
-                }
-                this.damage = value;
-            }
-        }
+        //private int Damage
+        //{
+        //    get
+        //    {
+        //        return this.damage;
+        //    }
+        //    set
+        //    {
+        //        if (value < 0)
+        //        {
+        //            throw new ArgumentException("Damage cannot be below 0");
+        //        }
+        //        this.damage = value;
+        //    }
+        //}
         public int DoDamage()
         {
             if (this.Durability == 0)
@@ -69,7 +74,7 @@ namespace Heroes.Models.Weapons
                 return 0;
             }
             this.Durability--;
-            return this.Damage;
+            return this.damage;
         }
     }
 }

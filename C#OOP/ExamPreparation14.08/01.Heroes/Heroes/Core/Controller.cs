@@ -73,6 +73,7 @@ namespace Heroes.Core
             }
             hero.AddWeapon(weapon);
             this.weapons.Remove(weapon);
+            
             var weaponType = weapon.GetType().Name.ToLower();
             return $"Hero {heroName} can participate in battle using a {weaponType}.";
         }
@@ -100,6 +101,5 @@ namespace Heroes.Core
             }
             return result.ToString().Trim();
         }
-
     }
 }

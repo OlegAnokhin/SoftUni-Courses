@@ -69,7 +69,7 @@ namespace AquaShop.Models.Aquariums
         {
             var sb = new StringBuilder();
             string fishOutput = this.Fish.Count > 0 ?
-                String.Join(" ", this.Fish.Select(f => f.Name)) : "none";
+                String.Join(", ", this.Fish.Select(f => f.Name)) : "none";
             sb.AppendLine($"{this.Name} ({this.GetType().Name}):")
                 .AppendLine($"Fish: {fishOutput}")
                 .AppendLine($"Decorations: {this.Decorations.Count()}")

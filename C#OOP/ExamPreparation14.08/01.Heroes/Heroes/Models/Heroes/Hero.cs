@@ -44,9 +44,9 @@ namespace Heroes.Models.Heroes
                 {
                     throw new ArgumentException("Hero health cannot be below 0.");
                 }
+                this.health = value;
             }
         }
-
         public int Armour
         {
             get
@@ -59,10 +59,9 @@ namespace Heroes.Models.Heroes
                 {
                     throw new ArgumentException("Hero armour cannot be below 0.");
                 }
+                this.armor = value;
             }
         }
-
-
         public IWeapon Weapon
         {
             get
@@ -75,6 +74,7 @@ namespace Heroes.Models.Heroes
                 {
                     throw new ArgumentException("Weapon cannot be null.");
                 }
+                this.weapon = value;
             }
         }
         public bool IsAlive => this.Health > 0;
@@ -87,7 +87,6 @@ namespace Heroes.Models.Heroes
             if (armourLeft >= 0)
             {
                 this.Armour = armourLeft;
-
             }
             else
             {
