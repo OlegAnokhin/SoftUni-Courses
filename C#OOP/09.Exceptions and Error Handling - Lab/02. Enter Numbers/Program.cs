@@ -9,98 +9,35 @@ namespace _02._Enter_Numbers
         {
             int start = 1;
             int end = 100;
-            int count = 0;
 
             List<int> numbers = new List<int>();
-            while (count < 10)
+            while (numbers.Count != 10)
             {
-                start = ReadNumber(start, end, numbers, ref count);
+                try
+                {
+                    start = ReadNumber(start, end);
+                    numbers.Add(start);
+                }
+                catch (Exception Exc)
+                {
+                    Console.WriteLine(Exc.Message);
+                }
             }
             Console.WriteLine(String.Join(", ", numbers));
+
         }
-        public static int ReadNumber(int start, int end, List<int> numbers, ref int count)
+        public static int ReadNumber(int start, int end)
         {
-            count++;
-            int num = 0;
-            try
+            string num = Console.ReadLine();
+            if (!int.TryParse(num, out int result))
             {
-                num = int.Parse(Console.ReadLine());
-                if (!(start < num && num < end))
-                {
-                    while (!(start < num && num < end))
-                    {
-                        throw new ArgumentException();
-                    }
-                }
-                numbers.Add(num);
+                throw new FormatException("Invalid Number!");
             }
-            catch (FormatException)
+            if (result <= start || result >= end)
             {
-                count--;
-                Console.WriteLine("Invalid Number!");
+                throw new ArgumentException($"Your number is not in range {start} - 100!");
             }
-            catch (ArgumentException)
-            {
-                count--;
-                Console.WriteLine($"Your number is not in range {start} - {end}!");
-            }
-            catch
-            {
-                count--;
-                Console.WriteLine("Invalid Number!");
-            }
-            return num;
+            return result;
         }
     }
 }
-
-
-//        static void Main()
-//        {
-//            int start = 1;
-//            int end = 100;
-//            int[] numbers = new int[10];
-
-//            for (int i = 0; i < 10; i++)
-//            {
-//                while (numbers[i] <= start || numbers[i] >= end || (i > 0 && numbers[i] <= numbers[i - 1]))
-//                {
-//                    bool exeption = false;
-//                    try
-//                    {
-//                        numbers[i] = int.Parse(Console.ReadLine());
-//                        if ((numbers[i] <= start || numbers[i] >= end) && !exeption)
-//                        {
-//                            throw new ArgumentException();
-//                        }
-//                        else if (i > 0 && numbers[i] <= numbers[i - 1] && !exeption)
-//                        {
-//                            throw new ArgumentException();
-//                        }
-//                    }
-//                    catch (ArgumentException)
-//                    {
-//                        if (numbers[i] == 1 || numbers[i] == 100)
-//                        {
-//                            Console.WriteLine($"Your number is not in range {numbers[i]} - 100!");
-//                        }
-//                        else
-//                        {
-//                            Console.WriteLine($"Your number is not in range {numbers[i - 1]} - 100!");
-//                        }
-//                    }
-//                    catch (Exception exc)
-//                    {
-//                        Console.WriteLine("Invalid Number!");
-//                        exeption = true;
-//                    }
-//                }
-//                if (numbers[i] == 99)
-//                {
-//                    break;
-//                }
-//            }
-//            Console.WriteLine(String.Join(", ", numbers));
-//        }
-//    }
-//}
