@@ -31,16 +31,13 @@
                     new RobotManager(-1);
                 });
         }
-        [TestCase(1)]
-        [TestCase(10)]
-        [TestCase(1000)]
-        public void RodotManegerCapacityShouldWorkCorrect(int capacity)
+        [Test]
+        public void RodotManegerCapacityShouldWorkCorrect()
         {
-            RobotManager robotManager = new RobotManager(capacity);
-            Assert.AreEqual(capacity, robotManager.Capacity);
+            RobotManager robotManager = new RobotManager(10);
+            Assert.AreEqual(10, robotManager.Capacity);
         }
         [TestCase(-1)]
-        [TestCase(-666)]
         [TestCase(-9999999)]
         public void CapacytyShouldThrowExceptionWhenIncorectValue(int capacity)
         {
