@@ -9,5 +9,5 @@ function solve(arr1, arr2, arr3){
     console.log(sum);
     console.log(average);
 }
-solve('chocolate', 'ice cream', 'cake')
-solve('Oleg', 'Petya', 'Dany')
+solve('chocolate', 'ice cream', 'cake');
+solve('pasta', '5', '22.3');
