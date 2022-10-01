@@ -19,7 +19,19 @@ function createAssemblyLine(){
             }
         },
         hasParktronic(car){
-
+            car.checkDistance = function(distance){
+                if (distance < 0) {
+                    console.log("");
+                }else if (distance < 0.1) {
+                    console.log("Beep! Beep! Beep!");
+                }else if (distance < 0.25) {
+                    console.log("Beep! Beep!");
+                }else if (distance < 0.5) {
+                    console.log("Beep!");
+                }else {
+                    console.log("");
+                }
+            }
         }
     }
 }
@@ -42,7 +54,12 @@ artist: 'Rick Astley'
 myCar.nowPlaying();
 
 assemblyLine.hasParktronic(myCar);
+myCar.checkDistance(-1);
 myCar.checkDistance(0.4);
-myCar.checkDistance(0.2);
+myCar.checkDistance(0.0);
+myCar.checkDistance(0.1);
+myCar.checkDistance(0.25);
+myCar.checkDistance(0.7);
+myCar.checkDistance(2)
 
 console.log(myCar);
