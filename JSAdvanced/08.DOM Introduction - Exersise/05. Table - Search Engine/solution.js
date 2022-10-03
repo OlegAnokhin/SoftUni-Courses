@@ -10,7 +10,6 @@ function solve() {
             row.className = 'select';
          }
       };
-      searchText.value = '';
-      debugger
+      searchText.value = '';   
    }
 }
