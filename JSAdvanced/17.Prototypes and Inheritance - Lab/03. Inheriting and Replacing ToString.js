@@ -1,4 +1,4 @@
-//function toStringExtension() {
+function toStringExtension() {
     class Person  {
         constructor(name, email){            
             this.name = name;
@@ -30,16 +30,16 @@
         }
     }
 
-    let person = new Person("Maria", "maria@yahoo.bg");
-    let teacher = new Teacher("Ivan", "ivan@ivan.bg", "history");
-    let student = new Student("Pesho", "pesho@gmail.com", "Math");
-    console.log(person.toString());
-    console.log(teacher.toString());
-    console.log(student.toString());
+    // let person = new Person("Maria", "maria@yahoo.bg");
+    // let teacher = new Teacher("Ivan", "ivan@ivan.bg", "history");
+    // let student = new Student("Pesho", "pesho@gmail.com", "Math");
+    // console.log(person.toString());
+    // console.log(teacher.toString());
+    // console.log(student.toString());
 
-    // return {
-    //     Person,
-    //     Teacher,
-    //     Student
-    // }
-//}
+    return {
+        Person,
+        Teacher,
+        Student
+    }
+}
