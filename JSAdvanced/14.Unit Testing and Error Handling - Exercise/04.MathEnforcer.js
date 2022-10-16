@@ -15,4 +15,4 @@ let mathEnforcer = {
 };
 
 
-module.exports = mathEnforcer;
+module.exports = {mathEnforcer};
