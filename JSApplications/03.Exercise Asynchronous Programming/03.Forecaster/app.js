@@ -1,11 +1,3 @@
-const enumItem = {
-    "Sunny": "&#x2600", // ☀
-    "Partly sunny": "&#x26C5", // ⛅
-    "Overcast": "&#x2601", // ☁
-    "Rain": "&#x2614", // ☂
-    "Degrees": "&#176" // °
-}
-const forecastContainer = document.getElementById('forecast');
 function attachEvents() {
     document.getElementById('submit').addEventListener('click', getWeather);
 }
@@ -15,6 +7,7 @@ async function getWeather() {
     const forecastContainer = document.getElementById('forecast');
 
     try {
+        debugger
         const url = `http://localhost:3030/jsonstore/forecaster/locations`;
         const townName = document.getElementById('location').value;
         const respons = await fetch(url);
@@ -34,6 +27,7 @@ async function getWeather() {
         document.querySelector('.label').textContent = 'Error'
     }
 }
+
 async function getToday(code) {
     const urlToday = `http://localhost:3030/jsonstore/forecaster/today/${code}`;
     const responsToday = await fetch(urlToday);
@@ -47,7 +41,13 @@ async function getUpcoming(code) {
     return dataThree;
 }
 function createToday(data) {
-
+    const enumItem = {
+        "Sunny": "&#x2600", // ☀
+        "Partly sunny": "&#x26C5", // ⛅
+        "Overcast": "&#x2601", // ☁
+        "Rain": "&#x2614", // ☂
+        "Degrees": "&#176" // °
+    }
     const { condition, high, low } = data.forecast;
     const conditionContainer = document.createElement('div');
     conditionContainer.classList.add('forecasts');
@@ -89,6 +89,13 @@ function createUpcoming(data) {
     return container;
 }
 function generateSpans(data) {
+    const enumItem = {
+        "Sunny": "&#x2600", // ☀
+        "Partly sunny": "&#x26C5", // ⛅
+        "Overcast": "&#x2601", // ☁
+        "Rain": "&#x2614", // ☂
+        "Degrees": "&#176" // °
+    }
     const { condition, high, low } = data
     const spanHolder = document.createElement('span');
     spanHolder.classList.add('upcoming');
