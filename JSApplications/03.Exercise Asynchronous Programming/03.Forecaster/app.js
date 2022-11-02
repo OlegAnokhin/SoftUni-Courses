@@ -7,7 +7,6 @@ async function getWeather() {
     const forecastContainer = document.getElementById('forecast');
 
     try {
-        debugger
         const url = `http://localhost:3030/jsonstore/forecaster/locations`;
         const townName = document.getElementById('location').value;
         const respons = await fetch(url);
@@ -24,7 +23,7 @@ async function getWeather() {
         upcomingContainer.appendChild(upcomingHTMLTemp);
     } catch (e){
         forecastContainer.style.display = 'block';
-        document.querySelector('.label').textContent = 'Error'
+        document.querySelector(".label").textContent = 'Error'
     }
 }
 
@@ -53,7 +52,7 @@ function createToday(data) {
     conditionContainer.classList.add('forecasts');
 
     const conditionIconSpan = document.createElement('span');
-    conditionIconSpan.classList.add('condition symbol');
+    conditionIconSpan.classList.add('condition', 'symbol');
     conditionIconSpan.innerHTML = enumItem[condition];
 
     const conditionSpan = document.createElement('span');
