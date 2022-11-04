@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPA Demo</title>
+    <script src="/02.WorkShop/app.js" type="module"></script>
+    <style>
+        section {
+            display: none;
+            padding: 16px 32px;
+        }
+        label {
+            display: block;
+        }
+        #catalog-view {
+            background-color: aquamarine;
+        }
+        #details-view {
+            background-color: rgb(13, 243, 166);
+        }
+        #login-view {
+            background-color: rgb(81, 243, 143);
+        }
+        #register-view {
+            background-color: rgb(89, 248, 110);
+        }
+        .user,
+        .guest {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>SPA Demo</h1>
+    <nav>
+        <a id ="catalog-link" href="javascript:void(0)">Catalog</a>
+        <a class="guest" id ="login-link" href="javascript:void(0)">Login</a>
+        <a class="guest" id ="register-link" href="javascript:void(0)">Register</a>
+        <span class="user" id="welcome-msg"></span>
+        <a class="user" id ="logout-link" href="javascript:void(0)">Logout</a>
+    </nav>
+    <section id ="catalog-view">
+        <h2>All recipes</h2>
+        <ul id = "recipes-list">
+            <li>First recipes</li>
+            <li>Second recipes</li>
+        </ul>
+    </section>
+    <section id = "details-view">
+        <h2 id = "recipe-name">Recipes Details</h2>
+        <p>Ingredients</p>
+        <ul id ="recipe-ingredients"></ul>
+        <p>Preparation steps</p>
+        <ul id ="recipe-steps"></ul>
+    </section>
+    <section id = 'login-view'>
+        <h2>Login</h2>
+        <form id="login-form">
+            <label>Email: <input type="text" name="email"></label>
+            <label>Password: <input type="password" name="password"></label>
+            <button>Login</button>
+        </form>
+
+    </section>
+</body>
+</html>

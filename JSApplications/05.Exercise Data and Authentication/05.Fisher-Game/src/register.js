@@ -31,8 +31,11 @@ async function onRegister(email, password) {
         if (data.code && data.code !== 200) {
             throw new Error(data.message)
         }
-        sessionStorage.setItem("email", data.email);
-        sessionStorage.setItem("accessToken", data.accessToken);
+        sessionStorage.setItem("userData", JSON.stringify({
+            email: data.email,
+            accessToken: data.accessToken,
+            id: data.id
+        }));
         window.location = "./index.html";
         return data;
     } catch (e) {
