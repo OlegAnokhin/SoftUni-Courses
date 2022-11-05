@@ -17,11 +17,13 @@ function attachEvents() {
         })
     }
     async function getComments() {
+        debugger
         const selectedOp = document.getElementById('posts').selectedOptions[0].value;
         const titleElement = document.getElementById('post-title');
         const postBodyElement = document.getElementById('post-body');
         const postUlElement = document.getElementById('post-comments');
         postUlElement.innerHTML = '';
+
         const postResponse = await fetch(postsUrl);
         const postData = await postResponse.json();
         const commentsRespons = await fetch(postsCommentsUrl);
