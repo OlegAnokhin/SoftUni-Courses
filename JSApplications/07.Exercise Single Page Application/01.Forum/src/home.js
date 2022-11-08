@@ -1,9 +1,9 @@
 import { showDetails } from './details.js'
-const url = 'http://localhost:3030/jsonstore/collections/myboard/posts';
 const main = document.getElementsByTagName('main')[0];
 const section = document.getElementById('homeView');
 const form = document.querySelector('#homeView form');
 form.addEventListener('submit', onSubmit);
+const url = 'http://localhost:3030/jsonstore/collections/myboard/posts';
 
 section.remove()
 
@@ -21,7 +21,7 @@ function topicTemplate(data) {
     container.innerHTML = `
     <div class="topic-name-wrapper">
         <div class="topic-name">
-        <a href="#" class="normal">
+        <a href="#" class="normal" id="${data._id}">
             <h2>${data.topicName}</h2>
         </a>
         <div class="columns">
@@ -52,7 +52,7 @@ function clearForm() {
     form.reset();
 }
 async function createPost(body) {
-    const url = 'http://localhost:3030/jsonstore/collections/myboard/posts';
+   // const url = 'http://localhost:3030/jsonstore/collections/myboard/posts';
     const response = await fetch(url, {
         method: 'POST',
         headers: { 'Content-type': 'application/json' },
@@ -62,7 +62,6 @@ async function createPost(body) {
     return data;
 }
 async function loadPost() {
-    const url = 'http://localhost:3030/jsonstore/collections/myboard/posts';
     const response = fetch(url);
     const data = await response.json();
     return data;
