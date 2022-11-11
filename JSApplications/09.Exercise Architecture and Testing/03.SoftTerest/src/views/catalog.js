@@ -22,7 +22,7 @@ function createIdea(idea) {
                 <p class="card-text">${idea.title}</p>
             </div>
             <img class="card-image" src=${idea.img} alt="Card image cap">
-            <a class="btn" href="/details">Details</a>
+            <a data id=${idea._id} class="btn" href="/details">Details</a>
     `
     return div
 }
