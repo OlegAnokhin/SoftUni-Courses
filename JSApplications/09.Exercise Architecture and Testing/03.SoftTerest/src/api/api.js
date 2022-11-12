@@ -1,24 +1,24 @@
-const host = `http://localhost:3030/`;
+const host = "http://localhost:3030/"; 
 
 async function requester(method, url, data) {
-    const user = JSON.parse(sessionStorage.getItem('user'));
+    const user = JSON.parse(sessionStorage.getItem("user"));
     const option = {
         method,
         headers: {}
     }
     if (data) {
-        option.headers['Content-type'] = 'Application/json';
+        option.headers["Content-Type"] = "Application/json";
         option.body = JSON.stringify(data);
     }
     if(user){
         const token = user.accessToken;
-        option.headers['X-Authorization'] = token;
+        option.headers["X-Authorization"] = token;
     }
     try {
         const response = await fetch(host + url, option);
         if(!response.ok){
             if(response.status === 403){
-                sessionStorage.removeItem('user');
+                sessionStorage.removeItem("user");
             }
             const err = await response.json();
             throw new Error(err.message);

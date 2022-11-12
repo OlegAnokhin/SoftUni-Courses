@@ -2,7 +2,8 @@ import { getAllIdea } from "../api/data.js";
 
 const section = document.getElementById("dashboard-holder");
 
-export async function showCatalog() {
+export async function showCatalog(context) {
+    debugger
     context.showSection(section);
     const ideas = await getAllIdea();
     if (ideas.lenght === 0) {
@@ -22,7 +23,7 @@ function createIdea(idea) {
                 <p class="card-text">${idea.title}</p>
             </div>
             <img class="card-image" src=${idea.img} alt="Card image cap">
-            <a data id=${idea._id} class="btn" href="/details">Details</a>
+            <a data-id=${idea._id} class="btn" href="/details">Details</a>
     `
     return div
 }

@@ -1,8 +1,8 @@
 import { createIdea } from "../api/data.js";
 
 const section = document.getElementById("createView");
-const form = section.querySelector('form');
-form.addEventListener('submit', onSubmit);
+const form = section.querySelector("form");
+form.addEventListener("submit", onSubmit);
 
 let ctx = null;
 
@@ -18,5 +18,5 @@ async function onSubmit(e){
 
     await createIdea({title, description, img: imageURL});
     form.reset();
-    ctx.goTo('/')
+    ctx.goTo('/catalog')
 }
