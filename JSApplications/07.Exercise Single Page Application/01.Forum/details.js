@@ -21,7 +21,7 @@ export async function showDetails(e) {
 async function appendElement() {
     const topic = await loadTopic(id)
     const comments = await loadComment(id) 
-    const res = topicTemplate(topic, comments);//tbd
+    const res = topicTemplate(topic, comments);
     themeContentWrapper.replaceChildren(res);
     main.replaceChildren(section)
 } 
@@ -41,10 +41,8 @@ function topicTemplate(topic, comments) {
     <div class="header">
         <img src="./static/profile.png" alt="avatar">
         <p><span>${topic.username}</span> posted on <time>${topic.date}</time></p>
- 
-    <p class="post-content">${topic.postText}</p>
-    </div>
-   `
+        <p class="post-content">${topic.postText}</p>
+    </div>`
     comments.forEach(x => {
         const comment = createComment(x);
         commentContainer.appendChild(comment);
@@ -62,8 +60,7 @@ function createComment(data) {
                  <p>${data.postText}</p>
               </div>
             </div>
-        </div>
-        `
+        </div>`
     return container;
 } 
 function onSubmit(e) {

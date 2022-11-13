@@ -1,4 +1,4 @@
-import { register } from "../api/user.js";
+import { register } from "../api/api.js";
 const section = document.getElementById("registerView")
 const form = section.querySelector("form");
 form.addEventListener("submit", onSubmit);

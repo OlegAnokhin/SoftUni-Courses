@@ -54,7 +54,7 @@ function clearForm() {
 async function createPost(body) {
     try {
         if (Object.values(body).includes('')) {
-            throw new Error('All fields must be provided');
+            throw new Error('Must fill in all fields');
         }
         const response = await fetch(url, {
             method: "POST",

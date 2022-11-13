@@ -1,6 +1,6 @@
-import { login } from "../api/user.js";
+import { login } from "../api/api.js";
 
-const section = document.getElementById("loginView")
+const section = document.getElementById("loginView");
 const form = section.querySelector("form");
 form.addEventListener("submit", onSubmit);
 let ctx = null;
@@ -16,5 +16,5 @@ async function onSubmit(e){
     const {email, password} = Object.fromEntries(formData);
     await login(email, password);
     ctx.updateNavigate();
-    ctx.goTo('/catalog')
+    ctx.goTo('/catalog');
 }
