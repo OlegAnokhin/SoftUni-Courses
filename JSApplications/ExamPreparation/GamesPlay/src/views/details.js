@@ -1,7 +1,7 @@
-import { deleteGame, getGameById } from '../api/data.js';
+import { deleteGame, getGameById, getComments, createComment } from '../api/data.js';
 import { html, nothing } from '../lib.js';
 
-const detailsTemp = (game, isOwner, onDelete) => html`
+const detailsTemp = (game, hasUser, isOwner, onDelete, onSubmit, comments) => html`
 <section id="game-details">
   <h1>Game Details</h1>
   <div class="info-section">
@@ -17,21 +17,17 @@ const detailsTemp = (game, isOwner, onDelete) => html`
     ${game.summary}
     </p>
 
-    <!-- Bonus ( for Guests and Users ) -->
-    <!-- <div class="details-comments">
+    <div class="details-comments">
       <h2>Comments:</h2>
-      <ul> -->
-        <!-- list all comments for current game (If any) -->
-        <!-- <li class="comment">
-          <p>Content: I rate this one quite highly.</p>
-        </li>
-        <li class="comment">
-          <p>Content: The best game.</p>
-        </li>
-      </ul> -->
-      <!-- Display paragraph: If there are no games in the database -->
-      <!-- <p class="no-comment">No comments.</p>
-    </div> -->
+      <ul>
+    ${comments.length == 0 ? html`
+    <p class="no-comment">No comments.</p>` 
+    : comments.map(comm => html`
+    <li class="comment">
+      <p>${comm.comment}</p>
+    </li>`)}
+      </ul>      
+    </div>
     ${isOwner ? html`
     <div class="buttons">
       <a href="/edit/${game._id}" class="button">Edit</a>
@@ -39,25 +35,26 @@ const detailsTemp = (game, isOwner, onDelete) => html`
     </div>` : nothing}
   </div>
 
-  <!-- Bonus -->
-  <!-- Add Comment ( Only for logged-in users, which is not creators of the current game ) -->
-  <!-- <article class="create-comment">
+  ${(() => {
+    if(hasUser && !isOwner) {
+  return html` 
+  <article class="create-comment">
     <label>Add new comment:</label>
-    <form class="form">
+    <form @submit=${onSubmit} class="form">
       <textarea name="comment" placeholder="Comment......"></textarea>
       <input class="btn submit" type="submit" value="Add Comment">
     </form>
-  </article> -->
-
+  </article>`}
+})()}
 </section>`
 
 export async function detailsView(ctx) {
   const id = ctx.params.id
   const game = await getGameById(id);
-
+  const comments = await getComments(id);
   const hasUser = !!ctx.user;
   const isOwner = hasUser && ctx.user.id == game._ownerId;
-  ctx.render(detailsTemp(game, isOwner, onDelete));
+  ctx.render(detailsTemp(game,hasUser, isOwner, onDelete, onSubmit, comments));
 
   async function onDelete() {
     const choise = confirm('Are you sure you want to delete this game?');
@@ -65,5 +62,20 @@ export async function detailsView(ctx) {
       await deleteGame(id);
       ctx.page.redirect('/');
     }
+  }
+  async function onSubmit(event) {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const currComment = {
+      gameId: id,
+      comment: formData.get('comment')
+    };
+    if (currComment.comment == '') {
+      return alert('The field are requared!')
+    }
+    await createComment(currComment);
+    const comments = await getComments(id);
+    event.target.reset();
+    ctx.render(detailsTemp(game,hasUser, isOwner, onDelete, onSubmit, comments));
   }
 }

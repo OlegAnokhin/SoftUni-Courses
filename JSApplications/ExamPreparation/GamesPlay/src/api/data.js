@@ -18,3 +18,9 @@ export async function deleteGame(id) {
 export async function updateGame(id, game) {
     return put('/data/games/' + id , game);
 }
+export async function getComments(gameId) {
+    return await get (`/data/comments?where=gameId%3D%22${gameId}%22`)
+}
+export async function createComment(commentData) {
+    return await post('/data/comments', commentData);
+}
