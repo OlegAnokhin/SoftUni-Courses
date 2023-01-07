@@ -19,8 +19,8 @@ const detailsTemp = (pet, hasUser, isOwner, onDelete) => html`
                     <div class="actionBtn">
                         ${isOwner ? html`
                         <a href="/edit/${pet._id}" class="edit">Edit</a>
-                        <a @click=${onDelete} href="javascript:void(0)" class="remove">Delete</a>` : html`
-                        <a href="#" class="donate">Donate</a>`}
+                        <a @click=${onDelete} href="javascript:void(0)" class="remove">Delete</a>` 
+                        : html`<a href="#" class="donate">Donate</a>`}
                     </div>` : nothing}
                 </div>
             </div>
