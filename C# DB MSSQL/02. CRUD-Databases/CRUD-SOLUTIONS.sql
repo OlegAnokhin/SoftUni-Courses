@@ -11,8 +11,9 @@ SELECT [FirstName], [LastName], [Salary] FROM [Employees]
 --5
 SELECT [FirstName], [MiddleName], [LastName] FROM [Employees]
 
---6
-SELECT [FirstName] + '.' + [LastName] + '@softuni.bg' AS [Full Email Address] FROM [Employees]
+--6 CONCAT ([FirstName], '.', [MiddleName] + '', [LastName], '@softuni.bg')
+SELECT CONCAT ([FirstName], '.', [LastName], '@softuni.bg')
+AS [Full Email Address] FROM [Employees]
 
 --7
 SELECT DISTINCT [Salary] FROM [Employees]
@@ -25,8 +26,9 @@ SELECT [FirstName], [LastName], [JobTitle] FROM [Employees]
 WHERE [Salary] >= 20000 AND [Salary] <= 30000
 
 --10
-SELECT [FirstName] + ' ' + [MiddleName] + ' ' + [LastName] AS [FullName] FROM [Employees]
+SELECT CONCAT([FirstName], ' ', [MiddleName], ' ', [LastName]) AS [FullName] FROM [Employees]
 WHERE [Salary] = 25000 OR [Salary] = 14000 OR [Salary] = 12500 OR [Salary] = 23600
+--WHERE [Salary] IN (25000, 14000, 12500, 23600)
 
 --11
 SELECT [FirstName], [LastName] FROM [Employees] 
@@ -79,6 +81,12 @@ UPDATE [Employees]
 SET [Salary] = [Salary] * 1.12
 WHERE DepartmentID IN (1, 2, 4, 11)
 SELECT [Salary] FROM Employees
+
+--UPDATE [Employees]
+--SET [Salary] = [Salary] / 1.12
+--WHERE DepartmentID IN (1, 2, 4, 11)
+--SELECT [Salary] FROM Employees
+
 
 --22 Geography
 
