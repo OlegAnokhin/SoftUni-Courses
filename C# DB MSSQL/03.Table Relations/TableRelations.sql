@@ -106,3 +106,70 @@ VALUES
 (104, 'Ted', 105),
 (105, 'Mark', 101),
 (106, 'Greta', 101)
+
+--5
+GO
+CREATE DATABASE [OnlineStore]
+GO
+USE [OnlineStore]
+
+CREATE TABLE [Cities](
+	[CityID] INT PRIMARY KEY,
+	[Name] VARCHAR(30) NOT NULL
+)
+CREATE TABLE [Customers](
+	[CustomerID] INT PRIMARY KEY,
+	[Name] VARCHAR(30) NOT NULL,
+	[Birthday] DATETIME2,
+	[CityID] INT REFERENCES [Cities](CityID)
+)
+CREATE TABLE [Orders](
+	[OrderID] INT PRIMARY KEY,
+	[CustomerID] INT REFERENCES [Customers](CustomerID)
+)
+CREATE TABLE [ItemTypes](
+	[ItemTypeID] INT PRIMARY KEY,
+	[Name] VARCHAR(30) NOT NULL
+)
+CREATE TABLE [Items](
+	[ItemID] INT PRIMARY KEY,
+	[Name] VARCHAR(30) NOT NULL,
+	[ItemTypeID] INT REFERENCES [ItemTypes](ItemTypeID)
+)
+CREATE TABLE [OrderItems](
+	[OrderID] INT REFERENCES [Orders](OrderID),
+	[ItemID] INT REFERENCES [Items](ItemID),
+	PRIMARY KEY (OrderID, ItemID)
+)
+
+--6
+GO
+CREATE DATABASE [University]
+GO
+USE [University]
+
+CREATE TABLE [Subjects](
+	[SubjectID] INT PRIMARY KEY,
+	[SubjectName] VARCHAR(30) NOT NULL
+)
+CREATE TABLE [Majors](
+	[MajorID] INT PRIMARY KEY,
+	[Name] VARCHAR(30) NOT NULL
+)
+CREATE TABLE [Students](
+	[StudentID] INT PRIMARY KEY,
+	[StudentNumber] INT NOT NULL,
+	[StudentName] VARCHAR(30) NOT NULL,
+	[MajorID] INT FOREIGN KEY REFERENCES [Majors](MajorID)
+)
+CREATE TABLE [Agenda](
+	[StudentID] INT FOREIGN KEY REFERENCES [Students](StudentID),
+	[SubjectID] INT FOREIGN KEY REFERENCES [Subjects](SubjectID),
+	PRIMARY KEY (StudentID, SubjectID)
+)
+CREATE TABLE [Payments](
+	[PaymentID] INT PRIMARY KEY,
+	[PaymentDate] DATETIME2 NOT NULL,
+	[PaymentAmount] DECIMAL(15,2) NOT NULL,
+	[StudentID] INT FOREIGN KEY REFERENCES [Students](StudentID)
+)
