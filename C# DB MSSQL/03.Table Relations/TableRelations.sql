@@ -173,3 +173,15 @@ CREATE TABLE [Payments](
 	[PaymentAmount] DECIMAL(15,2) NOT NULL,
 	[StudentID] INT FOREIGN KEY REFERENCES [Students](StudentID)
 )
+
+--9
+
+SELECT m.MountainRange, p.PeakName, p.Elevation
+FROM [Mountains] AS m
+JOIN Peaks AS p ON p.MountainId = m.Id
+WHERE m.MountainRange = 'Rila'
+ORDER BY p.Elevation DESC
+
+
+SELECT *
+FROM [Mountains]
