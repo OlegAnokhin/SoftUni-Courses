@@ -82,7 +82,8 @@ WHERE (SELECT dbo.ufn_GetSalaryLevel([Salary])) = @string
 EXEC [dbo].[usp_EmployeesBySalaryLevel] 'High'
 
 --07
-CREATE FUNCTION ufn_IsWordComprised(@setOfLetters VARCHAR(50), @word VARCHAR(50))
+CREATE FUNCTION ufn_IsWordComprised
+(@setOfLetters VARCHAR(50), @word VARCHAR(50))
 RETURNS BIT
 AS
 BEGIN
@@ -102,3 +103,36 @@ SELECT dbo.ufn_IsWordComprised ('oistmiahf', 'halves')
 --08 BONUS
 
 --09
+CREATE PROCEDURE dbo.usp_GetHoldersFullName
+AS 
+SELECT 
+CONCAT([FirstName], ' ', [LastName]) AS [Full Name]
+FROM [AccountHolders]
+
+EXEC dbo.usp_GetHoldersFullName
+
+--10
+CREATE PROCEDURE dbo.usp_GetHoldersWithBalanceHigherThan
+(@number DECIMAL(18,4))
+AS
+SELECT 
+	[FirstName],
+	[LastName]
+FROM [AccountHolders] AS ah
+JOIN [Accounts] AS a
+ON ah.Id = a.AccountHolderId
+GROUP BY [FirstName], [LastName]
+HAVING SUM(Balance) > @number
+ORDER BY FirstName, LastName
+
+EXEC [dbo].[usp_GetHoldersWithBalanceHigherThan] 30000
+
+--11
+
+
+
+
+
+SELECT 
+	*
+FROM [Accounts]
