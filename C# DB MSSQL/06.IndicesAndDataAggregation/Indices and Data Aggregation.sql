@@ -63,12 +63,6 @@ GROUP BY wd.[DepositGroup], wd.[MagicWandCreator]
 ORDER BY [MagicWandCreator] ASC, [DepositGroup] ASC
 
 --09
---SELECT 
---	[Age],
---	COUNT([Age]) AS WizardCount
---FROM [WizzardDeposits]
---GROUP BY [Age]
-
 ----TEST 01
 --SELECT COUNT(CASE WHEN ([Age] <= 10) THEN id ELSE null END)                 AS '[0-10]',
 --       COUNT(CASE WHEN ([Age] >= 11 AND [Age] <= 20) THEN id ELSE null END) AS '[11-20]',
@@ -114,9 +108,17 @@ GROUP BY [DepositGroup], [IsDepositExpired]
 ORDER BY [DepositGroup] DESC, [IsDepositExpired] ASC
 
 --12
-
-
-SELECT * FROM WizzardDeposits
+SELECT SUM([Difference]) AS [SumDifference]
+FROM 
+(
+	SELECT
+ 		[FirstName] AS [Host Wizard],
+ 		[DepositAmount] AS [Host Wizard Deposit],
+		LEAD([FirstName]) OVER (ORDER BY [Id]) AS [Guest Wizard],
+		LEAD([DepositAmount]) OVER (ORDER BY [Id]) AS [Guest Wizard Deposit],
+		[DepositAmount] - LEAD([DepositAmount]) OVER (ORDER BY [Id]) AS [Difference]
+	FROM [WizzardDeposits]
+ ) AS [DiffSubQuery]
 
 --13
 SELECT 
@@ -134,21 +136,21 @@ FROM [Employees] AS e
 WHERE e.[DepartmentID] IN (2, 5, 7) AND e.[HireDate] > 01/01/2000
 GROUP BY [DepartmentID]
 
---15 NOT WORK CORRECT FOR JUDGE
-SELECT * 
-FROM Employees
-WHERE Salary > 30000 AND [ManagerID] <> 42
+--15
+SELECT * INTO [EmployeesWithSalaryOver30000]
+	FROM [Employees]
+   WHERE [Salary] > 30000
 
-UPDATE [Employees]
-SET [Salary] = [Salary] + 5000
-WHERE DepartmentID = 1
---SELECT [Salary] FROM Employees
+DELETE FROM [EmployeesWithSalaryOver30000]
+	WHERE [ManagerID] = 42
 
-SELECT
-	[DepartmentID],
-	AVG(Salary) AS AverageSalary
-FROM [Employees]
-GROUP BY [DepartmentID]
+UPDATE [EmployeesWithSalaryOver30000]
+	SET [Salary] += 5000
+	WHERE [DepartmentID] = 1
+
+SELECT [DepartmentID], AVG([Salary]) AS [AverageSalary]
+	FROM [EmployeesWithSalaryOver30000]
+	GROUP BY [DepartmentID]
 
 --16
 SELECT 
@@ -164,3 +166,36 @@ SELECT
 FROM [Employees]
 WHERE [ManagerID] IS NULL
 GROUP BY [ManagerID]
+
+--18
+SELECT 
+DISTINCT [DepartmentID],
+         [Salary]
+AS [ThirdHighestSalary]
+FROM (
+      SELECT [DepartmentID],
+             [Salary],
+             DENSE_RANK() OVER(PARTITION BY [DepartmentID] ORDER BY [Salary] DESC)
+		     AS [SalaryRank]
+             FROM [Employees]
+      )
+AS [SalaryRankingSuquery]
+WHERE [SalaryRank] = 3
+ 
+--19
+SELECT 
+TOP (10) [e].[FirstName],
+         [e].[LastName],
+         [e].[DepartmentID]
+FROM [Employees]
+AS [e]
+WHERE [e].[Salary] > (
+                     SELECT AVG([Salary])
+                     AS [AverageSalary]
+                     FROM [Employees]
+                     AS [eSub]
+                     WHERE [eSub].[DepartmentID] = [e].[DepartmentID]
+                     GROUP BY [DepartmentID]
+                      )
+ORDER BY [e].[DepartmentID]
+ 
