@@ -11,13 +11,13 @@ SELECT * FROM [Logs]
 
 GO
 CREATE TRIGGER tr_AddToLogsOnAccountUpdate
-ON [Accounts] INSTEAD OF UPDATE
+ON [Accounts] FOR UPDATE
 AS
 INSERT INTO Logs(AccountId, OldSum, NewSum)
 SELECT 
 	i.Id,
-	i.Balance,
-	d.Balance
+	d.Balance,
+	i.Balance
 FROM inserted AS i
 JOIN deleted AS d
 ON i.Id = d.Id
@@ -54,8 +54,8 @@ CREATE TABLE NotificationEmails
  INSERT INTO [NotificationEmails]
  SELECT
 	i.[AccountId],
-	CONCAT('Balance change for account:', i.[AccountId]) AS [Subject],
-	CONCAT('On', GETDATE(), 'your balance was changed from', i.[OldSum], 'to', i.[NewSum], '.') AS [Body]
+	CONCAT('Balance change for account: ', i.[AccountId]) AS [Subject],
+	CONCAT('On ', GETDATE(), ' your balance was changed from ', i.[OldSum], ' to ', i.[NewSum], '.') AS [Body]
 FROM inserted AS i
 
 GO
@@ -167,7 +167,7 @@ BEGIN
 		(SELECT COUNT(ep.ProjectID)
 		FROM [EmployeesProjects] AS ep
 		WHERE ep.EmployeeID = @emloyeeId)
-		IF @ProjectCount > 3
+		IF @ProjectCount >= 3
 		BEGIN
 		RAISERROR ('The employee has too many projects!', 16, 1)
 			ROLLBACK
