@@ -114,8 +114,114 @@ WHERE [RepositoryId] =
 
 --05. Commits
 
+SELECT 
+	[Id],
+	[Message],
+	[RepositoryId],
+	[ContributorId]
+FROM [Commits]
+ORDER BY [Id] ASC, [Message] ASC, [RepositoryId] ASC, [ContributorId] ASC
 
+--06. Front-end
 
+SELECT 
+	[Id],
+	[Name],
+	[Size]
+FROM [Files]
+WHERE [Size] > 1000 AND [Name] LIKE '%html%'
+ORDER BY [Size] DESC, [Id] ASC, [Name] ASC
 
-SELECT * FROM [Repositories]
-WHERE [Name] = 'Softuni-Teamwork'
+--07. Issue Assignment
+
+SELECT
+	i.[Id],
+	CONCAT(u.[Username], ' : ', i.[Title]) AS [IssueAssignee]
+FROM [Issues] AS i
+LEFT JOIN [Users] AS u
+ON i.[AssigneeId] = u.[Id]
+ORDER BY i.[Id] DESC, [IssueAssignee]
+
+--08. Single Files
+
+SELECT
+	pf.[Id],
+	pf.[Name],
+	CONCAT(pf.[Size], 'KB')
+FROM [Files] AS f
+FULL OUTER JOIN [Files] AS pf
+ON f.[ParentId] = pf.[Id]
+WHERE f.[Id] IS NULL
+ORDER BY pf.[Id] ASC, pf.[Name] ASC, pf.[Size] DESC
+
+--09. Commits in Repositories
+
+SELECT TOP(5) 
+	r.[Id],
+	r.[Name],
+	COUNT(c.[Id]) AS [Commits]
+FROM [Repositories] AS r
+JOIN [Commits] AS c
+ON c.RepositoryId = r.Id
+JOIN [RepositoriesContributors] AS rc
+ON rc.[RepositoryId] = r.[Id]
+GROUP BY r.[Id], r.[Name]
+ORDER BY [Commits] DESC, r.[Id] ASC, r.[Name] ASC 
+
+--10. Average Size
+
+SELECT
+	u.[Username],
+	AVG(f.[Size]) AS [Size]
+FROM [Users] AS u
+INNER JOIN [Commits] AS c
+ON c.[ContributorId] = u.[Id]
+INNER JOIN [Files] AS f
+ON f.[CommitId] = c.[Id]
+GROUP BY u.[Username]
+ORDER BY [Size] DESC, u.[Username] ASC
+
+--Section 4. Programmability (20 pts)
+
+--11. All User Commits
+
+GO
+CREATE FUNCTION udf_AllUserCommits(@username VARCHAR(30)) 
+RETURNS INT
+AS
+BEGIN
+	DECLARE @userID INT = 
+		(
+			SELECT [Id]
+			FROM [Users]
+			WHERE [Username] = @username
+		)
+	DECLARE @commitsCount INT = 
+		(
+			SELECT 
+				COUNT([Id])
+			FROM [Commits]
+			WHERE [ContributorId] = @userID
+		)
+	RETURN @commitsCount
+END
+
+GO
+SELECT dbo.udf_AllUserCommits('UnderSinduxrein')
+
+--12. Search for Files
+GO
+
+CREATE PROCEDURE usp_SearchForFiles @fileExtension VARCHAR (100)
+AS
+BEGIN
+	SELECT 
+		f.[Id],
+		f.[Name],
+		CONCAT(f.[Size], 'KB') AS [Size]
+	FROM [Files] AS f
+	WHERE [Name] LIKE CONCAT('%.', @fileExtension)
+	ORDER BY [Id] ASC, [Name] ASC, f.[Size] DESC 
+END
+
+EXEC usp_SearchForFiles 'txt'
