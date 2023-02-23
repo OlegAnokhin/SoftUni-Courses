@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace SoftUni.Models
+﻿namespace SoftUni.Models
 {
-    public partial class Project
+    public class Project
     {
         public Project()
         {
-            Employees = new HashSet<Employee>();
+            EmployeesProjects = new HashSet<EmployeeProject>();
         }
 
         public int ProjectId { get; set; }
@@ -16,6 +13,6 @@ namespace SoftUni.Models
         public DateTime StartDate { get; set; }
         public DateTime? EndDate { get; set; }
 
-        public virtual ICollection<Employee> Employees { get; set; }
+        public virtual ICollection<EmployeeProject> EmployeesProjects { get; set; }
     }
 }
