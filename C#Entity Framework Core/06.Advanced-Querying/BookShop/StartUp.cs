@@ -52,8 +52,13 @@ namespace BookShop
             //Console.WriteLine(result);
 
             //Pr.10 Book Search by Author
-            var input = Console.ReadLine();
-            var result = GetBooksByAuthor(db, input);
+            //var input = Console.ReadLine();
+            //var result = GetBooksByAuthor(db, input);
+            //Console.WriteLine(result);
+
+            //Pr.11 Count Books
+            int input = int.Parse(Console.ReadLine());
+            var result = CountBooks(db, input);
             Console.WriteLine(result);
 
 
@@ -180,6 +185,17 @@ namespace BookShop
                 .ToArray());
             return books;
         }
+
+        public static int CountBooks(BookShopContext context, int lengthCheck)
+        {
+            var booksCount = context
+                .Books
+                .Where(b => b.Title.Length > lengthCheck)
+                .ToList()
+                .Count();
+            return booksCount;
+        }
+
 
     }
 }
