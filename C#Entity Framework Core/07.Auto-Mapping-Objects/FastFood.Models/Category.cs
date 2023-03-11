@@ -14,6 +14,7 @@ public class Category
     [Key]
     public int Id { get; set; }
 
+    [MinLength(EntitiesValidation.CategoryMinLength)]
     [MaxLength(EntitiesValidation.CategoryMaxLength)]
     public string Name { get; set; } = null!;
 

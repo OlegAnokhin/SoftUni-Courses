@@ -1,11 +1,10 @@
 ﻿using FastFood.Web.ViewModels.Positions;
 
-namespace FastFood.Services.Data
-{
-    public interface IPositionsService
-    {
-        Task CreateAsync(CreatePositionInputModel inputModel);
+namespace FastFood.Services.Data;
 
-        Task<IEnumerable<PositionsAllViewModel>> GetAllAsync();
-    }
+public interface IPositionsService
+{
+    Task CreateAsync(CreatePositionInputModel inputModel);
+
+    Task<IEnumerable<PositionsAllViewModel>> GetAllAsync();
 }
