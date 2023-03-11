@@ -81,7 +81,7 @@ namespace BookShop
             //Console.WriteLine(result);
 
 
-            //DbInitializer.ResetDatabase(db);
+            DbInitializer.ResetDatabase(db);
         }
 
         public static string GetBooksByAgeRestriction(BookShopContext context, string command)
@@ -299,9 +299,19 @@ namespace BookShop
 
         }
 
-        //public static int RemoveBooks(BookShopContext context)
-        //{
+        public static int RemoveBooks(BookShopContext context)
+        {
+            var countDeleteBook = 0;
 
-        //}
+            var booksForDelete = context
+                .Books
+                .Where(b => b.Copies < 4200);
+
+            countDeleteBook = booksForDelete.Count();
+            context.RemoveRange(booksForDelete);
+            context.SaveChanges();
+
+            return countDeleteBook;
+        }
     }
 }
