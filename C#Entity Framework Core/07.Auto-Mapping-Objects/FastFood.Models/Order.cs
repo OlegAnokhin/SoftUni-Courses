@@ -16,6 +16,7 @@ public class Order
         this.OrderItems = new HashSet<OrderItem>();
     }
     [Key]
+    // [MaxLength(EntitiesValidation.GuidMaxLength)]
     public string Id { get; set; }
 
     public string Customer { get; set; } = null!;
@@ -28,6 +29,7 @@ public class Order
     public decimal TotalPrice { get; set; }
 
     [ForeignKey(nameof(Employee))]
+    // [MaxLength(EntitiesValidation.GuidMaxLength)]
     public string EmployeeId { get; set; } = null!;
 
     public virtual Employee Employee { get; set; } = null!;

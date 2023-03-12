@@ -14,6 +14,7 @@ public class Item
         this.OrderItems = new HashSet<OrderItem>();
     }
     [Key]
+    // [MaxLength(EntitiesValidation.GuidMaxLength)]
     public string Id { get; set; }
 
     [StringLength(EntitiesValidation.ItemMaxLength, MinimumLength = 3)]

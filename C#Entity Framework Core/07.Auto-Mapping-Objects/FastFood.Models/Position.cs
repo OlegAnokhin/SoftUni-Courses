@@ -11,6 +11,7 @@ public class Position
     {
         this.Employees = new HashSet<Employee>();
     }
+    [Key]
     public int Id { get; set; }
 
     [MaxLength(EntitiesValidation.PositionMaxLength)]

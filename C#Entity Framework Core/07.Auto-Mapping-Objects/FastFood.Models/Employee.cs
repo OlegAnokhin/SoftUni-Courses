@@ -14,6 +14,7 @@ public class Employee
         this.Orders = new HashSet<Order>();
     }
     [Key]
+   // [MaxLength(EntitiesValidation.GuidMaxLength)]
     public string Id { get; set; }
 
     [StringLength(EntitiesValidation.EmployeeNameMaxLength, MinimumLength = 3)]
