@@ -1,34 +1,44 @@
-﻿using AutoMapper;
-using FastFood.Data;
-using FastFood.Web.ViewModels.Items;
-using Microsoft.AspNetCore.Mvc;
+﻿namespace FastFood.Web.Controllers;
 
-namespace FastFood.Web.Controllers;
+using FastFood.Services.Data;
+using ViewModels.Items;
+using Microsoft.AspNetCore.Mvc;
 
 public class ItemsController : Controller
 {
-    private readonly FastFoodContext _context;
-    private readonly IMapper _mapper;
-
-    public ItemsController(FastFoodContext context, IMapper mapper)
+    private readonly IItemServices itemServices;
+    public ItemsController(IItemServices itemServices)
     {
-        _context = context;
-        _mapper = mapper;
+        this.itemServices = itemServices;
     }
 
-    public IActionResult Create()
+    [HttpGet]
+    public async Task<IActionResult> Create()
     {
-        throw new NotImplementedException();
+        IEnumerable<CreateItemViewModel> availableCategories =
+            await this.itemServices.GetAllAvailableCategoriesAsync();
+
+        return View(availableCategories);
     }
 
     [HttpPost]
-    public IActionResult Create(CreateItemInputModel model)
+    public async Task<IActionResult> Create(CreateItemInputModel model)
     {
-        throw new NotImplementedException();
+        if (!this.ModelState.IsValid)
+        {
+            return this.RedirectToAction("Error", "Home");
+        }
+
+        await this.itemServices.CreateAsync(model);
+
+        return this.RedirectToAction("All");
     }
 
-    public IActionResult All()
+    public async Task<IActionResult> All()
     {
-        throw new NotImplementedException();
+        IEnumerable<ItemsAllViewModel> items =
+            await this.itemServices.GetAllAsync();
+
+        return this.View(items.ToList());
     }
 }

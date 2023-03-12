@@ -34,6 +34,7 @@ public class CategoriesController : Controller
         return this.RedirectToAction("All");
     }
 
+    [HttpGet]
     public async Task<IActionResult> All()
     {
         IEnumerable<CategoryAllViewModel> categories =

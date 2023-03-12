@@ -17,7 +17,7 @@ public class Item
     // [MaxLength(EntitiesValidation.GuidMaxLength)]
     public string Id { get; set; }
 
-    [StringLength(EntitiesValidation.ItemMaxLength, MinimumLength = 3)]
+    [MaxLength(EntitiesValidation.ItemMaxLength)]
     public string? Name { get; set; }
 
     [ForeignKey(nameof(Category))]
@@ -25,7 +25,6 @@ public class Item
 
     public virtual Category Category { get; set; } = null!;
 
-    [Range(typeof(decimal), "0.01", "79228162514264337593543950335")]
     public decimal Price { get; set; }
 
     public virtual ICollection<OrderItem> OrderItems { get; set; }

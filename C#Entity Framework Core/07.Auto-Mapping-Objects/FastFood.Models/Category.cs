@@ -14,8 +14,8 @@ public class Category
     [Key]
     public int Id { get; set; }
 
-   // [MinLength(EntitiesValidation.CategoryMinLength)]
-    [MaxLength(EntitiesValidation.CategoryMaxLength)]
+    [MinLength(ViewModelsValidation.CategoryNameMinLength)]
+    [MaxLength(ViewModelsValidation.CategoryNameMaxLength)]
     public string Name { get; set; } = null!;
 
     public virtual ICollection<Item> Items { get; set; }

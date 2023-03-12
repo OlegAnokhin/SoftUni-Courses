@@ -22,7 +22,6 @@ public class PositionsService : IPositionsService
         Position position = this.mapper.Map<Position>(inputModel);
         await this.context.Positions.AddAsync(position);
         await this.context.SaveChangesAsync();
-
     }
 
     public async Task<IEnumerable<PositionsAllViewModel>> GetAllAsync()

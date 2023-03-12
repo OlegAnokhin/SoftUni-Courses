@@ -5,7 +5,7 @@ namespace FastFood.Web.ViewModels.Categories;
 
 public class CreateCategoryInputModel
 {
-    //[MaxLength(ViewModelsValidation.CategoryNameMaxLength)]
-    //[MinLength(ViewModelsValidation.CategoryNameMinLength)]
+    [MinLength(ViewModelsValidation.CategoryNameMinLength)]
+    [MaxLength(ViewModelsValidation.CategoryNameMaxLength)]
     public string CategoryName { get; set; } = null!;
 }

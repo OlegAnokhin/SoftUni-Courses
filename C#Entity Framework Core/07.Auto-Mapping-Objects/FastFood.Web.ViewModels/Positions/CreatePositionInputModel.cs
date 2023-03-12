@@ -5,7 +5,7 @@ namespace FastFood.Web.ViewModels.Positions;
 
 public class CreatePositionInputModel
 {
-    [MaxLength(ViewModelsValidation.PositionNameMaxLength)]
     [MinLength(ViewModelsValidation.PositionNameMinLength)]
+    [MaxLength(ViewModelsValidation.PositionNameMaxLength)]
     public string PositionName { get; set; } = null!;
 }
