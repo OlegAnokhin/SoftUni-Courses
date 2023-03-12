@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using FastFood.Data;
+using FastFood.Models;
 using FastFood.Web.ViewModels.Employees;
+using Microsoft.EntityFrameworkCore;
 
 namespace FastFood.Services.Data
 
@@ -15,14 +18,22 @@ namespace FastFood.Services.Data
             this.mapper = mapper;
             this.context = context;
         }
-        public Task<IEnumerable<EmployeesAllViewModel>> GetAllAsync()
+        public async Task RegisterAsync(RegisterEmployeeInputModel model)
         {
-            throw new NotImplementedException();
+            Employee employee = this.mapper.Map<Employee>(model);
+
+            await this.context.Employees.AddAsync(employee);
+            await this.context.SaveChangesAsync();
         }
 
-        public Task RegisterAsync(RegisterEmployeeInputModel model)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<IEnumerable<EmployeesAllViewModel>> GetAllAsync()
+            => await this.context.Employees
+                .ProjectTo<EmployeesAllViewModel>(this.mapper.ConfigurationProvider)
+                .ToArrayAsync();
+
+        public async Task<IEnumerable<RegisterEmployeeViewModel>> AddEmployeeInPositionAsync()
+            => await this.context.Positions
+                .ProjectTo<RegisterEmployeeViewModel>(this.mapper.ConfigurationProvider)
+                .ToArrayAsync();
     }
 }

@@ -1,6 +1,6 @@
-﻿using FastFood.Web.ViewModels.Categories;
+﻿namespace FastFood.Services.Data;
 
-namespace FastFood.Services.Data;
+using Web.ViewModels.Categories;
 
 public interface ICategoryService
 {
