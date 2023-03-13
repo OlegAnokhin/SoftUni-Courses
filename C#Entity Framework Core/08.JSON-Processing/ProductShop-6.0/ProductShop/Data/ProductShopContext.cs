@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using ProductShop.Models;
-namespace ProductShop.Data
+﻿namespace ProductShop.Data
 {
+    using Microsoft.EntityFrameworkCore;
+    using Models;
     public class ProductShopContext : DbContext
     {
         public ProductShopContext()
@@ -27,7 +27,8 @@ namespace ProductShop.Data
             if (!optionsBuilder.IsConfigured)
             {
                 optionsBuilder
-                    .UseSqlServer(Configuration.ConnectionString);
+                    .UseSqlServer(Configuration.ConnectionString)
+                    .UseLazyLoadingProxies();
             }
         }
 
@@ -42,11 +43,14 @@ namespace ProductShop.Data
             {
                 entity.HasMany(x => x.ProductsBought)
                       .WithOne(x => x.Buyer)
-                      .HasForeignKey(x => x.BuyerId);
+                      .HasForeignKey(x => x.BuyerId)
+                      .OnDelete(DeleteBehavior.NoAction);
 
                 entity.HasMany(x => x.ProductsSold)
                       .WithOne(x => x.Seller)
-                      .HasForeignKey(x => x.SellerId);
+                      .HasForeignKey(x => x.SellerId)
+                      .OnDelete(DeleteBehavior.NoAction);
+                      
             });
         }
     }

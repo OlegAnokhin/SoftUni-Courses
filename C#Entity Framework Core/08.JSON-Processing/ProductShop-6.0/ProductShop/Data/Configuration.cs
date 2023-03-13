@@ -3,6 +3,6 @@
     public static class Configuration
     {
         public const string ConnectionString =
-            @"Server=ACERPREDATOR\SQLEXPRESS;Database=ProductShop;Integrated Security=True";
+            @"Server=ACERPREDATOR\SQLEXPRESS;Database=ProductShop;Integrated Security=True;Encrypt=False;";
     }
 }
