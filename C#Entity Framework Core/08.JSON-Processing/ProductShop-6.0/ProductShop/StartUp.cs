@@ -21,29 +21,28 @@ namespace ProductShop
         {
             //Query1
             //ProductShopContext context = new ProductShopContext();
-            //string inputString = File.ReadAllText(@"../../../Datasets/users.json");
 
+            ////context.Database.EnsureDeleted();
+            ////context.Database.EnsureCreated();
+            //string inputString = File.ReadAllText(@"../../../Datasets/users.json");
             //string result = ImportUsers(context, inputString);
             //Console.WriteLine(result);
 
             //Query2
             //ProductShopContext context = new ProductShopContext();
             //string inputString = File.ReadAllText(@"../../../Datasets/products.json");
-
             //string result = ImportProducts(context, inputString);
             //Console.WriteLine(result);
 
             //Query3
             //ProductShopContext context = new ProductShopContext();
             //string inputString = File.ReadAllText(@"../../../Datasets/categories.json");
-
             //string result = ImportCategories(context, inputString);
             //Console.WriteLine(result);
 
             //Query4
             //ProductShopContext context = new ProductShopContext();
             //string inputString = File.ReadAllText(@"../../../Datasets/categories-products.json");
-
             //string result = ImportCategoryProducts(context, inputString);
             //Console.WriteLine(result);
 
@@ -56,12 +55,12 @@ namespace ProductShop
             //ProductShopContext context = new ProductShopContext();
             //string result = GetSoldProducts(context);
             //Console.WriteLine(result);
-            
+
             //Query 7
             //ProductShopContext context = new ProductShopContext();
             //string result = GetCategoriesByProductsCount(context);
             //Console.WriteLine(result);
-            
+
             //Query 8
             ProductShopContext context = new ProductShopContext();
             string result = GetUsersWithProducts(context);
@@ -92,13 +91,16 @@ namespace ProductShop
         public static string ImportProducts(ProductShopContext context, string inputJson)
         {
             IMapper mapper = CreateMapper();
-
             ImportProductDTO[] productsDtos = JsonConvert.DeserializeObject<ImportProductDTO[]>(inputJson);
-
-            Product[] products = mapper.Map<Product[]>(productsDtos);
-            context.Products.AddRange(products);
+            ICollection<Product> validProducts = new HashSet<Product>();
+            foreach (var productDto in productsDtos)
+            {
+                Product product = mapper.Map<Product>(productDto);
+                validProducts.Add(product);
+            }
+            context.Products.AddRange(validProducts);
             context.SaveChanges();
-            return $"Successfully imported {products.Length}";
+            return $"Successfully imported {validProducts.Count}";
         }
 
         public static string ImportCategories(ProductShopContext context, string inputJson)
@@ -217,19 +219,20 @@ namespace ProductShop
                 .OrderByDescending(c => c.CategoriesProducts.Count)
                 .Select(c => new
                 {
-                    Category = c.Name,
-                    ProductsCount = c.CategoriesProducts.Count,
-                    AveragePrice = Math.Round((double)c.CategoriesProducts.Average(p => p.Product.Price), 2),
-                    TotalRevenue = Math.Round((double)c.CategoriesProducts.Sum(p => p.Product.Price), 2)
+                    category = c.Name,
+                    productsCount = c.CategoriesProducts.Count,
+                    averagePrice = Math.Round((double)c.CategoriesProducts.Average(p => p.Product.Price), 2).ToString(),
+                    totalRevenue = Math.Round((double)c.CategoriesProducts.Sum(p => p.Product.Price), 2).ToString()
                 })
-                .AsNoTracking()
                 .ToArray();
             return JsonConvert.SerializeObject(categories, 
-                Formatting.Indented,
-                new JsonSerializerSettings()
-                {
-                    ContractResolver = contractResolver
-                });
+                Formatting.Indented
+                //,
+                //new JsonSerializerSettings()
+                //{
+                //    ContractResolver = contractResolver
+                //}
+                );
         }
 
         public static string GetUsersWithProducts(ProductShopContext context)

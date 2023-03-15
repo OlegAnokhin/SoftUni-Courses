@@ -1,0 +1,58 @@
+WRITE
+
+using (SoftUniContext context = new SoftUniContext())
+{
+   var employees = await context.Employees
+        .Where(e => e.DepartmentId == 3)
+        .Include(e => e.Department)
+        .ToListAsync();
+
+    XDocument doc = new XDocument();
+    XElement root = new XElement("employees");
+    string? departmentName = employees.FirstOrDefault()?.Department?.Name;
+    root.Add(new XAttribute("department", departmentName));
+
+    foreach (var employee in employees)
+    {
+        var empl = new XElement("employee");
+        empl.Add(new XElement("Name", $"{employee.FirstName} {employee.LastName}"),
+                new XElement("Salary", employee.Salary));
+        root.Add(empl);
+    }
+
+    doc.Add(root);
+    doc.Save("employees.xml");
+}
+
+
+READ
+
+XDocument doc = XDocument.Load("employees.xml");
+var emplElements = doc.Root.Element("Employees").Elements();
+foreach(var el in emplElements)
+{
+   ConsoleWriteLine($......);
+}
+
+Load DTO with XDocument
+
+XDocument doc = XDocument.Load("employees.xml");
+var dto = new EmployeesDto() {Depatment = doc.Root.Attribute("department").Value};
+var emplCollection = new List<EmployeeDto>();
+var emplElements = doc.Root.Element("Employees").Elements();
+foreach(var el in emplElements)
+{
+   emplCollection.Add(new EmplooDto()
+	{FullName = el.Element("Name").Value,
+	Salary = decimal.Parse(el.Element("Salary").Value, CultureInfo.InvariantCulture)
+	});
+}
+dto.Employees = emplCollection.ToArray();
+
+Load with Serializer  best type
+
+XmlSerialiser deserilizer = new XmlSerializer(typeof(EmployeesDto));
+using (StreamReader reader = new StreamReader("employees.xml"));
+{
+  var dto = (EmployeesDto)deserializer.Deserializer(reader);
+}
