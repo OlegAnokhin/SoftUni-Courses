@@ -62,9 +62,9 @@ namespace ProductShop
             //Console.WriteLine(result);
 
             //Query 8
-            ProductShopContext context = new ProductShopContext();
-            string result = GetUsersWithProducts(context);
-            Console.WriteLine(result);
+            //ProductShopContext context = new ProductShopContext();
+            //string result = GetUsersWithProducts(context);
+            //Console.WriteLine(result);
 
         }
 
