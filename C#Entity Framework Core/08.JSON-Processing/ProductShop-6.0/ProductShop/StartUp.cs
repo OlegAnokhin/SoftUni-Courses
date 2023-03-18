@@ -219,20 +219,19 @@ namespace ProductShop
                 .OrderByDescending(c => c.CategoriesProducts.Count)
                 .Select(c => new
                 {
-                    category = c.Name,
-                    productsCount = c.CategoriesProducts.Count,
-                    averagePrice = Math.Round((double)c.CategoriesProducts.Average(p => p.Product.Price), 2).ToString(),
-                    totalRevenue = Math.Round((double)c.CategoriesProducts.Sum(p => p.Product.Price), 2).ToString()
+                    Category = c.Name,
+                    ProductsCount = c.CategoriesProducts.Count,
+                    AveragePrice = Math.Round((double)c.CategoriesProducts.Average(p => p.Product.Price), 2).ToString(),
+                    TotalRevenue = Math.Round((double)c.CategoriesProducts.Sum(p => p.Product.Price), 2).ToString()
                 })
                 .ToArray();
             return JsonConvert.SerializeObject(categories, 
                 Formatting.Indented
-                //,
-                //new JsonSerializerSettings()
-                //{
-                //    ContractResolver = contractResolver
-                //}
-                );
+                ,
+                new JsonSerializerSettings()
+                {
+                    ContractResolver = contractResolver
+                });
         }
 
         public static string GetUsersWithProducts(ProductShopContext context)

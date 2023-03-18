@@ -10,14 +10,11 @@ namespace ProductShop
     {
         public ProductShopProfile()
         {
+            //User
             this.CreateMap<ImportUserDTO, User>();
 
+            //Product
             this.CreateMap<ImportProductDTO, Product>();
-
-            this.CreateMap<ImportCategoryDTO, Category>();
-
-            this.CreateMap<ImportCategorieProductDTO, CategoryProduct>();
-
             this.CreateMap<Product, ExportProductInRangeDTO>()
                 .ForMember(d => d.ProductName,
                     opt => opt.MapFrom(s => s.Name))
@@ -25,6 +22,13 @@ namespace ProductShop
                     opt => opt.MapFrom(s => s.Price))
                 .ForMember(d => d.SellerName,
                     opt => opt.MapFrom(s => $"{s.Seller.FirstName} {s.Seller.LastName}"));
+
+            //Category
+            this.CreateMap<ImportCategoryDTO, Category>();
+
+            //CategoryProduct
+            this.CreateMap<ImportCategorieProductDTO, CategoryProduct>();
+
         }
     }
 }
