@@ -10,6 +10,7 @@
     using Newtonsoft.Json.Serialization;
     using System.Text;
     using Microsoft.EntityFrameworkCore;
+    using System.Linq;
 
     public class StartUp
     {
@@ -304,27 +305,54 @@
 
         public static string GetTotalSalesByCustomer(CarDealerContext context)
         {
-            var totalSales = context.Customers
-                .Where(c => c.Sales.Count() > 0)
+            //opt 1 not work
+            var totalSales = context.Sales
+                .Where(c => c.Customer.Sales.Count() > 0)
                 .Select(c => new
                 {
-                    fullName = c.Name,
-                    boughtCars = c.Sales.Count(),
-                    spentMoney = c.Sales.Sum(s => s.Car.PartsCars.Sum(pc => pc.Part.Price))
+                    fullName = c.Customer.Name,
+                    boughtCars = c.Customer.Sales.Count(),
+                    spentMoney = c.Customer.Sales.Sum(c => c.Car.PartsCars.Sum(pc => pc.Part.Price))
                 })
                 .OrderByDescending(ts => ts.spentMoney)
                 .ThenByDescending(ts => ts.boughtCars)
                 .ToList();
             return JsonConvert.SerializeObject(totalSales, Formatting.Indented);
+            
+            //opt 2 not work too
+            //var totalSales = context.Customers
+            //    .Where(c => c.Sales.Count() > 0)
+            //    .Select(c => new
+            //    {
+            //        fullName = c.Name,
+            //        boughtCars = c.Sales.Count(),
+            //        spentMoney = c.Sales.Sum(s => s.Car.PartsCars.Sum(pc => pc.Part.Price))
+            //    })
+            //    .OrderByDescending(ts => ts.spentMoney)
+            //    .ThenByDescending(ts => ts.boughtCars)
+            //    .ToList();
+            //return JsonConvert.SerializeObject(totalSales, Formatting.Indented);
         }
 
         public static string GetSalesWithAppliedDiscount(CarDealerContext context)
         {
-            //Not implement
-            var salesWithDiscount = context.Sales
-                .ToList();
-            return JsonConvert.SerializeObject(salesWithDiscount, Formatting.Indented);
+            var salesInfo = context.Sales
+                .Select(c => new
+                {
+                    car = new
+                    {
+                        Make = c.Car.Make,
+                        Model = c.Car.Model,
+                        TraveledDistance = c.Car.TraveledDistance
+                    },
+                    customerName = c.Customer.Name,
+                    discount = c.Discount.ToString("f2"),
+                    price = c.Car.PartsCars.Sum(pc => pc.Part.Price).ToString("f2"),
+                    priceWithDiscount =
+                        ((c.Car.PartsCars.Sum(pc => pc.Part.Price)) * (1 - c.Discount * 0.01m)).ToString("f2")
+                }).Take(10).ToList();
 
+            return JsonConvert.SerializeObject(salesInfo, Formatting.Indented);
         }
 
         private static IContractResolver ConfigureCamelCaseNaming()
