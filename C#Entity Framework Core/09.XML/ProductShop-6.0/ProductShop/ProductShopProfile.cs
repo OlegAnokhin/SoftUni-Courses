@@ -1,4 +1,6 @@
-﻿namespace ProductShop
+﻿using ProductShop.DTOs.Export;
+
+namespace ProductShop
 {
     using DTOs.Import;
     using Models;
@@ -14,6 +16,13 @@
 
             //Product
             CreateMap<ImportProductDto, Product>();
+            this.CreateMap<Product, ExportProductDto>()
+                .ForMember(d => d.ProductName,
+                    opt => opt.MapFrom(s => s.Name))
+                .ForMember(d => d.ProductPrice,
+                    opt => opt.MapFrom(s => s.Price))
+                .ForMember(d => d.BuyerName,
+                    opt => opt.MapFrom(s => $"{s.Buyer.FirstName} {s.Buyer.LastName}"));
 
             //Categories
             CreateMap<ImportCategoryDto, Category>();

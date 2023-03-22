@@ -1,4 +1,7 @@
-﻿namespace ProductShop
+﻿using AutoMapper.QueryableExtensions;
+using ProductShop.DTOs.Export;
+
+namespace ProductShop
 {
 
     using AutoMapper;
@@ -7,6 +10,7 @@
     using DTOs.Import;
     using Data;
     using Models;
+    using System.Xml.Serialization;
 
     public class StartUp
     {
@@ -31,11 +35,20 @@
             //Console.WriteLine(result);
 
             //Query 4. Import Categories and Products
-            ProductShopContext context = new ProductShopContext();
-            string inputXml = File.ReadAllText("../../../Datasets/categories-products.xml");
-            string result = ImportCategoryProducts(context, inputXml);
-            Console.WriteLine(result);
+            //ProductShopContext context = new ProductShopContext();
+            //string inputXml = File.ReadAllText("../../../Datasets/categories-products.xml");
+            //string result = ImportCategoryProducts(context, inputXml);
+            //Console.WriteLine(result);
 
+            //Query 5. Export Products In Range
+            //using ProductShopContext context = new ProductShopContext();
+            //string result = GetProductsInRange(context);
+            //Console.WriteLine(result);
+
+            //Query 6. Export Sold Products
+            using ProductShopContext context = new ProductShopContext();
+            string result = GetSoldProducts(context);
+            Console.WriteLine(result);
 
 
         }
@@ -112,28 +125,87 @@
 
         public static string ImportCategoryProducts(ProductShopContext context, string inputXml)
         {
+            var xmlSerializer = new XmlSerializer(typeof(ImportCategoryProductDto[]),
+                new XmlRootAttribute("CategoryProducts"));
+            var categoryProducts = new List<CategoryProduct>();
+
+            using (var reader = new StringReader(inputXml))
+            {
+                var categoryProductsFromDto = (ImportCategoryProductDto[])xmlSerializer.Deserialize(reader);
+
+                var categoryIds = context.Categories.Select(c => c.Id).ToList();
+                var productIds = context.Products.Select(p => p.Id).ToList();
+
+                foreach (var dto in categoryProductsFromDto)
+                 {
+                    if (categoryIds.Any(c => c == dto.CategoryId &&
+                                             productIds.Any(p => p == dto.ProductId)))
+                    {
+                        var categoryProduct = new CategoryProduct
+                        {
+                            CategoryId = dto.CategoryId,
+                            ProductId = dto.ProductId
+                        };
+
+                        categoryProducts.Add(categoryProduct);
+                    }
+                }
+
+                context.CategoryProducts.AddRange(categoryProducts);
+                context.SaveChanges();
+            }
+
+            return $"Successfully imported {context.CategoryProducts.Count()}";
+            //IMapper mapper = InitializeAutoMapper();
+            //XmlHelper xmlHelper = new XmlHelper();
+
+            //ImportCategoryProductDto[] categoryProductDtos =
+            //    xmlHelper.Deserialize<ImportCategoryProductDto[]>(inputXml, "CategoryProducts");
+            //ICollection<CategoryProduct> validCategoriesProducts = new HashSet<CategoryProduct>();
+            //foreach (var categoryProductDto in categoryProductDtos)
+            //{
+            //    if (categoryProductDto.CategoryId == null ||
+            //        categoryProductDto.ProductId == null)
+            //    {
+            //        continue;
+            //    }
+            //    CategoryProduct categoryProduct = mapper.Map<CategoryProduct>(categoryProductDto);
+            //    validCategoriesProducts.Add(categoryProduct);
+            //}
+            //context.CategoryProducts.AddRange(validCategoriesProducts);
+            // context.SaveChanges();
+
+            //return $"Successfully imported {validCategoriesProducts.Count}";
+        }
+
+        public static string GetProductsInRange(ProductShopContext context)
+        {
             IMapper mapper = InitializeAutoMapper();
             XmlHelper xmlHelper = new XmlHelper();
 
-            ImportCategoryProductDto[] categoryProductDtos =
-                xmlHelper.Deserialize<ImportCategoryProductDto[]>(inputXml, "CategoryProducts");
-            ICollection<CategoryProduct> validCategoriesProducts = new HashSet<CategoryProduct>();
-            foreach (var categoryProductDto in categoryProductDtos)
-            {
-                //if (categoryProductDto.CategoryId == null ||
-                //    categoryProductDto.ProductId == null)
-                //{
-                //    continue;
-                //}
-                CategoryProduct categoryProduct = mapper.Map<CategoryProduct>(categoryProductDto);
-                validCategoriesProducts.Add(categoryProduct);
-            }
-            context.CategoryProducts.AddRange(validCategoriesProducts);
-            context.SaveChanges();
-
-            return $"Successfully imported {validCategoriesProducts.Count}";
+            ExportProductDto[] productsDtos = context.Products
+                .Where(p => p.Price >= 500 && p.Price <= 1000)
+                .OrderBy(p => p.Price)
+                .Take(10)
+                .ProjectTo<ExportProductDto>(mapper.ConfigurationProvider)
+                .ToArray();
+            return xmlHelper.Serialize<ExportProductDto[]>(productsDtos, "Products");
         }
 
+        public static string GetSoldProducts(ProductShopContext context)
+        {
+            IMapper mapper = InitializeAutoMapper();
+            XmlHelper xmlHelper = new XmlHelper();
+
+            ExportProductDto[] productsDtos = context.Products
+                .Where(p => p.Price >= 500 && p.Price <= 1000)
+                .OrderBy(p => p.Price)
+                .Take(10)
+                .ProjectTo<ExportProductDto>(mapper.ConfigurationProvider)
+                .ToArray();
+            return xmlHelper.Serialize<ExportProductDto[]>(productsDtos, "Products");
+
+        }
 
         private static IMapper InitializeAutoMapper()
             => new Mapper(new MapperConfiguration(cfg => { cfg.AddProfile<ProductShopProfile>(); }));
