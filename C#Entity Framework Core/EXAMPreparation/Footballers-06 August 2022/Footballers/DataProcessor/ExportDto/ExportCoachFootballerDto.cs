@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Footballers.DataProcessor.ExportDto
+﻿namespace Footballers.DataProcessor.ExportDto
 {
-    internal class ExportCoachFootballerDto
+    using System.Xml.Serialization;
+
+    [XmlType("Footballer")]
+    public class ExportCoachFootballerDto
     {
+        [XmlElement("Name")]
+        public string Name { get; set; }
+
+        [XmlElement("Position")]
+        public string Position { get; set; }
     }
 }
