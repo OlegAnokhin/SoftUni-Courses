@@ -47,8 +47,8 @@ namespace Footballers.Migrations
                     Name = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
                     ContractStartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ContractEndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    PositionType = table.Column<int>(type: "int", nullable: false),
                     BestSkillType = table.Column<int>(type: "int", nullable: false),
+                    PositionType = table.Column<int>(type: "int", nullable: false),
                     CoachId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>

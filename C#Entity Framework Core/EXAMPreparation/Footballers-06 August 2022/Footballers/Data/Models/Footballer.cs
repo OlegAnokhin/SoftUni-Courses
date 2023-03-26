@@ -6,13 +6,17 @@
 
     public class Footballer
     {
+        public Footballer()
+        {
+            this.TeamsFootballers = new HashSet<TeamFootballer>();
+        }
         [Key]
         public int Id { get; set; }
 
         [Required]
         [MaxLength(40)]
         [MinLength(2)]
-        public string Name { get; set; } = null!;
+        public string Name { get; set; }
 
         [Required]
         public DateTime ContractStartDate { get; set; }
@@ -26,13 +30,10 @@
         [Required]
         public PositionType PositionType { get; set; }
 
-        [Required] 
+        [Required]
+        [ForeignKey("CoachId")]
         public int CoachId { get; set; }
-
-        [ForeignKey(nameof(CoachId))]
-        public Coach Coach { get; set; } = null!;
-
-        public virtual ICollection<TeamFootballer> TeamsFootballers { get; set; } = new HashSet<TeamFootballer>();
-
+        public Coach Coach { get; set; }
+        public ICollection<TeamFootballer> TeamsFootballers { get; set; }
     }
 }

@@ -3,8 +3,6 @@
     using System.Xml.Serialization;
     using System.ComponentModel.DataAnnotations;
 
-    using Data.Models.Enums;
-
    [XmlType("Footballer")]
     public class ImportFootballerDto
     {
@@ -12,7 +10,7 @@
         [Required]
         [MaxLength(40)]
         [MinLength(2)]
-        public string? Name { get; set; }
+        public string Name { get; set; }
 
         [XmlElement("ContractStartDate")]
         [Required]

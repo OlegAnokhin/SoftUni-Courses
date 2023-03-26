@@ -1,15 +1,15 @@
-﻿using System.Globalization;
-using System.Text;
-using System.Xml.Serialization;
-using Footballers.Data.Models;
-using Footballers.Data.Models.Enums;
-using Footballers.DataProcessor.ImportDto;
-using Newtonsoft.Json;
-
-namespace Footballers.DataProcessor
+﻿namespace Footballers.DataProcessor
 {
-    using Footballers.Data;
+    using System.Globalization;
+    using System.Text;
+    using Newtonsoft.Json;
+    using System.Xml.Serialization;
     using System.ComponentModel.DataAnnotations;
+
+    using Data;
+    using Data.Models;
+    using Data.Models.Enums;
+    using ImportDto;
 
     public class Deserializer
     {
@@ -52,14 +52,14 @@ namespace Footballers.DataProcessor
                     {
                         footballerEntity.Name = footballer.Name ?? "";
                         footballerEntity.PositionType = (PositionType)footballer.PositionType;
-                        footballerEntity.ContractEndDate =
+                        footballerEntity.ContractStartDate =
                             DateTime.ParseExact(footballer.ContractStartDate, "dd/MM/yyyy",
                                 CultureInfo.InvariantCulture);
                         footballerEntity.ContractEndDate =
                             DateTime.ParseExact(footballer.ContractEndDate, "dd/MM/yyyy",
                                 CultureInfo.InvariantCulture);
                         footballerEntity.BestSkillType = (BestSkillType)footballer.BestSkillType;
-                        if (IsValid(footballerEntity)
+                        if (!IsValid(footballerEntity)
                             || footballerEntity.ContractEndDate < footballerEntity.ContractStartDate)
                         {
                             sb.AppendLine(ErrorMessage);
@@ -80,58 +80,53 @@ namespace Footballers.DataProcessor
 
             return sb.ToString().TrimEnd();
         }
-
         public static string ImportTeams(FootballersContext context, string jsonString)
         {
             StringBuilder sb = new StringBuilder();
-            var teamsEntities = new List<Team>();
+            ImportTeamDto[] teamDtos = JsonConvert.DeserializeObject<ImportTeamDto[]>(jsonString);
 
-            var teams = JsonConvert.DeserializeObject<TeamDto[]>(jsonString);
+            List<Team> teams = new List<Team>();
 
-            foreach (var team in teams)
+            foreach (ImportTeamDto teamDto in teamDtos)
             {
-                Team teamEntity = new Team();
-                teamEntity.Name = team.Name ?? "";
-                teamEntity.Nationality = team.Nationality ?? "";
-
-                if (!int.TryParse(team.Trophies, out var trophiesCount)
-                    || trophiesCount <= 0)
+                if (!IsValid(teamDto))
                 {
                     sb.AppendLine(ErrorMessage);
                     continue;
                 }
 
-                teamEntity.Trophies = trophiesCount;
-                if (!IsValid(teamEntity))
+                Team t = new Team()
+                {
+                    Name = teamDto.Name,
+                    Nationality = teamDto.Nationality,
+                    Trophies = teamDto.Trophies,
+                };
+
+                if (t.Trophies == 0)
                 {
                     sb.AppendLine(ErrorMessage);
                     continue;
                 }
 
-                foreach (var footballer in team.Footballers.Distinct())
+                foreach (int footballerId in teamDto.Footballers.Distinct())
                 {
-                    Footballer? footballerEntity = context.Footballers.Find(footballer);
-
-                    if (footballerEntity == null)
+                    Footballer f = context.Footballers.Find(footballerId);
+                    if (f == null)
                     {
                         sb.AppendLine(ErrorMessage);
                         continue;
                     }
 
-                 //   if (!teamEntity.TeamsFootballers.Any(f => f.FootballerId == footballer))
-                 //   {
-                        teamEntity.TeamsFootballers.Add(new TeamFootballer()
-                            {Footballer = footballerEntity, FootballerId = footballer});
-                   // }
+                    t.TeamsFootballers.Add(new TeamFootballer()
+                    {
+                        Footballer = f
+                    });
                 }
-
-                teamsEntities.Add(teamEntity);
-                sb.AppendLine(String.Format(SuccessfullyImportedTeam, teamEntity.Name, teamEntity.TeamsFootballers.Count));
-
+                teams.Add(t);
+                sb.AppendLine(String.Format(SuccessfullyImportedTeam, t.Name, t.TeamsFootballers.Count));
             }
-            context.Teams.AddRange(teamsEntities);
+            context.Teams.AddRange(teams);
             context.SaveChanges();
-
             return sb.ToString().TrimEnd();
         }
 

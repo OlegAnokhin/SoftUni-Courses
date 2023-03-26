@@ -134,13 +134,13 @@ namespace Footballers.Migrations
             modelBuilder.Entity("Footballers.Data.Models.TeamFootballer", b =>
                 {
                     b.HasOne("Footballers.Data.Models.Footballer", "Footballer")
-                        .WithMany()
+                        .WithMany("TeamsFootballers")
                         .HasForeignKey("FootballerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Footballers.Data.Models.Team", "Team")
-                        .WithMany()
+                        .WithMany("TeamsFootballers")
                         .HasForeignKey("TeamId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -153,6 +153,16 @@ namespace Footballers.Migrations
             modelBuilder.Entity("Footballers.Data.Models.Coach", b =>
                 {
                     b.Navigation("Footballers");
+                });
+
+            modelBuilder.Entity("Footballers.Data.Models.Footballer", b =>
+                {
+                    b.Navigation("TeamsFootballers");
+                });
+
+            modelBuilder.Entity("Footballers.Data.Models.Team", b =>
+                {
+                    b.Navigation("TeamsFootballers");
                 });
 #pragma warning restore 612, 618
         }

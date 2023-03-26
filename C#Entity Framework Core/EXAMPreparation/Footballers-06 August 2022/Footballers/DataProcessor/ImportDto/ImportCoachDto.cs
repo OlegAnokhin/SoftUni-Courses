@@ -6,18 +6,17 @@
     [XmlType("Coach")]
     public class ImportCoachDto
     {
-        [XmlElement("Name")]
         [Required]
+        [XmlElement("Name")]
         [MinLength(2)]
         [MaxLength(40)]
-        public string? Name { get; set; }
+        public string Name { get; set; }
 
-        [XmlElement("Nationality")]
         [Required]
+        [XmlElement("Nationality")]
         public string? Nationality { get; set; }
 
         [XmlArray("Footballers")]
-        [XmlArrayItem("Footballer")]
         public virtual ImportFootballerDto[] Footballers { get; set; }
     }
 }

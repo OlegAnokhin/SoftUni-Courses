@@ -4,14 +4,13 @@
 
     public class TeamFootballer
     {
+        [ForeignKey("Team")]
         public int TeamId { get; set; }
 
-        [ForeignKey(nameof(TeamId))]
-        public Team Team { get; set; } = null!;
+        public Team Team { get; set; }
 
+        [ForeignKey("Footballer")]
         public int FootballerId { get; set; }
-
-        [ForeignKey(nameof(FootballerId))]
-        public Footballer Footballer { get; set; } = null!;
+        public Footballer Footballer { get; set; }
     }
 }
