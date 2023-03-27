@@ -1,4 +1,7 @@
-﻿namespace SoftJail
+﻿using System.Linq;
+using SoftJail.DataProcessor.ExportDto;
+
+namespace SoftJail
 {
     using AutoMapper;
     using Data.Models;
@@ -13,6 +16,15 @@
             this.CreateMap<ImportDepatmentCellDto, Cell>();
 
             this.CreateMap<ImportPrisonerMailDto, Mail>();
+
+            this.CreateMap<Mail, ExportPrisonerMailsDto>()
+                .ForMember(d => d.Description,
+                    opt => opt.MapFrom(s => string.Join("", s.Description.Reverse())));
+            this.CreateMap<Prisoner, ExportPrisonerDto>()
+                .ForMember(d => d.IncarcerationDate,
+                    opt => opt.MapFrom(s => s.IncarcerationDate.ToString("yyyy-MM-dd")))
+                .ForMember(d => d.Mails,
+                    opt => opt.MapFrom(s => s.Mails));
 
         }
     }

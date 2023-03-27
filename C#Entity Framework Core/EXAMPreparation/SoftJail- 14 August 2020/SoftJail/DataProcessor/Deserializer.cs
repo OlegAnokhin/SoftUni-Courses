@@ -1,20 +1,19 @@
-﻿using System.IO;
-using System.Xml.Serialization;
-using SoftJail.Data.Models.Enums;
-
-namespace SoftJail.DataProcessor
+﻿namespace SoftJail.DataProcessor
 {
-    using AutoMapper;
-    using Data;
-    using Newtonsoft.Json;
-    using Data.Models;
-    using ImportDto;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Globalization;
+    using System.IO;
     using System.Linq;
     using System.Text;
+    using System.Xml.Serialization;
+    using AutoMapper;
+    using ImportDto;
+    using Newtonsoft.Json;
+    using Data;
+    using Data.Models;
+    using Data.Models.Enums;
 
     public class Deserializer
     {
@@ -174,11 +173,11 @@ namespace SoftJail.DataProcessor
                     sb.AppendLine("Invalid Data");
                     continue;
                 }
-                if (!context.Departments.Any(d => d.Id == officerDto.DepartmentId))
-                {
-                    sb.AppendLine("Invalid Data");
-                    continue;
-                }
+                //if (!context.Departments.Any(d => d.Id == officerDto.DepartmentId))
+                //{
+                //    sb.AppendLine("Invalid Data");
+                //    continue;
+                //}
 
                 Officer officer = new Officer()
                 {

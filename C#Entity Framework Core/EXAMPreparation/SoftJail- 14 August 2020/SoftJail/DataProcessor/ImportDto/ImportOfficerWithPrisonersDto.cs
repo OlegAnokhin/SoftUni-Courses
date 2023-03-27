@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace SoftJail.DataProcessor.ImportDto
+﻿namespace SoftJail.DataProcessor.ImportDto
 {
     using Data.Common;
     using System.ComponentModel.DataAnnotations;
