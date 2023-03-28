@@ -2,9 +2,9 @@
 {
     public enum Genre
     {
-        Drama = 1, 
-        Comedy = 2, 
-        Romance = 3, 
-        Musical = 4
+        Drama, 
+        Comedy, 
+        Romance, 
+        Musical
     }
 }
