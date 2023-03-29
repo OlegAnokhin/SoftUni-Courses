@@ -6,14 +6,12 @@
     [XmlType("Shell")]
     public class ShellDto
     {
-        [Required]
-        [Range(2, 1680)]
+        [Range(2, 1_680)]
         [XmlElement("ShellWeight")]
         public double ShellWeight { get; set; }
 
         [Required]
-        [MinLength(4)]
-        [MaxLength(30)]
+        [StringLength(30, MinimumLength = 4)]
         [XmlElement("Caliber")]
         public string Caliber { get; set; }
     }

@@ -2,19 +2,16 @@
 {
     using System.ComponentModel.DataAnnotations;
     using System.Xml.Serialization;
-
     [XmlType("Manufacturer")]
     public class ManufacturerDto
     {
         [Required]
-        [MinLength(4)]
-        [MaxLength(40)]
+        [StringLength(40, MinimumLength = 4)]
         [XmlElement("ManufacturerName")]
         public string ManufacturerName { get; set; }
 
         [Required]
-        [MinLength(10)]
-        [MaxLength(100)]
+        [StringLength(100, MinimumLength = 10)]
         [XmlElement("Founded")]
         public string Founded { get; set; }
     }
