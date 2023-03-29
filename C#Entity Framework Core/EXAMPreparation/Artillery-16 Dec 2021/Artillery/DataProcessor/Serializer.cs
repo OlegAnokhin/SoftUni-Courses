@@ -1,5 +1,4 @@
-﻿
-namespace Artillery.DataProcessor
+﻿namespace Artillery.DataProcessor
 {
     using Artillery.Data;
     using Artillery.DataProcessor.ExportDto;

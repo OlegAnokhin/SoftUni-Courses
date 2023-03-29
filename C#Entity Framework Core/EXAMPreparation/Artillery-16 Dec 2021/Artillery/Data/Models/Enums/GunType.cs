@@ -2,6 +2,11 @@
 {
     public enum GunType
     {
-        Howitzer, Mortar, FieldGun, AntiAircraftGun, MountainGun, AntiTankGun
+        Howitzer, 
+        Mortar, 
+        FieldGun, 
+        AntiAircraftGun, 
+        MountainGun, 
+        AntiTankGun
     }
 }
