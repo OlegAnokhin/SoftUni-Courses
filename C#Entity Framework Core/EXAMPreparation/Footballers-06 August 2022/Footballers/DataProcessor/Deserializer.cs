@@ -1,4 +1,6 @@
-﻿namespace Footballers.DataProcessor
+﻿using Castle.Core.Internal;
+
+namespace Footballers.DataProcessor
 {
     using System.Globalization;
     using System.Text;
@@ -10,6 +12,7 @@
     using Data.Models;
     using Data.Models.Enums;
     using ImportDto;
+    using System.Diagnostics.Metrics;
 
     public class Deserializer
     {
@@ -23,59 +26,61 @@
 
         public static string ImportCoaches(FootballersContext context, string xmlString)
         {
-            StringBuilder sb = new StringBuilder();
+            var deserializer = new XmlSerializer(typeof(ImportCoachDto[]), new XmlRootAttribute("Coaches"));
+            var objects = (ImportCoachDto[])deserializer.Deserialize(new StringReader(xmlString));
+            var coaches = new List<Coach>();
+            var sb = new StringBuilder();
 
-            ImportCoachDto[] coaches;
-            XmlSerializer serializer = new XmlSerializer(typeof(ImportCoachDto[]), new XmlRootAttribute("Coaches"));
-
-            using (TextReader reader = new StringReader(xmlString))
+            foreach (var coach in objects)
             {
-                coaches = (ImportCoachDto[])serializer.Deserialize(reader);
-
-            }
-
-            List<Coach> coachEntitys = new List<Coach>();
-            foreach (var coach in coaches)
-            {
-                Coach coachEntity = new Coach();
-                coachEntity.Name = coach.Name ?? "";
-                coachEntity.Nationality = coach.Nationality ?? "";
-                if (!IsValid(coachEntity))
+                if (!IsValid(coach))
                 {
                     sb.AppendLine(ErrorMessage);
                     continue;
                 }
+                if (coach.Nationality.IsNullOrEmpty())
+                {
+                    sb.AppendLine(ErrorMessage);
+                    continue;
+                }
+
+                ICollection<Footballer> validFootballers = new HashSet<Footballer>();
                 foreach (var footballer in coach.Footballers)
                 {
-                    Footballer footballerEntity = new Footballer();
-                    try
-                    {
-                        footballerEntity.Name = footballer.Name ?? "";
-                        footballerEntity.PositionType = (PositionType)footballer.PositionType;
-                        footballerEntity.ContractStartDate =
-                            DateTime.ParseExact(footballer.ContractStartDate, "dd/MM/yyyy",
-                                CultureInfo.InvariantCulture);
-                        footballerEntity.ContractEndDate =
-                            DateTime.ParseExact(footballer.ContractEndDate, "dd/MM/yyyy",
-                                CultureInfo.InvariantCulture);
-                        footballerEntity.BestSkillType = (BestSkillType)footballer.BestSkillType;
-                        if (!IsValid(footballerEntity)
-                            || footballerEntity.ContractEndDate < footballerEntity.ContractStartDate)
-                        {
-                            sb.AppendLine(ErrorMessage);
-                            continue;
-                        }
-                    }
-                    catch (Exception)
+                    if (!IsValid(footballer))
                     {
                         sb.AppendLine(ErrorMessage);
                         continue;
                     }
-                    coachEntity.Footballers.Add(footballerEntity);
+
+                    Footballer validFootballer = new Footballer();
+                    validFootballer.Name = footballer.Name;
+                    validFootballer.ContractStartDate =
+                        DateTime.ParseExact(footballer.ContractStartDate, "dd/MM/yyyy",
+                            CultureInfo.InvariantCulture);
+                    validFootballer.ContractEndDate =
+                        DateTime.ParseExact(footballer.ContractEndDate, "dd/MM/yyyy",
+                            CultureInfo.InvariantCulture);
+                    validFootballer.BestSkillType = (BestSkillType)footballer.BestSkillType;
+                    validFootballer.PositionType = (PositionType)footballer.PositionType;
+                    
+                    if (validFootballer.ContractStartDate > validFootballer.ContractEndDate)
+                    {
+                        sb.AppendLine(ErrorMessage);
+                        continue;
+                    }
+                    validFootballers.Add(validFootballer);
                 }
-                sb.AppendLine(string.Format(SuccessfullyImportedCoach, coachEntity.Name, coachEntity.Footballers.Count));
+                var validCoach = new Coach()
+                {
+                    Name = coach.Name,
+                    Nationality = coach.Nationality,
+                    Footballers = validFootballers
+                };
+                coaches.Add(validCoach);
+                sb.AppendLine(string.Format(SuccessfullyImportedCoach, validCoach.Name, validCoach.Footballers.Count));
             }
-            context.Coaches.AddRange(coachEntitys);
+            context.Coaches.AddRange(coaches);
             context.SaveChanges();
 
             return sb.ToString().TrimEnd();

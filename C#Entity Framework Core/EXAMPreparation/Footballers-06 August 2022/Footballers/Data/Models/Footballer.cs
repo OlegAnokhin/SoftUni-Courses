@@ -25,15 +25,15 @@
         public DateTime ContractEndDate { get; set; }
 
         [Required]
-        public BestSkillType BestSkillType { get; set; }
-
-        [Required]
         public PositionType PositionType { get; set; }
 
         [Required]
-        [ForeignKey("CoachId")]
+        public BestSkillType BestSkillType { get; set; }
+
+        [Required]
+        [ForeignKey(nameof(Coach))]
         public int CoachId { get; set; }
-        public Coach Coach { get; set; }
-        public ICollection<TeamFootballer> TeamsFootballers { get; set; }
+        public virtual Coach Coach { get; set; }
+        public virtual ICollection<TeamFootballer> TeamsFootballers { get; set; }
     }
 }

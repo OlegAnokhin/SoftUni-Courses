@@ -1,4 +1,6 @@
-﻿namespace Footballers.DataProcessor
+﻿using Footballers.DataProcessor.ImportDto;
+
+namespace Footballers.DataProcessor
 {
     using System;
     using System.IO;
@@ -19,6 +21,38 @@
 
     public class Serializer
     {
+        public static string ExportTeamsWithMostFootballers(FootballersContext context, DateTime date)
+        {
+            var teams = context
+                .Teams
+                .Where(t => t.TeamsFootballers.Any(tf => tf.Footballer.ContractStartDate >= date))
+                .ToArray()
+                .Select(t => new
+                {
+                    t.Name,
+                    Footballers = t.TeamsFootballers
+                        .Where(tf => tf.Footballer.ContractStartDate >= date)
+                        .ToArray()
+                        .OrderByDescending(tf => tf.Footballer.ContractEndDate)
+                        .ThenBy(tf => tf.Footballer.Name)
+                        .Select(tf => new
+                        {
+                            FootballerName = tf.Footballer.Name,
+                            ContractStartDate = tf.Footballer.ContractStartDate.ToString("d", CultureInfo.InvariantCulture),
+                            ContractEndDate = tf.Footballer.ContractEndDate.ToString("d", CultureInfo.InvariantCulture),
+                            PositionType = tf.Footballer.PositionType.ToString(),
+                            BestSkillType = tf.Footballer.BestSkillType.ToString()
+                        })
+                        .ToArray()
+                })
+                .OrderByDescending(t => t.Footballers.Length)
+                .ThenBy(t => t.Name)
+                .Take(5)
+                .ToArray();
+
+            return JsonConvert.SerializeObject(teams, Formatting.Indented);
+        }
+
         public static string ExportCoachesWithTheirFootballers(FootballersContext context)
         {
             var config = new MapperConfiguration(cfg =>
@@ -45,38 +79,6 @@
                 .ToArray();
             xmlSerializer.Serialize(sw, coachDtos, namespaces);
             return sb.ToString().TrimEnd();
-        }
-
-        public static string ExportTeamsWithMostFootballers(FootballersContext context, DateTime date)
-        {
-            var teams = context
-                .Teams
-                .Where(t => t.TeamsFootballers.Any(tf => tf.Footballer.ContractStartDate >= date))
-                .ToArray()
-                .Select(t => new
-                {
-                    t.Name,
-                    Footballers = t.TeamsFootballers
-                        .Where(tf => tf.Footballer.ContractStartDate >= date)
-                        .ToArray()
-                        .OrderByDescending(tf => tf.Footballer.ContractEndDate)
-                        .ThenBy(tf => tf.Footballer.Name)
-                        .Select(tf => new
-                        {
-                            FootballerName = tf.Footballer.Name,
-                            ContractStartDate = tf.Footballer.ContractStartDate.ToString("d", CultureInfo.InvariantCulture),
-                            ContractEndDate = tf.Footballer.ContractEndDate.ToString("d", CultureInfo.InvariantCulture),
-                            BestSkillType = tf.Footballer.BestSkillType.ToString(),
-                            PositionType = tf.Footballer.PositionType.ToString()
-                        })
-                        .ToArray()
-                })
-                .OrderByDescending(t => t.Footballers.Length)
-                .ThenBy(t => t.Name)
-                .Take(5)
-                .ToArray();
-
-            return JsonConvert.SerializeObject(teams, Formatting.Indented);
         }
     }
 }

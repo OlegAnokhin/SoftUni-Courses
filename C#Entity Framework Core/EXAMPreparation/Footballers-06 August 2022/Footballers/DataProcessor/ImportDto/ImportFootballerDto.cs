@@ -6,26 +6,26 @@
    [XmlType("Footballer")]
     public class ImportFootballerDto
     {
-        [XmlElement("Name")]
         [Required]
-        [MaxLength(40)]
         [MinLength(2)]
+        [MaxLength(40)]
+        [XmlElement("Name")]
         public string Name { get; set; }
 
+        [Required]
         [XmlElement("ContractStartDate")]
-        [Required]
-        public string? ContractStartDate { get; set; }
+        public string ContractStartDate { get; set; }
 
+        [Required]
         [XmlElement("ContractEndDate")]
-        [Required]
-        public string? ContractEndDate { get; set; }
+        public string ContractEndDate { get; set; }
 
-        [XmlElement("BestSkillType")]
         [Required]
+        [XmlElement("BestSkillType")]
         public int BestSkillType { get; set; }
 
-        [XmlElement("PositionType")]
         [Required]
+        [XmlElement("PositionType")]
         public int PositionType { get; set; }
     }
 }

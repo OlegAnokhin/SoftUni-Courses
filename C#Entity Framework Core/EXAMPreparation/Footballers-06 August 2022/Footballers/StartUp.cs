@@ -1,14 +1,12 @@
-﻿using System;
-using System.IO;
-using System.Globalization;
-
-using AutoMapper;
-using Microsoft.EntityFrameworkCore;
-
-using Footballers.Data;
-
-namespace Footballers
+﻿namespace Footballers
 {
+    using AutoMapper;
+    using Footballers.Data;
+    using Microsoft.EntityFrameworkCore;
+    using System;
+    using System.Globalization;
+    using System.IO;
+
     public class StartUp
     {
         public static void Main()

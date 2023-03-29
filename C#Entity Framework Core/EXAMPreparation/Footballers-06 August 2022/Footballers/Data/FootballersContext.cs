@@ -11,6 +11,11 @@
         public FootballersContext(DbContextOptions options)
             : base(options) { }
 
+        public DbSet<Team> Teams { get; set; } = null!;
+        public DbSet<Footballer> Footballers { get; set; } = null!;
+        public DbSet<Coach> Coaches { get; set; } = null!;
+        public DbSet<TeamFootballer> TeamsFootballers { get; set; } = null!;
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -27,12 +32,5 @@
                 .HasKey(k => new { k.TeamId, k.FootballerId });
 
         }
-
-        public DbSet<Team> Teams { get; set; } = null!;
-        public DbSet<Footballer> Footballers { get; set; } = null!;
-        public DbSet<Coach> Coaches { get; set; } = null!;
-        public DbSet<TeamFootballer> TeamsFootballers { get; set; } = null!;
-
-
     }
 }

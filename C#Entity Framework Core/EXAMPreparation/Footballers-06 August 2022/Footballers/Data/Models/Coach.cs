@@ -12,11 +12,11 @@ namespace Footballers.Data.Models
         public int Id { get; set; }
 
         [Required]
-        [MaxLength(40)]
         [MinLength(2)]
+        [MaxLength(40)]
         public string Name { get; set; }
 
-        [Required(AllowEmptyStrings = false)] 
+        [Required]
         public string Nationality { get; set; }
 
         public ICollection<Footballer> Footballers { get; set; }
