@@ -1,7 +1,9 @@
 ﻿using System.Globalization;
 using System.Text;
+using System.Xml.Serialization;
 using Newtonsoft.Json;
 using VaporStore.Data.Models;
+using VaporStore.Data.Models.Enums;
 using VaporStore.DataProcessor.ImportDto;
 
 namespace VaporStore.DataProcessor
@@ -135,12 +137,135 @@ namespace VaporStore.DataProcessor
 
         public static string ImportUsers(VaporStoreDbContext context, string jsonString)
         {
-            throw new NotImplementedException();
+            StringBuilder sb = new StringBuilder();
+            ImportUserDto[] userDtos = JsonConvert.DeserializeObject<ImportUserDto[]>(jsonString);
+            List<User> users = new List<User>();
+
+            foreach (var userDto in userDtos)
+            {
+                if (!IsValid(userDto))
+                {
+                    sb.AppendLine(ErrorMessage);
+                    continue;
+                }
+                List<Card> userCards = new List<Card>();
+                bool allCardsIsValid = true;
+
+                foreach (var cardDto in userDto.Cards)
+                {
+                    if (!IsValid(cardDto))
+                    {
+                        allCardsIsValid = false;
+                        break;
+                    }
+                    Object cardTypeResult;
+                    bool isCardTypeValid = Enum.TryParse(typeof(CardType),
+                        cardDto.Type, out cardTypeResult);
+                    if (!isCardTypeValid)
+                    {
+                        allCardsIsValid = false;
+                        break;
+                    }
+                    CardType cardType = (CardType)cardTypeResult;
+                    userCards.Add(new Card()
+                    {
+                        Number = cardDto.Number,
+                        Cvc = cardDto.Cvc,
+                        Type = cardType
+                    });
+                }
+                if (!allCardsIsValid)
+                {
+                    sb.AppendLine(ErrorMessage);
+                    continue;
+                }
+                if (userCards.Count == 0)
+                {
+                    sb.AppendLine(ErrorMessage);
+                    continue;
+                }
+                var user = new User()
+                {
+                    Username = userDto.UserName,
+                    FullName = userDto.FullName,
+                    Email = userDto.Email,
+                    Age = userDto.Age,
+                    Cards = userCards
+                };
+                users.Add(user);
+                sb.AppendLine(String.Format(SuccessfullyImportedUser, user.Username, user.Cards.Count));
+            }
+            context.Users.AddRange(users);
+            context.SaveChanges();
+
+            return sb.ToString().TrimEnd();
         }
 
         public static string ImportPurchases(VaporStoreDbContext context, string xmlString)
         {
-            throw new NotImplementedException();
+            StringBuilder sb = new StringBuilder();
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(ImportPurchaseDto[]),
+                new XmlRootAttribute("Purchases"));
+            using StringReader stringReader = new StringReader(xmlString);
+            ImportPurchaseDto[] purchaseDtos = (ImportPurchaseDto[])xmlSerializer
+                .Deserialize(stringReader);
+
+            List<Purchase> purchases = new List<Purchase>();
+            foreach (var purchaseDto in purchaseDtos)
+            {
+                if (!IsValid(purchaseDto))
+                {
+                    sb.AppendLine(ErrorMessage);
+                    continue;
+                }
+                Object purchaseTypeObj;
+                bool isPurchaseTypeVaild = Enum.TryParse(typeof(PurchaseType),
+                    purchaseDto.PurchaseType, out purchaseTypeObj);
+
+                if (!isPurchaseTypeVaild)
+                {
+                    sb.AppendLine(ErrorMessage);
+                    continue;
+                }
+                PurchaseType purchaseType = (PurchaseType)purchaseTypeObj;
+                DateTime date;
+                bool isDateValid = DateTime.TryParseExact(purchaseDto.Date, "dd/MM/yyyy HH:mm",
+                    CultureInfo.InvariantCulture, DateTimeStyles.None, out date);
+                if (!isDateValid)
+                {
+                    sb.Append(ErrorMessage); 
+                    continue;
+                }
+                Card card = context
+                    .Cards.FirstOrDefault(c => c.Number == purchaseDto.CardNumber);
+                if (card == null)
+                {
+                    sb.AppendLine(ErrorMessage);
+                    continue;
+                }
+                Game game = context
+                    .Games.FirstOrDefault(g => g.Name == purchaseDto.GameTitle);
+                if (game == null)
+                {
+                    sb.AppendLine(ErrorMessage);
+                    continue;
+                }
+                Purchase purchase = new Purchase()
+                {
+                    Type = purchaseType,
+                    Date = date,
+                    ProductKey = purchaseDto.Key,
+                    Game = game,
+                    Card = card
+                };
+                purchases.Add(purchase);
+                sb.AppendLine(String.Format(SuccessfullyImportedPurchase, purchase.Game.Name,
+                    purchase.Card.User.Username));
+            }
+            context.Purchases.AddRange(purchases);
+            context.SaveChanges();
+
+            return sb.ToString().TrimEnd();
         }
 
         private static bool IsValid(object dto)
