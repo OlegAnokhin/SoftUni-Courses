@@ -1,30 +1,31 @@
 ﻿using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
+using Boardgames.Common;
 
 namespace Boardgames.DataProcessor.ImportDto
 {
     public class ImportSellerDto
     {
         [Required]
-        [MinLength(5)]
-        [MaxLength(20)]
+        [MinLength(ValidationConstants.SellerNameMinLenght)]
+        [MaxLength(ValidationConstants.SellerNameMaxLenght)]
         [JsonProperty("Name")]
-        public string Name { get; set; }
+        public string Name { get; set; } = null!;
 
         [Required]
-        [MinLength(2)]
-        [MaxLength(30)]
+        [MinLength(ValidationConstants.SellerAddressMinLenght)]
+        [MaxLength(ValidationConstants.SellerAddressMaxLenght)]
         [JsonProperty("Address")]
-        public string Address { get; set; }
+        public string Address { get; set; } = null!;
 
         [Required]
         [JsonProperty("Country")]
-        public string Country { get; set; }
+        public string Country { get; set; } = null!;
 
         [Required]
-        [RegularExpression(@"^[w]{3}.{1}[A-Za-z0-9|-]+.{1}[c]{1}[o]{1}[m]{1}")]
+        [RegularExpression(ValidationConstants.SellerWebsiteRegex)]
         [JsonProperty("Website")]
-        public string Website { get; set; }
+        public string Website { get; set; } = null!;
 
         [JsonProperty("Boardgames")]
         public int[] BoardgameIds { get; set; }

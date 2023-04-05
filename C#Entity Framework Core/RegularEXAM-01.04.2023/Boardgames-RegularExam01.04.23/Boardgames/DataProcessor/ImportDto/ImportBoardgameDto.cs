@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Xml.Serialization;
+using Boardgames.Common;
 
 namespace Boardgames.DataProcessor.ImportDto
 {
@@ -7,18 +8,20 @@ namespace Boardgames.DataProcessor.ImportDto
     public class ImportBoardgameDto
     {
         [Required]
-        [MinLength(10)]
-        [MaxLength(20)]
+        [MinLength(ValidationConstants.BoardgameNameMinLenght)]
+        [MaxLength(ValidationConstants.BoardgameNameMaxLenght)]
         [XmlElement("Name")]
-        public string Name { get; set; }
+        public string Name { get; set; } = null!;
 
         [Required]
-        [Range(1, 10.00)]
+        [Range(ValidationConstants.BoardgameRatingMinValue, 
+               ValidationConstants.BoardgameRatingMaxValue)]
         [XmlElement("Rating")]
         public double Rating { get; set; }
 
         [Required]
-        [Range(2018, 2023)]
+        [Range(ValidationConstants.BoardgameYearMinValue,
+               ValidationConstants.BoardgameYearMaxValue)]
         [XmlElement("YearPublished")]
         public int YearPublished { get; set; }
 
@@ -28,6 +31,6 @@ namespace Boardgames.DataProcessor.ImportDto
 
         [Required]
         [XmlElement("Mechanics")]
-        public string Mechanics { get; set; }
+        public string Mechanics { get; set; } = null!;
     }
 }

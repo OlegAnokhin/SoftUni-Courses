@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Boardgames.Common;
 
 namespace Boardgames.Data.Models
 {
@@ -12,11 +13,11 @@ namespace Boardgames.Data.Models
         public int Id { get; set; }
 
         [Required]
-        [MaxLength(20)]
+        [MaxLength(ValidationConstants.SellerNameMaxLenght)]
         public string Name { get; set; }
 
         [Required]
-        [MaxLength(30)]
+        [MaxLength(ValidationConstants.SellerAddressMaxLenght)]
         public string Address { get; set; }
 
         [Required]

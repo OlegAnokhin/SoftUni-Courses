@@ -1,6 +1,7 @@
 ﻿using Boardgames.Data.Models.Enums;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Boardgames.Common;
 
 namespace Boardgames.Data.Models
 {
@@ -14,7 +15,7 @@ namespace Boardgames.Data.Models
         public int Id { get; set; }
 
         [Required]
-        [MaxLength(20)]
+        [MaxLength(ValidationConstants.BoardgameNameMaxLenght)]
         public string Name { get; set; }
 
         [Required]
