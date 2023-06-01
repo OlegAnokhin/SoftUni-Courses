@@ -1,25 +1,17 @@
-﻿namespace Forum.Data.Models
+﻿namespace Forum.ViewModels.Post
 {
     using System.ComponentModel.DataAnnotations;
 
     using static Forum.Common.Validations.EntityValidations.Post;
 
-
-    public class Post
+    public class PostFormModel
     {
-        public Post()
-        {
-            this.Id = Guid.NewGuid();
-        }
-        [Key]
-        public Guid Id { get; set; }
-
         [Required]
-        [StringLength(TitleMaxLength)]
+        [StringLength(TitleMaxLength, MinimumLength = TitleMinLength)]
         public string Title { get; set; } = null!;
 
         [Required]
-        [StringLength(ContentMaxLength)]
+        [StringLength(ContentMaxLength, MinimumLength = ContentMinLength)]
         public string Content { get; set; } = null!;
     }
 }

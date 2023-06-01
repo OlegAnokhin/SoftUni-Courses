@@ -1,22 +1,23 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using WorkshopForumApp.Common;
-using WorkshopForumApp.Data.Seeding;
-using WorkshopForumApp.Models;
-
-namespace WorkshopForumApp.Data.Configuration;
-
-public class PostEntityConfiguration : IEntityTypeConfiguration<EntityValidations.Post>
+﻿namespace Forum.Data.Configuration
 {
-    private readonly PostSeeder postSeeder;
 
-    public PostEntityConfiguration()
-    {
-        this.postSeeder = new PostSeeder();
-    }
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Metadata.Builders;
+    using Models;
+    using Seeding;
 
-    public void Configure(EntityTypeBuilder<Post> builder)
+    public class PostEntityConfiguration : IEntityTypeConfiguration<Post>
     {
-        builder.HasData(this.postSeeder.GeneratePosts());
+        private readonly PostSeeder postSeeder;
+
+        public PostEntityConfiguration()
+        {
+            this.postSeeder = new PostSeeder();
+        }
+
+        public void Configure(EntityTypeBuilder<Post> builder)
+        {
+            builder.HasData(this.postSeeder.GeneratePosts());
+        }
     }
 }

@@ -19,7 +19,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WorkshopForumApp.Data\WorkshopForumApp.Data.csproj" />
+    <ProjectReference Include="..\Forum.Services\Forum.Services.csproj" />
+    <ProjectReference Include="..\Forum.ViewModels\Forum.ViewModels.csproj" />
+    <ProjectReference Include="..\WorkshopForumApp.Data\Forum.Data.csproj" />
   </ItemGroup>
 
 </Project>

@@ -23,7 +23,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WorkshopForumApp.Common\WorkshopForumApp.Common.csproj" />
+    <ProjectReference Include="..\WorkshopForumApp.Common\Forum.Common.csproj" />
+    <ProjectReference Include="..\WorkshopForumApp.Models\Forum.Data.Models.csproj" />
   </ItemGroup>
 
 </Project>

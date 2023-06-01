@@ -1,15 +1,20 @@
 using Microsoft.EntityFrameworkCore;
-using WorkshopForumApp.Data;
+using Forum.Data;
+using Forum.Services;
+using Forum.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
 builder.Services.AddDbContext<ForumAppDbContext>(options =>
 {
     options.UseSqlServer(connectionString);
 });
+
+builder.Services.AddScoped<IPostService, PostService>();
 
 var app = builder.Build();
 

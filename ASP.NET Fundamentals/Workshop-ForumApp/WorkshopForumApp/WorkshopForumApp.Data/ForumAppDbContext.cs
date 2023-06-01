@@ -1,22 +1,23 @@
-﻿using Microsoft.EntityFrameworkCore;
-using WorkshopForumApp.Data.Configuration;
-using WorkshopForumApp.Models;
-
-namespace WorkshopForumApp.Data;
-
-public class ForumAppDbContext : DbContext
+﻿namespace Forum.Data
 {
-    public ForumAppDbContext(DbContextOptions<ForumAppDbContext> options)
-        :base(options)
-    {
-            
-    }
+    using Configuration;
+    using Models;
+    using Microsoft.EntityFrameworkCore;
 
-    public DbSet<Post> Posts { get; set; } = null!;
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    public class ForumAppDbContext : DbContext
     {
-        modelBuilder.ApplyConfiguration(new PostEntityConfiguration());
-        base.OnModelCreating(modelBuilder);
+        public ForumAppDbContext(DbContextOptions<ForumAppDbContext> options)
+            : base(options)
+        {
+
+        }
+
+        public DbSet<Post> Posts { get; set; } = null!;
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfiguration(new PostEntityConfiguration());
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }
