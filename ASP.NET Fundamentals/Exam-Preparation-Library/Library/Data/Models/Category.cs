@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using static Library.Common.ValidationConstants.Category;
 
 namespace Library.Data.Models
 {
@@ -8,7 +9,7 @@ namespace Library.Data.Models
         public int Id { get; set; }
 
         [Required]
-        [StringLength(50)]
+        [StringLength(NameMaxLength)]
         public string Name { get; set; } = null!;
 
         public List<Book> Books { get; set; } = new List<Book>();

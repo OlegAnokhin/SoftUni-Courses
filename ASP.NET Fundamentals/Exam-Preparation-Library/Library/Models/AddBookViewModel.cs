@@ -1,19 +1,20 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using static Library.Common.ValidationConstants.Book;
 
 namespace Library.Models
 {
     public class AddBookViewModel
     {
         [Required]
-        [StringLength(50, MinimumLength = 10)]
+        [StringLength(TitleMaxLength, MinimumLength = TitleMinLength)]
         public string Title { get; set; } = null!;
 
         [Required]
-        [StringLength(50, MinimumLength = 5)]
+        [StringLength(AuthorMaxLength, MinimumLength = AuthorMinLength)]
         public string Author { get; set; } = null!;
 
         [Required]
-        [StringLength(5000, MinimumLength = 5)]
+        [StringLength(DescriptionMaxLength, MinimumLength = DescriptionMinLength)]
         public string Description { get; set; } = null!;
 
         [Required(AllowEmptyStrings = false)]
