@@ -15,7 +15,12 @@ namespace Homies.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<EventParticipant>()
-                .HasKey(ep => new { ep.EventId, ep.HelperId });
+                .HasKey(ep => new { ep.HelperId, ep.EventId });
+
+            modelBuilder.Entity<EventParticipant>()
+                .HasOne(x => x.Event)
+                .WithMany(x => x.EventsParticipants)
+                .OnDelete(DeleteBehavior.NoAction);
 
             //Seeding
             modelBuilder
