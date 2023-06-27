@@ -1,12 +1,12 @@
 ﻿namespace Forum.Data
 {
+    using Microsoft.EntityFrameworkCore;
     using Configuration;
     using Models;
-    using Microsoft.EntityFrameworkCore;
 
-    public class ForumAppDbContext : DbContext
+    public class ForumDbContext : DbContext
     {
-        public ForumAppDbContext(DbContextOptions<ForumAppDbContext> options)
+        public ForumDbContext(DbContextOptions<ForumDbContext> options)
             : base(options)
         {
 

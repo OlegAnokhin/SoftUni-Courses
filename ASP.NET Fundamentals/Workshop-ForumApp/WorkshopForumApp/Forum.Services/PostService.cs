@@ -1,7 +1,6 @@
 ﻿namespace Forum.Services
 {
     using Microsoft.EntityFrameworkCore;
-
     using Data;
     using Data.Models;
     using Interfaces;
@@ -9,9 +8,9 @@
 
     public class PostService : IPostService
     {
-        private readonly ForumAppDbContext dbContext;
+        private readonly ForumDbContext dbContext;
 
-        public PostService(ForumAppDbContext dbContext)
+        public PostService(ForumDbContext dbContext)
         {
             this.dbContext = dbContext;
         }

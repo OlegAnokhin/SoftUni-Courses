@@ -39,14 +39,13 @@ namespace Homies.Controllers
             if (!ModelState.IsValid)
             {
                 model.Types = await eventService.GetAllTypesAsync();
-                ModelState.AddModelError("", "Invalid data!");
                 return View(model);
             }
 
             try
             {
                 var userId = GetUserId();
-                // model.OrganiserId = userId;
+                model.OrganiserId = userId;
                 await eventService.AddEventAsync(model, userId);
             }
             catch (Exception e)
