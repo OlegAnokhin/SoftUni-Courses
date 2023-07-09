@@ -1,6 +1,7 @@
-﻿namespace Homies.Models
+﻿#nullable disable
+namespace Homies.Models.Event
 {
-    public class AllEventsViewModel
+    public class EventViewModel
     {
         public int Id { get; set; }
 
@@ -9,7 +10,5 @@
         public DateTime Start { get; set; }
 
         public string Type { get; set; }
-
-        public string Organiser { get; set; }
     }
 }

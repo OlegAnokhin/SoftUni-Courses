@@ -1,10 +1,10 @@
-﻿using Homies.Data.Models;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-using Type = Homies.Data.Models.Type;
-
-namespace Homies.Data
+﻿namespace Homies.Data
 {
+    using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore;
+    using Models;
+    using Type = Models.Type;
+
     public class HomiesDbContext : IdentityDbContext
     {
         public HomiesDbContext(DbContextOptions<HomiesDbContext> options)
@@ -25,12 +25,7 @@ namespace Homies.Data
                 .HasOne(e => e.Type)
                 .WithMany(ep => ep.Events)
                 .HasForeignKey(e => e.TypeId)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            //modelBuilder.Entity<EventParticipant>()
-            //    .HasOne(x => x.Event)
-            //    .WithMany(x => x.EventsParticipants)
-            //    .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Restrict);
 
             //seeding
 

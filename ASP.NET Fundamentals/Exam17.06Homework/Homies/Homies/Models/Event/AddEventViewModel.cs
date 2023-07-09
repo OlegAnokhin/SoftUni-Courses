@@ -1,28 +1,30 @@
-﻿using System.ComponentModel.DataAnnotations;
-using static Homies.Common.ValidationConstants.Event;
-
-namespace Homies.Models
+﻿#nullable disable
+namespace Homies.Models.Event
 {
+    using System.ComponentModel.DataAnnotations;
+    using Type;
+    using static Homies.Common.ValidationConstants.Event;
+
     public class AddEventViewModel
     {
         [Required]
         [StringLength(NameMaxLength, MinimumLength = NameMinLength)]
-        public string Name { get; set; } = null!;
+        public string Name { get; set; }
 
         [Required]
         [StringLength(DescriptionMaxLength, MinimumLength = DescriptionMinLength)]
-        public string Description { get; set; } = null!;
+        public string Description { get; set; }
 
         [Required]
         public DateTime Start { get; set; }
-        
+
         [Required]
         public DateTime End { get; set; }
-        
+
         public int TypeId { get; set; }
 
         public string OrganiserId { get; set; }
 
-        public List<AllTypesViewModel> Types { get; set; } = new List<AllTypesViewModel>();
+        public List<AllTypesModel> Types { get; set; } = new List<AllTypesModel>();
     }
 }

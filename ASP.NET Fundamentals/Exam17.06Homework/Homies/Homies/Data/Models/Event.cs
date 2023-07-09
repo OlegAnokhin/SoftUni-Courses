@@ -1,10 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.AspNetCore.Identity;
-using static Homies.Common.ValidationConstants.Event;
-
+﻿#nullable disable
 namespace Homies.Data.Models
 {
+    using Microsoft.AspNetCore.Identity;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using static Homies.Common.ValidationConstants.Event;
+
     public class Event
     {
         [Key]
@@ -12,18 +13,17 @@ namespace Homies.Data.Models
 
         [Required]
         [StringLength(NameMaxLength)]
-        public string Name { get; set; } = null!;
+        public string Name { get; set; }
 
         [Required]
         [StringLength(DescriptionMaxLength)]
-        public string Description { get; set; } = null!;
+        public string Description { get; set; }
 
         [Required]
-        public string OrganiserId { get; set; } = null!;
+        public string OrganiserId { get; set; }
 
         [Required]
-        [ForeignKey(nameof(OrganiserId))]
-        public IdentityUser Organiser { get; set; } = null!;
+        public IdentityUser Organiser { get; set; }
 
         [Required]
         [DisplayFormat(DataFormatString = "yyyy-MM-dd H:mm")]
@@ -42,7 +42,7 @@ namespace Homies.Data.Models
 
         [Required]
         [ForeignKey(nameof(TypeId))]
-        public Type Type { get; set; } = null!;
+        public Type Type { get; set; }
 
         public List<EventParticipant> EventsParticipants { get; set; } = new List<EventParticipant>();
     }
